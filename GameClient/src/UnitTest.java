@@ -51,6 +51,7 @@ public class UnitTest {
 		*/
 		
 		//EventClient.send("pakage.Classname:name::func($...)", Object[]{arg1, arg2}, to);
+		EventClient.
 		EventClient.send((o)->response(o), "event.ExampleObject::test(1)", EventClient.getKey());
 		EventClient.send((o)->response(o), "event.ExampleObject::test(1)", EventClient.getKey());
 	}
