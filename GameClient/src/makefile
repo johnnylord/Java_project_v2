@@ -32,3 +32,7 @@ WinClient:
 
 WinClient-run: 
 	java -cp ".;../lib/json.jar" UnitTest
+
+clear:
+	rm -rf *.class
+	rm -rf ./event/*.class
