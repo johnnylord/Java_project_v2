@@ -13,21 +13,28 @@ import java.util.Scanner;
 import javax.sound.sampled.*;
 import event.*;
 import packageData.*;
-
+import javax.swing.DefaultComboBoxModel;
 
 public class GameClient {
 
 	public static String SERVERIP = "127.0.0.1";
 	public static int PORT = 9487;
 	public static JFrame frame;
+	public static String gKey; // my GaneClient key
+	public static String enemyEventClientKey; // EnemyID
+	public static String enemyGameClientKey; // Enemy GameClient key
+	public static boolean firstSelect;
+
 	//public static Socket ClientSock;
 	public static Mixer mixer;
 	public static Clip musicBeforeGame;
 	public static Clip musicForGame;
 	public static UserData userData;
-	/**
-	 * Launch the application.
-	 */
+
+	// Select predefined data
+	private static int picked[] = new int[6]; 
+
+
 	public static void main(String[] args) throws Exception {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -95,7 +102,9 @@ public class GameClient {
 			public void actionPerformed(ActionEvent arg0) {
 
 					// Connect to server and get the EventClient.thisKey
-					EventClient.initialize(SERVERIP);
+					EventClient.initialize();
+
+					gKey = EventClient.addReference(this,EventClient.getKey());
 
 					if(EventClient.getKey() != null){
 						// Clean the Component in the JFrame's ContentPane
@@ -135,7 +144,6 @@ public class GameClient {
 	public static int photoIndex = 1, webcam_check = 0;
 	public static Webcam webcam = Webcam.getDefault();
 	public static WebcamPanel panel = null;
-
 	public static void secondScene() {
 
 		// Text Field for client to enter "PlayerID" 
@@ -260,7 +268,7 @@ public class GameClient {
 				// take pictures
 				BufferedImage takedPhoto = webcam.getImage();
 			    BufferedImage bi = new BufferedImage(760, 754,BufferedImage.TRANSLUCENT);
-			    Graphics2D g2d = (Graphics2D) bi.createGraphics();
+			    Graphics2D g2d = bi.createGraphics();
 			    g2d.addRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY));
 			    g2d.drawImage(takedPhoto, 0, 0, 760, 754, null);
 			    g2d.dispose();
@@ -409,18 +417,108 @@ public class GameClient {
 		
 		btn1.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-
 				// Send to tell server group me and other player
-				;
-				// Change the scene
-				//GameClient.thirdScene();
+				EventCient.send("GameServer::match($...)", new Object[]{EventClient.getKey(), gKey},null);
+				reminder.dispose();
 			}
 		});
-
 		reminder.add(msg);
 		reminder.add(btn1);
 		reminder.add(btn2);
+	}
+
+	/*
+	 *Third Scene:
+	 * Select the Heros 
+	 */
+	public static void thirdScene() {
+		String[] character = {"亞瑟王","高文","莫德雷德","蘭斯洛特","加雷斯","貝迪維爾","崔斯坦","摩根勒菲","加拉哈德","珀西瓦","梅林","閨妮維雅"};
+		JLabel character_data = new JLabel("");
+		JComboBox comboBox = new JComboBox<String>(character);
+		JLabel label = new JLabel("");
+		JButton btnNewButton = new JButton("選擇");
+		JLabel player1_character_1 = new JLabel("選擇角色中");
+		JLabel player1_character_2 = new JLabel("選擇角色中");
+		JLabel player1_character_3 = new JLabel("選擇角色中");
+		JLabel player2_character_1 = new JLabel("選擇角色中");
+		JLabel player2_character_2 = new JLabel("選擇角色中");
+		JLabel player2_character_3 = new JLabel("選擇角色中");
+		JLabel select[] = new JLabel[]{player1_character_1,player2_character_1,player1_character_2,player2_character_2,player1_character_3,player2_character_3};
+		int seleted[] = new int[12];
+
+		// refresh the frame
+		frame.getContentPane().removeAll();
+		frame.getContentPane().doLayout();
+		frame.getContentPane().update(frame.getContentPane().getGraphics());
+		
+		// add Combo box 
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"亞瑟王","高文","莫德雷德","蘭斯洛特","加雷斯","貝迪維爾","崔斯坦","摩根勒菲","加拉哈德","珀西瓦","梅林","閨妮維雅"}));
+		comboBox.setForeground(Color.BLACK);
+		comboBox.setFont(new Font("標楷體", Font.BOLD, 40));
+		comboBox.setBounds(512, 40, 200, 50);
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				int index = comboBox.getSelectedIndex();
+				
+				if (index != 0) {
+					String content = comboBox.getSelectedItem().toString();
+					System.out.println("index = " + index + ", character=" + content);
+				}
+				
+				//change the picture
+				Icon img = new ImageIcon("../resource/image/" + character[index] + ".png");
+				character_data.setIcon(img);
+				
+			}
+		} );
 
 
+		// used to display the selected car
+		ImageIcon display = new ImageIcon("../resource/image/亞瑟王.png");
+		display.setImage(display.getImage().getScaledInstance(400,590,Image.SCALE_DEFAULT));
+		Icon img = display;
+		character_data.setIcon(img);
+		character_data.setBounds(425, 150, 400, 590);
+		
+		//press the "select" button (action)
+		btnNewButton.setFont(new Font("標楷體", Font.BOLD, 30));
+		btnNewButton.setBounds(559, 802, 131, 56);
+		label.setBounds(47, 94, 57, 19);
+		btnNewButton.setEnabled((firstSelect)? true:false);
+		
+		
+		// the placeholder for selected card
+		player1_character_1.setBounds(110, 10, 200, 295);
+		player1_character_2.setBounds(110, 305, 200, 295);	
+		player1_character_3.setBounds(110, 600, 200, 295);
+		player2_character_1.setBounds(967, 10, 200, 295);
+		player2_character_2.setBounds(967, 305, 200, 295);
+		player2_character_3.setBounds(967, 600, 200, 295);
+		
+
+		// add all the component to the frame
+		frame.getContentPane().add(comboBox);
+		frame.getContentPane().add(character_data);
+		frame.getContentPane().add(btnNewButton);
+		frame.getContentPane().add(label);
+		frame.getContentPane().add(player1_character_1);
+		frame.getContentPane().add(player1_character_2);
+		frame.getContentPane().add(player1_character_3);
+		frame.getContentPane().add(player2_character_1);
+		frame.getContentPane().add(player2_character_2);
+		frame.getContentPane().add(player2_character_3);		
+		frame.getContentPane().update(frame.getContentPane().getGraphics());
+	}
+
+	public static void setPair(String key,boolean firstSelect) {
+		GameClient.enemyEventClientKey = key;
+		GameClient.firstSelect = firstSelect;
+	}
+
+	public static void setGKey(String enemyGKey){
+		GameClient.enemyGameClientKey = enemyGKey;
+		//Change to third scene
+		GameClient.thirdScene();
 	}
 }
