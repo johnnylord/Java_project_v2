@@ -20,7 +20,7 @@ import org.json.JSONObject;
 
 public class GameClient {
 
-	public static String SERVERIP = "127.0.0.1";
+	public static String SERVERIP = "192.168.5.141";
 	public static int PORT = 9487;
 	public static JFrame frame;
 	public static String gKey; // my GaneClient key
@@ -105,7 +105,7 @@ public class GameClient {
 			public void actionPerformed(ActionEvent arg0) {
 
 					// Connect to server and get the EventClient.thisKey
-					EventClient.initialize();
+					EventClient.initialize(SERVERIP);
 					gKey = EventClient.addReference(this,EventClient.getKey());
 
 					if(EventClient.getKey() != null){
@@ -516,8 +516,11 @@ public class GameClient {
 	}
 
 	public static void setPair(String key,boolean firstSelect) {
+		System.out.println("Set pair triggered.");
 		GameClient.enemyEventClientKey = key;
 		GameClient.firstSelect = firstSelect;
+		//Change to third scene
+		GameClient.thirdScene();
 	}
 
 	public static void setGKey(String enemyGKey){

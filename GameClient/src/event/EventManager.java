@@ -5,6 +5,7 @@ import java.net.*;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
+import java.util.Scanner;
 
 public class EventManager {
 	
@@ -16,9 +17,19 @@ public class EventManager {
 	protected static int lastRequsetKey = -1;
 	
 	public static void start(int port) {
+			
 		try {
-			serverSock = new ServerSocket(port);
-			System.out.print("Server started...");
+			System.out.print("\nEnter serverIP:");
+			Scanner cin = new Scanner(System.in);
+			String serverIP = cin.nextLine(); 
+			InetAddress inetIP = InetAddress.getByName(serverIP);
+			serverSock = new ServerSocket(port,100,inetIP);
+			System.out.println("Server started...");
+			System.out.println("-------------------------");
+			System.out.println("Server information [ hostname / serverIP / port]");
+			System.out.println(serverSock.getLocalSocketAddress());
+			System.out.println("-------------------------");
+
 			while (true) {
 				Socket cSock = serverSock.accept();
 				ObjectOutputStream output = new ObjectOutputStream(cSock.getOutputStream());
