@@ -125,7 +125,7 @@ class Router implements Runnable {
 						System.out.println("from :"+from+" to:server id:"+id+" api:"+api+" args:"+args);
 						if (inputObject[1] instanceof String) { // not return value
 							Object returnValue = EventClient.callAPI(api, args);
-							Object[] obj = new Object[]{id, true, returnValue};
+							Object[] obj = new Object[]{id, true, returnValue, inputObject[4], inputObject[3]};
 							this.output.writeObject(obj);
 						}
 						else if((boolean)inputObject[1] == true && EventManager.hasListener(id)) { // is return value
