@@ -2,21 +2,21 @@ package packageData;
 
 import java.awt.*;
 import java.awt.image.*;
+import javax.imageio.*;
+import javax.swing.*;
 
 //user setting 
 
 public class UserData{ 
 
 		// User Setting 
-	public BufferedImage photo;
+	public ImageIcon photo;
 	public String playerID;
 	public String playerGender;
-	public String playerMotto;
 
-	public UserData(BufferedImage photo, String playerID, String playerGender, String playerMotto){
+	public UserData(ImageIcon photo, String playerID, String playerGender){
 		this.photo = photo;
 		this.playerID = playerID;
 		this.playerGender = playerGender;
-		this.playerMotto = playerMotto;
 	}
 }

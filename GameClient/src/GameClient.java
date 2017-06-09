@@ -20,13 +20,12 @@ import org.json.JSONObject;
 
 public class GameClient {
 
-	public static String SERVERIP = "192.168.5.141";
+	public static String SERVERIP = "192.168.5.40";
 	public static int PORT = 9487;
 	public static JFrame frame;
 	public static String gKey; // my GaneClient key
 	public static String enemyEventClientKey; // EnemyID
 	public static String enemyGameClientKey; // Enemy GameClient key
-	public static boolean firstSelect;
 
 	//public static Socket ClientSock;
 	public static Mixer mixer;
@@ -34,9 +33,24 @@ public class GameClient {
 	public static Clip musicForGame;
 	public static UserData userData;
 
+	// Scene2Data
+	public static String PlayerID_String;
+	public static String PlayerGender_String;
+	public static JLabel confirmedPhoto = null;
+	public static Icon confirmedIcon = null;
+	public static int photoIndex = 1, webcam_check = 0;
+	public static Webcam webcam = Webcam.getDefault();
+	public static WebcamPanel panel = null;
+	public static ImageIcon confirmedToSend = null;
+	// Data of opponent
+	public static String opponentID;
+	public static String opponentGender;
+	public static ImageIcon opponentPhoto;
+
+	// Scene3Data
 	// Select predefined data
 	private static int picked[] = new int[6]; 
-
+	public static boolean firstSelect;
 
 	public static void main(String[] args) throws Exception {
 		EventQueue.invokeLater(new Runnable() {
@@ -141,11 +155,6 @@ public class GameClient {
 	 * Change to the user setting. And build the packet based on user setting 
 	 * After setting, send the packet to the Server
 	 */
-	public static JLabel confirmedPhoto = null;
-	public static Icon confirmedIcon = null;
-	public static int photoIndex = 1, webcam_check = 0;
-	public static Webcam webcam = Webcam.getDefault();
-	public static WebcamPanel panel = null;
 	public static void secondScene() {
 
 		// Text Field for client to enter "PlayerID" 
@@ -154,7 +163,7 @@ public class GameClient {
 		PlayerID.setFont(new Font("Liberation Mono", Font.BOLD | Font.ITALIC, 24));
 		PlayerID.setLocation(865,50); // 50 + 760
 		PlayerID.setSize(365,80);
-		String PlayerID_String = PlayerID.getText();
+		PlayerID_String = PlayerID.getText();
 		
 		// Text Field for client to enter "PlayGender" 
 		JTextField PlayerGender = new JTextField("Enter Player Gender here.", 30);
@@ -162,7 +171,7 @@ public class GameClient {
 		PlayerGender.setBackground(Color.PINK);
 		PlayerGender.setLocation(865,295); 
 		PlayerGender.setSize(365,80);
-		String PlayerGender_String = PlayerGender.getText();
+		PlayerGender_String = PlayerGender.getText();
 		
 		// Text Field for client to enter "PlayerMotto" 
 		JTextField PlayerMotto = new JTextField("Enter Player Motto here.", 30);
@@ -235,11 +244,14 @@ public class GameClient {
 				}
 				
 				// set and display choosed photo
-				if(webcam_check == 1)
-					confirmedIcon = new ImageIcon("./takedPhoto.png");
-				else
-					confirmedIcon = new ImageIcon(filepath[photoIndex-1]);
-				
+				if(webcam_check == 1){
+					confirmedToSend = new ImageIcon("./takedPhoto.png"); 
+					confirmedIcon = confirmedToSend;
+				}else{
+					confirmedToSend = new ImageIcon(filepath[photoIndex-1]);
+					confirmedIcon = confirmedToSend;
+				}
+
 				confirmedPhoto = new JLabel(confirmedIcon);
 				confirmedPhoto.setLocation(50,50);
 				confirmedPhoto.setSize(760,754);
@@ -515,15 +527,24 @@ public class GameClient {
 		frame.getContentPane().update(frame.getContentPane().getGraphics());
 	}
 
-	public static void setPair(String key,boolean firstSelect) {
+	public static void setPair(String key,Boolean firstSelect) {
 		System.out.println("Set pair triggered.");
 		GameClient.enemyEventClientKey = key;
 		GameClient.firstSelect = firstSelect;
-		EventClient.send("GameClient::setGKey($)",gKey,key);
+
+		userData = new UserData(confirmedToSend,PlayerID_String,PlayerGender_String);
+		PacketData packageData = new PacketData(userData,null,null,null);
+		EventClient.send("GameClient::playersInit($...)",new Object[]{gKey,packageData},key);
 	}
 
-	public static void setGKey(String enemyGKey){
+	public static void playersInit(String enemyGKey,PacketData packageData){
 		GameClient.enemyGameClientKey = enemyGKey;
+		opponentID = packageData.getUserData().playerID;
+		opponentGender = packageData.getUserData().playerGender;
+		opponentPhoto = packageData.getUserData().photo;
+		if(opponentID!=null && opponentGender!= null && opponentPhoto != null){
+			System.out.println("Return packege players info .............!!!!!!!!!!!1");
+		}
 		//Change to third scene
 		GameClient.thirdScene();
 	}
