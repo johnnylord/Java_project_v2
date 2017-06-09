@@ -14,6 +14,9 @@ import javax.sound.sampled.*;
 import event.*;
 import packageData.*;
 import javax.swing.DefaultComboBoxModel;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class GameClient {
 
@@ -103,7 +106,6 @@ public class GameClient {
 
 					// Connect to server and get the EventClient.thisKey
 					EventClient.initialize();
-
 					gKey = EventClient.addReference(this,EventClient.getKey());
 
 					if(EventClient.getKey() != null){
@@ -418,7 +420,7 @@ public class GameClient {
 		btn1.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				// Send to tell server group me and other player
-				EventCient.send("GameServer::match($...)", new Object[]{EventClient.getKey(), gKey},null);
+				EventClient.send("GameServer::match($...)", new Object[]{EventClient.getKey(), gKey},null);
 				reminder.dispose();
 			}
 		});
@@ -445,6 +447,8 @@ public class GameClient {
 		JLabel player2_character_3 = new JLabel("選擇角色中");
 		JLabel select[] = new JLabel[]{player1_character_1,player2_character_1,player1_character_2,player2_character_2,player1_character_3,player2_character_3};
 		int seleted[] = new int[12];
+		int myCount = 0;
+		int oppCount = 1;
 
 		// refresh the frame
 		frame.getContentPane().removeAll();
