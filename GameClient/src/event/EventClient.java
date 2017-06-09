@@ -29,7 +29,7 @@ public class EventClient {
 	protected static ObjectOutputStream output;
 	protected static String thisKey = null;
 	protected static int lastRequsetKey = -1;
-	
+
 	public static void initialize() {
 		try {
 			// Connecting to server on port 9487
