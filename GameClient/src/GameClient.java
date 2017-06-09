@@ -48,6 +48,22 @@ public class GameClient {
 	public static ImageIcon opponentPhoto;
 
 	// Scene3Data
+	public static String[] character = {"亞瑟王","高文","莫德雷德","蘭斯洛特","加雷斯","貝迪維爾","崔斯坦","摩根勒菲","加拉哈德","珀西瓦","梅林","閨妮維雅"};
+	public static JLabel character_data = new JLabel("");
+	public static JComboBox comboBox = new JComboBox<String>(character);
+	public static JLabel label = new JLabel("");
+	public static JButton btnNewButton = new JButton("選擇");
+	public static JLabel player1_character_1 = new JLabel("選擇角色中");
+	public static JLabel player1_character_2 = new JLabel("選擇角色中");
+	public static JLabel player1_character_3 = new JLabel("選擇角色中");
+	public static JLabel player2_character_1 = new JLabel("選擇角色中");
+	public static JLabel player2_character_2 = new JLabel("選擇角色中");
+	public static JLabel player2_character_3 = new JLabel("選擇角色中");
+	public static JLabel select[] = new JLabel[]{player1_character_1,player2_character_1,player1_character_2,player2_character_2,player1_character_3,player2_character_3};
+	public static int seleted[] = new int[12];
+	public static int myCount = 0;
+	public static int oppCount = 1;
+	
 	// Select predefined data
 	private static int picked[] = new int[6]; 
 	public static boolean firstSelect;
@@ -446,22 +462,6 @@ public class GameClient {
 	 * Select the Heros 
 	 */
 	public static void thirdScene() {
-		String[] character = {"亞瑟王","高文","莫德雷德","蘭斯洛特","加雷斯","貝迪維爾","崔斯坦","摩根勒菲","加拉哈德","珀西瓦","梅林","閨妮維雅"};
-		JLabel character_data = new JLabel("");
-		JComboBox comboBox = new JComboBox<String>(character);
-		JLabel label = new JLabel("");
-		JButton btnNewButton = new JButton("選擇");
-		JLabel player1_character_1 = new JLabel("選擇角色中");
-		JLabel player1_character_2 = new JLabel("選擇角色中");
-		JLabel player1_character_3 = new JLabel("選擇角色中");
-		JLabel player2_character_1 = new JLabel("選擇角色中");
-		JLabel player2_character_2 = new JLabel("選擇角色中");
-		JLabel player2_character_3 = new JLabel("選擇角色中");
-		JLabel select[] = new JLabel[]{player1_character_1,player2_character_1,player1_character_2,player2_character_2,player1_character_3,player2_character_3};
-		int seleted[] = new int[12];
-		int myCount = 0;
-		int oppCount = 1;
-
 		// refresh the frame
 		frame.getContentPane().removeAll();
 		frame.getContentPane().doLayout();
@@ -502,7 +502,41 @@ public class GameClient {
 		btnNewButton.setBounds(559, 802, 131, 56);
 		label.setBounds(47, 94, 57, 19);
 		btnNewButton.setEnabled((firstSelect)? true:false);
-		
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {	
+				if(seleted[comboBox.getSelectedIndex()]==0)
+				{
+					//set the character image
+					ImageIcon img = new ImageIcon("../resource/image/" + character[comboBox.getSelectedIndex()] + ".png");
+					img.setImage(img.getImage().getScaledInstance(200,295,Image.SCALE_DEFAULT));
+					
+					seleted[comboBox.getSelectedIndex()]=1;
+					picked[myCount] = comboBox.getSelectedIndex();
+					select[myCount].setIcon(img);
+					myCount+=2;
+					
+					btnNewButton.setEnabled(false);
+					
+					//when the character are all selected
+					if(myCount==6 && !firstSelect){	
+						EventClient.send("GameClient::my_turn_to_select($...)",new Object[]{comboBox.getSelectedIndex(),oppCount},key);
+						EventClient.send("GameClient::game_is_getting_to_start()",,key);	
+						JOptionPane.showMessageDialog(null, "遊戲即將開始");
+						//change to scene 4
+					}
+					else{
+						EventClient.send("GameClient::my_turn_to_select($...)",new Object[]{comboBox.getSelectedIndex(),oppCount},key);
+						oppCount+=2;
+					};
+						
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "該角色已被選走");
+				}
+				comboBox.setSelectedIndex(0);
+			}
+		});
 		
 		// the placeholder for selected card
 		player1_character_1.setBounds(110, 10, 200, 295);
@@ -550,4 +584,24 @@ public class GameClient {
 		//Change to third scene
 		GameClient.thirdScene();
 	}
+	
+	public static void my_turn_to_select(Integer select_which_character,Integer index)
+	{
+		ImageIcon img = new ImageIcon("../resource/image/" + character[select_which_character] + ".png");
+		img.setImage(img.getImage().getScaledInstance(200,295,Image.SCALE_DEFAULT));
+		
+		seleted[select_which_character]=1;
+		picked[index] = select_which_character;
+		select[index].setIcon(img);
+		
+		btnNewButton.setEnabled(true);
+	}
+	
+	public static void game_is_getting_to_start()
+	{
+		JOptionPane.showMessageDialog(null, "遊戲即將開始");
+		//change to scene 4
+	}
 }
+
+
