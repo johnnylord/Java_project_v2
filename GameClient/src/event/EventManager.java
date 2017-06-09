@@ -4,12 +4,16 @@ import java.io.*;
 import java.net.*;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 
 public class EventManager {
 	
 	protected static ServerSocket serverSock;
 	public static Map<String, Router> sockets = new ConcurrentHashMap<String, Router>();
+	@SuppressWarnings("rawtypes")
+	protected static Map<String, Function> listeners = new ConcurrentHashMap<String, Function>();
 	protected static int lastSocketKey = -1;
+	protected static int lastRequsetKey = -1;
 	
 	public static void start(int port) {
 		try {
@@ -32,6 +36,51 @@ public class EventManager {
 	public static void start() {
 		start(9487);
 	}
+	
+	@SuppressWarnings("rawtypes")
+	public static void send(Function onReturn, String api, Object args, String to) {
+		try {
+			String id = String.valueOf(++lastRequsetKey);
+			if(onReturn != null) listeners.put(id, onReturn);
+			Object[] obj = new Object[]{id, api, args, to, null};
+			sockets.get(to).send(obj);
+		} catch (Exception e) { e.printStackTrace(); }
+	}
+	@SuppressWarnings("rawtypes")
+	public static void send(Function onReturn, String api, String to) {
+		send(onReturn, api, new Object[0], to);
+	}
+	public static void send(String api, Object args, String to) {
+		send(null, api, args, to);
+	}
+	public static void send(String api, String to) {
+		send(null, api, new Object[0], to);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public static void sendAll(Function onReturn, String api, Object args) {
+		for (String to : sockets.keySet()) {
+			send(onReturn, api, args, to);
+		}
+	}
+	@SuppressWarnings("rawtypes")
+	public static void sendAll(Function onReturn, String api) {
+		sendAll(onReturn, api, new Object[0]);
+	}
+	public static void sendAll(String api, Object args) {
+		sendAll(null, api, args);
+	}
+	public static void sendAll(String api) {
+		sendAll(null, api, new Object[0]);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public static Function getListener(String id) {
+		return listeners.get(id);
+	}
+	public static boolean hasListener(String id) {
+		return listeners.containsKey(id);
+	}
 }
 
 class Router implements Runnable {
@@ -44,6 +93,7 @@ class Router implements Runnable {
 		this.output = output;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void run() {
 		try {
 			while(true) {
@@ -60,13 +110,18 @@ class Router implements Runnable {
 					String to = String.valueOf(inputObject[3]);
 					String from = String.valueOf(inputObject[4]);
 					System.out.println("from :"+from+" to:"+to+" id:"+id+" api:"+api+" args:"+args);
-					if(inputObject[3] == null) {
-						Object returnValue = EventClient.callAPI(api, args);
-						System.out.println("Debug");
-						Object[] obj = new Object[]{id, true, returnValue};
-						this.output.writeObject(obj);
+					
+					if(inputObject[3] == null) { // if to server
+						if (inputObject[1] instanceof String) { // not return value
+							Object returnValue = EventClient.callAPI(api, args);
+							Object[] obj = new Object[]{id, true, returnValue};
+							this.output.writeObject(obj);
+						}
+						else if((boolean)inputObject[1] == true && EventManager.hasListener(id)) { // is return value
+							EventManager.getListener(id).apply(inputObject[2]);
+						}
 					}
-					else {
+					else { // if to client
 						EventManager.sockets.get(to).send(inputObject);
 					}
 				}
