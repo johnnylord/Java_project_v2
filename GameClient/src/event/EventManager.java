@@ -11,9 +11,9 @@ public class EventManager {
 	public static Map<String, Router> sockets = new ConcurrentHashMap<String, Router>();
 	protected static int lastSocketKey = -1;
 	
-	public static void start() {
+	public static void start(int port) {
 		try {
-			serverSock = new ServerSocket(9487);
+			serverSock = new ServerSocket(port);
 			System.out.print("Server started...");
 			while (true) {
 				Socket cSock = serverSock.accept();
@@ -29,7 +29,9 @@ public class EventManager {
 			}
 		} catch (IOException e) { System.out.println("disconnected..."); }
 	}
-	
+	public static void start() {
+		start(9487);
+	}
 }
 
 class Router implements Runnable {

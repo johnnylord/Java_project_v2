@@ -26,7 +26,7 @@ public class GameClient {
 	public static String SERVER_IP = "192.168.5.141";
 	public static int SERVER_PORT = 6000;
 	public static JFrame frame;
-	public static Socket ClientSock;
+	//public static Socket ClientSock;
 	public static Mixer mixer;
 	public static Clip musicBeforeGame;
 	public static Clip musicForGame;
@@ -99,29 +99,11 @@ public class GameClient {
 		JButton StartButton = new JButton("Start Game");
 		StartButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				try {
-					ClientSock = new Socket(SERVER_IP, SERVER_PORT);
-					// Print the Connection Information
-					if (ClientSock != null) {
-						System.out.println("Clients IP:" + ClientSock.getLocalSocketAddress());
-						System.out.println("Connection established!");
-					} else {
-						System.out.println("Connection Failed!");
-						return;
-					}
 					// Clean the Component in the JFrame's ContentPane
 					frame.getContentPane().removeAll();
 					frame.getContentPane().doLayout();
 					frame.getContentPane().update(frame.getContentPane().getGraphics());
-					GameClient.secondScene();
-					
-				} catch (UnknownHostException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+					GameClient.secondScene();	
 			}
 		});
 
