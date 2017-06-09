@@ -15,6 +15,7 @@ public class GameServer {
 	}
 	
 	public static void match(String key) {
+		
 		String other = queue.poll();
 		if(other == null) queue.add(key);
 		else {
