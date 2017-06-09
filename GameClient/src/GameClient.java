@@ -519,7 +519,10 @@ public class GameClient {
 		System.out.println("Set pair triggered.");
 		GameClient.enemyEventClientKey = key;
 		GameClient.firstSelect = firstSelect;
+<<<<<<< HEAD
+=======
 		//Change to third scene
+>>>>>>> 517ca25bf0bafe5d5ad0022e2520dc9460fc899d
 		GameClient.thirdScene();
 	}
 
