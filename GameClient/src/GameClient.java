@@ -420,7 +420,7 @@ public class GameClient {
 		btn1.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				// Send to tell server group me and other player
-				EventClient.send("GameServer::match($...)", new Object[]{EventClient.getKey(), gKey},null);
+				EventClient.send("GameServer::match($)",EventClient.getKey(),null);
 				reminder.dispose();
 			}
 		});
