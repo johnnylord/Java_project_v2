@@ -15,12 +15,20 @@ public class GameServer {
 	}
 	
 	public static void match(String key) {
+<<<<<<< HEAD
 		
+=======
+		System.out.println("match"+key);
+		System.out.println(queue);
+>>>>>>> 59684c28842e3fcfeeb256d8cf066710aa92cbf8
 		String other = queue.poll();
+		System.out.println(other);
 		if(other == null) queue.add(key);
 		else {
+			System.out.println("Start put");
 			pair.put(key, other);
 			pair.put(other, key);
+			System.out.println("End put");
 			EventManager.send("GameClient::setPair($...)", new Object[]{other, true}, key);
 			EventManager.send("GameClient::setPair($...)", new Object[]{key, false}, other);
 		}
