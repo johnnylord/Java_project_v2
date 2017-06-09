@@ -30,10 +30,10 @@ public class EventClient {
 	protected static String thisKey = null;
 	protected static int lastRequsetKey = -1;
 	
-	public static void initialize() {
+	public static void initialize(String ip, int port) {
 		try {
 			// Connecting to server on port 9487
-			connectionSock = new Socket("127.0.0.1", 9487);
+			connectionSock = new Socket(ip, port);
 			input = new ObjectInputStream(connectionSock.getInputStream());
 			output = new ObjectOutputStream(connectionSock.getOutputStream());
 			// Connection made, sending name
@@ -52,6 +52,12 @@ public class EventClient {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	public static void initialize(String ip) {
+		initialize(ip, 9487);
+	}
+	public static void initialize() {
+		initialize("127.0.0.1");
 	}
 	
 	public static String getKey() {
