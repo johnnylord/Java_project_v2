@@ -2,9 +2,10 @@ package packageData;
 
 import java.awt.*;
 import java.awt.image.*;
+import java.io.*;
 
 
-public class PacketData{
+public class PacketData implements Serializable{
  
 	private UserData userData;	// User Setting
 	private SelectData selectData; //  Hero selecting

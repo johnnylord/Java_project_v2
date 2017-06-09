@@ -561,9 +561,7 @@ public class GameClient {
 		frame.getContentPane().update(frame.getContentPane().getGraphics());
 	}
 
-
 	public static void setPair(String key, Boolean firstSelect) {
-
 		System.out.println("Set pair triggered.");
 		GameClient.enemyEventClientKey = key;
 		GameClient.firstSelect = firstSelect;

@@ -4,10 +4,11 @@ import java.awt.*;
 import java.awt.image.*;
 import javax.imageio.*;
 import javax.swing.*;
+import java.io.*;
 
 //user setting 
 
-public class UserData{ 
+public class UserData implements Serializable{ 
 
 		// User Setting 
 	public ImageIcon photo;
