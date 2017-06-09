@@ -592,9 +592,13 @@ class Receiver implements Runnable {
 				}
 				if (inputObject != null) {
 					String id = String.valueOf(inputObject[0]);
+					String api = String.valueOf(inputObject[1]);
+					Object args = inputObject[2];
+					String to = String.valueOf(inputObject[3]);
+					String from = String.valueOf(inputObject[4]);
+					System.out.println("from :"+from+" to:"+to+" id:"+id+" api:"+api+" args:"+args);
 					if (inputObject[1] instanceof String) {
-						String api = String.valueOf(inputObject[1]);
-						Object returnValue = EventClient.callAPI(api, inputObject[2]);
+						Object returnValue = EventClient.callAPI(api, args);
 						Object[] obj = new Object[]{id, true, returnValue, inputObject[4], inputObject[3]};
 						output.writeObject(obj);
 					}
