@@ -5,6 +5,7 @@ import java.net.*;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
+import java.util.Scanner;
 
 public class EventManager {
 	
@@ -16,9 +17,19 @@ public class EventManager {
 	protected static int lastRequsetKey = -1;
 	
 	public static void start(int port) {
+			
 		try {
-			serverSock = new ServerSocket(port);
-			System.out.print("Server started...");
+			System.out.print("\nEnter serverIP:");
+			Scanner cin = new Scanner(System.in);
+			String serverIP = cin.nextLine(); 
+			InetAddress inetIP = InetAddress.getByName(serverIP);
+			serverSock = new ServerSocket(port,100,inetIP);
+			System.out.println("Server started...");
+			System.out.println("-------------------------");
+			System.out.println("Server information [ hostname / serverIP / port]");
+			System.out.println(serverSock.getLocalSocketAddress());
+			System.out.println("-------------------------");
+
 			while (true) {
 				Socket cSock = serverSock.accept();
 				ObjectOutputStream output = new ObjectOutputStream(cSock.getOutputStream());
@@ -109,9 +120,9 @@ class Router implements Runnable {
 					Object args = inputObject[2];
 					String to = String.valueOf(inputObject[3]);
 					String from = String.valueOf(inputObject[4]);
-					System.out.println("from :"+from+" to:"+to+" id:"+id+" api:"+api+" args:"+args);
-					
+										
 					if(inputObject[3] == null) { // if to server
+						System.out.println("from :"+from+" to:server id:"+id+" api:"+api+" args:"+args);
 						if (inputObject[1] instanceof String) { // not return value
 							Object returnValue = EventClient.callAPI(api, args);
 							Object[] obj = new Object[]{id, true, returnValue};
@@ -121,7 +132,22 @@ class Router implements Runnable {
 							EventManager.getListener(id).apply(inputObject[2]);
 						}
 					}
+					else if(inputObject[3] instanceof Boolean) {
+						if((boolean)inputObject[3] == true) { // if to all
+							System.out.println("from :"+from+" to:all id:"+id+" api:"+api+" args:"+args);
+							for (String key : EventManager.sockets.keySet()) {
+								EventManager.sockets.get(key).send(inputObject);
+							}
+						}
+						else if((boolean)inputObject[3] == false) { // if to others
+							System.out.println("from :"+from+" to:others id:"+id+" api:"+api+" args:"+args);
+							for (String key : EventManager.sockets.keySet()) {
+								if(!key.equals(from)) EventManager.sockets.get(key).send(inputObject);
+							}
+						}
+					}
 					else { // if to client
+						System.out.println("from :"+from+" to:"+to+" id:"+id+" api:"+api+" args:"+args);
 						EventManager.sockets.get(to).send(inputObject);
 					}
 				}
