@@ -36,3 +36,5 @@ WinClient-run:
 clear:
 	rm -rf *.class
 	rm -rf ./event/*.class
+	rm -rf takedPhoto.png
+
