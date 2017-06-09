@@ -29,13 +29,8 @@ public class EventClient {
 	protected static ObjectOutputStream output;
 	protected static String thisKey = null;
 	protected static int lastRequsetKey = -1;
-<<<<<<< HEAD
 	
 	public static void initialize(String ip, int port) {
-=======
-
-	public static void initialize() {
->>>>>>> 2210594f4f07c3ae472f0fb27f4e5723aade0d66
 		try {
 			// Connecting to server on port 9487
 			connectionSock = new Socket(ip, port);
