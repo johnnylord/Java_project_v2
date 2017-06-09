@@ -93,6 +93,50 @@ public class EventClient {
 		send(null, api, new Object[0], to);
 	}
 	
+	@SuppressWarnings("rawtypes")
+	public static void sendAll(Function onReturn, String api, Object args) {
+		if(thisKey == null) initialize();
+		try {
+			String id = String.valueOf(++lastRequsetKey);
+			if(onReturn != null) listeners.put(id, onReturn);
+			// Connection made
+			Object[] obj = new Object[]{id, api, args, true, thisKey};
+			output.writeObject(obj);
+		} catch (Exception e) { e.printStackTrace(); }
+	}
+	@SuppressWarnings("rawtypes")
+	public static void sendAll(Function onReturn, String api) {
+		sendAll(onReturn, api, new Object[0]);
+	}
+	public static void sendAll(String api, Object args) {
+		sendAll(null, api, args);
+	}
+	public static void sendAll(String api) {
+		sendAll(null, api, new Object[0]);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public static void sendOthers(Function onReturn, String api, Object args) {
+		if(thisKey == null) initialize();
+		try {
+			String id = String.valueOf(++lastRequsetKey);
+			if(onReturn != null) listeners.put(id, onReturn);
+			// Connection made
+			Object[] obj = new Object[]{id, api, args, false, thisKey};
+			output.writeObject(obj);
+		} catch (Exception e) { e.printStackTrace(); }
+	}
+	@SuppressWarnings("rawtypes")
+	public static void sendOthers(Function onReturn, String api) {
+		sendOthers(onReturn, api, new Object[0]);
+	}
+	public static void sendOthers(String api, Object args) {
+		sendOthers(null, api, args);
+	}
+	public static void sendOthers(String api) {
+		sendOthers(null, api, new Object[0]);
+	}
+	
 	public static String addReference(Object obj) {
 		String key = obj.getClass().getName() + "@" + Integer.toHexString(obj.hashCode());
 		references.put(key, obj);
