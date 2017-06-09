@@ -19,4 +19,4 @@ public class UserData{
 		this.playerGender = playerGender;
 		this.playerMotto = playerMotto;
 	}
-};
+}
