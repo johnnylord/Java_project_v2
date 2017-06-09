@@ -60,6 +60,7 @@ class Router implements Runnable {
 					System.out.println("from :"+from+" to:"+to+" id:"+id+" api:"+api+" args:"+args);
 					if(inputObject[3] == null) {
 						Object returnValue = EventClient.callAPI(api, args);
+						System.out.println("Debug");
 						Object[] obj = new Object[]{id, true, returnValue};
 						this.output.writeObject(obj);
 					}

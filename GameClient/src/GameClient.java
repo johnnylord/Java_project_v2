@@ -19,6 +19,7 @@ import java.util.Scanner;
 import javax.sound.sampled.*;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import event.*;
 
 public class GameClient {
 

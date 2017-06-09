@@ -1,4 +1,4 @@
-package event;
+import event.*;
 
 public class UnitTest {
 
