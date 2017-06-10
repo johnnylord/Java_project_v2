@@ -46,6 +46,7 @@ public class GameClient {
 	public static WebcamPanel panel = null;
 	public static ImageIcon confirmedToSend = null;
 	public static JLabel FindOpponent = null; 
+	public static JLabel contentPane = null;
 	// Data of opponent
 	public static String opponentID;
 	public static String opponentGender;
@@ -319,7 +320,7 @@ public class GameClient {
 		frame.setResizable(false);
 
 		// Setting Backgroung image
-		JLabel contentPane = new JLabel();
+		contentPane = new JLabel();
 		ImageIcon diceBackground = new ImageIcon("./resource/image/dicebackground.jpg");
 		diceBackground.setImage(diceBackground.getImage().getScaledInstance(1280,960,Image.SCALE_DEFAULT));
 		contentPane.setIcon(diceBackground);
@@ -576,15 +577,15 @@ public class GameClient {
 
 				// set client taked photo
 				confirmedToSend = new ImageIcon("./takedPhoto.png");
-                confirmedPhoto = new JLabel(confirmedIcon);
-                confirmedPhoto.setLocation(50,50);                                                                     
+                confirmedPhoto = new JLabel(confirmedToSend);
+                confirmedPhoto.setLocation(50,50);                                     
                 confirmedPhoto.setSize(760,754);
 
                 // remove useless component
                 webcam.close();
                 frame.getContentPane().remove(panel);
                 frame.getContentPane().remove(showup_default_photo);
-                frame.getContentPane().add(confirmedPhoto);                                                            
+                frame.getContentPane().add(confirmedPhoto);                   
                 frame.getContentPane().doLayout();
                 frame.getContentPane().update(frame.getContentPane().getGraphics());
 			}
@@ -2788,6 +2789,7 @@ public class GameClient {
 			{
 				frame.getContentPane().removeAll();
 				frame.getContentPane().doLayout();
+				frame.setContentPane(contentPane);
 				secondScene();
 
 				//to debug
