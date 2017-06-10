@@ -67,6 +67,7 @@ public class Character_Data {
 	public void set_now_defence(int def){this.now_def = def;}
 	public void reset_now_attack(){this.now_atk = this.attack;}
 	public void reset_now_defence(){this.now_def = this.defence;}
+	public void reset_hp(){this.hp = this.origin_hp;}
 	
 	
 	public int get_skill_num(){return this.skill_num;}

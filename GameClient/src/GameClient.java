@@ -237,6 +237,8 @@ public class GameClient {
 	public static Boolean winner ;
 	
 	// Chat room 
+	//public static JTextField inputField = null;
+	//public static JButton enterButton = null;
 	public static JTextArea chatContentDisplay = null; // Text Show in this area
 	public static String get = null; 
 	public static JFrame chat = null; // chatRoom JFrame 
@@ -1419,6 +1421,17 @@ public class GameClient {
 	//遊戲介面construct
 	public static void windows_construct(){
 		
+		for(int i=0;i<12;i++)
+		{
+			character_data.character[i].reset_hp();
+			character_data.character[i].reset_now_attack();
+			character_data.character[i].reset_now_defence();
+		}
+		for(int i=0;i<6;i++)
+		{
+			character_alive[i]=true;
+		}
+		
 		//角色目前狀況
 		windows_character_button_construct();
 		windows_character_state_construct();
@@ -1911,18 +1924,21 @@ public class GameClient {
 		atk_num.setHorizontalAlignment(SwingConstants.CENTER);
 		atk_num.setFont(new Font("新細明體", Font.PLAIN, 20));
 		atk_num.setBounds(107, 51, 57, 19);
+		atk_num.setText("0");
 		dice_state.add(atk_num);
 		
 		//text def
 		def_num.setHorizontalAlignment(SwingConstants.CENTER);
 		def_num.setFont(new Font("新細明體", Font.PLAIN, 20));
 		def_num.setBounds(280, 51, 57, 19);
+		def_num.setText("2");
 		dice_state.add(def_num);
 		
 		//text spec
 		spec_num.setHorizontalAlignment(SwingConstants.CENTER);
 		spec_num.setFont(new Font("新細明體", Font.PLAIN, 20));
 		spec_num.setBounds(456, 51, 57, 19);
+		spec_num.setText("2");
 		dice_state.add(spec_num);
 	}
 	
@@ -2344,9 +2360,19 @@ public class GameClient {
 							}
 							
 							//BUG點
+							/*Boolean opp_attack_all;
+							EventClient.send(o->opp_attack_all(o), "GameClient::get_attack_all()", enemyEventClientKey);
+							
+							if(opp_attack_all)
+							{
+								null_construct();
+								wait_stage();
+							}
+							else{*/
 								returnToOriginalState();
 								null_construct();
 								wait_stage();
+							//}
 
 							
 							//呼叫對方的 可以再次攻擊 can_attack_and_useSkill()
@@ -2742,6 +2768,14 @@ public class GameClient {
 				frame.getContentPane().removeAll();
 				frame.getContentPane().doLayout();
 				secondScene();
+
+				//to debug
+				/*for(ActionListener remove_enter_listener: enterButton.getActionListeners()){
+                    enterButton.removeActionListener(remove_enter_listener);                                                   
+                }
+                for(KeyListener remove_input_listener: inputField.getKeyListeners()){
+                    inputField.removeKeyListener(remove_input_listener);                                                   
+                }*/
 				chat.dispose();
 				frame.getContentPane().update(frame.getContentPane().getGraphics());	
 			}
@@ -2824,10 +2858,10 @@ public class GameClient {
 			
 	
 			// chat room title
-			JLabel chatRoom = new JLabel("Chat Content");
-			chatRoom.setFont(new Font("DejaVu Sans Light", Font.BOLD | Font.ITALIC, 20));
-			chatRoom.setBounds(113, -18, 175, 70);
-			chat.getContentPane().add(chatRoom);
+			JLabel chatRoo = new JLabel("Chat Content");
+			chatRoo.setFont(new Font("DejaVu Sans Light", Font.BOLD | Font.ITALIC, 20));
+			chatRoo.setBounds(113, -18, 175, 70);
+			chat.getContentPane().add(chatRoo);
 			
 			// text enter field
 			JTextField inputField = new JTextField();
