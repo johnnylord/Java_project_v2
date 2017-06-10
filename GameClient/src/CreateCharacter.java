@@ -6,86 +6,86 @@ public class CreateCharacter {
 	
 	public CreateCharacter()
 	{
-		Character_Data char1 = new Character_Data("¨È·æ¤ı",40,35,30,1,
-				"»}¬ù³Ó§Q¤§¼C¡]§ğÀ»¶¥¬q\n\n\t¯S®í3\t¸Ó¦^¦X¹ï¥şÅé§ğÀ»¤@¦¸",
+		Character_Data char1 = new Character_Data("äºç‘Ÿç‹",40,35,30,1,
+				"èª“ç´„å‹åˆ©ä¹‹åŠï¼ˆæ”»æ“Šéšæ®µ\n\n\tç‰¹æ®Š3\tè©²å›åˆå°å…¨é«”æ”»æ“Šä¸€æ¬¡",
 				"",
 				Character_Data.Atk,Character_Data.no_skill,
 				Character_Data.self,Character_Data.no_skill,
 				3,0);
 		
-		Character_Data char2 = new Character_Data("°ª¤å",40,30,35,1,
-				"¸tªÌªº¼Æ¦r¡]§ğÀ»¶¥¬q\n\n\t¯S®í2\t¼W¥[¦Û¨­§ğÀ»20¡A30%¾÷²v¦A¥[15",
+		Character_Data char2 = new Character_Data("é«˜æ–‡",40,30,35,1,
+				"è–è€…çš„æ•¸å­—ï¼ˆæ”»æ“Šéšæ®µ\n\n\tç‰¹æ®Š2\tå¢åŠ è‡ªèº«æ”»æ“Š20ï¼Œ30%æ©Ÿç‡å†åŠ 15",
 				"",
 				Character_Data.Atk,Character_Data.no_skill,
 				Character_Data.self,Character_Data.no_skill,
 				2,0);
 		
-		Character_Data char3 = new Character_Data("²ö¼w¹p¼w",50,25,30,1,
-				"¤£©¾ªº«H¥õ¡]§ğÀ»¶¥¬q\n\n\t¯S®í3\t­°§C¦Û¨­15¦å¶q\n\t\t¸Ó¦^¦X¼W¥[40§ğÀ»",
+		Character_Data char3 = new Character_Data("è«å¾·é›·å¾·",50,25,30,1,
+				"ä¸å¿ çš„ä¿¡ä»°ï¼ˆæ”»æ“Šéšæ®µ\n\n\tç‰¹æ®Š3\té™ä½è‡ªèº«15è¡€é‡\n\t\tè©²å›åˆå¢åŠ 40æ”»æ“Š",
 				"",
 				Character_Data.Atk,Character_Data.no_skill,
 				Character_Data.self,Character_Data.no_skill,
 				3,0);
 		
-		Character_Data char4 = new Character_Data("Äõ´µ¬¥¯S",45,30,30,1,
-				"´ò¤§ÃM¤h¡]§ğÀ»¶¥¬q\n\n\t¯S®í2\t¼W¥[¦Û¨­§ğÀ»25",
+		Character_Data char4 = new Character_Data("è˜­æ–¯æ´›ç‰¹",45,30,30,1,
+				"æ¹–ä¹‹é¨å£«ï¼ˆæ”»æ“Šéšæ®µ\n\n\tç‰¹æ®Š2\tå¢åŠ è‡ªèº«æ”»æ“Š25",
 				"",
 				Character_Data.Atk,Character_Data.no_skill,
 				Character_Data.self,Character_Data.no_skill,
 				2,0);
 		
-		Character_Data char5 = new Character_Data("¥[¹p´µ",35,30,35,2,
-				"Áô½ª¡]§ğÀ»¶¥¬q\n\n\t¯S®í2\t¦Û¨­¦å¶q´î¤Ö10ÂI¡A§ğÀ»¤O¼W¥[30",
-				"±Ë¤v¬°¤H¡]§ğÀ»¡B¨¾¿m¶¥¬q\n\n\t¯S®í3\t¦Û¨­¦å¶qÂk¹s\n\t\t¦^ÂĞ¤@¦W¶¤¤Í  30¦å",
+		Character_Data char5 = new Character_Data("åŠ é›·æ–¯",35,30,35,2,
+				"éš±è”½ï¼ˆæ”»æ“Šéšæ®µ\n\n\tç‰¹æ®Š2\tè‡ªèº«è¡€é‡æ¸›å°‘10é»ï¼Œæ”»æ“ŠåŠ›å¢åŠ 30",
+				"æ¨å·±ç‚ºäººï¼ˆæ”»æ“Šã€é˜²ç¦¦éšæ®µ\n\n\tç‰¹æ®Š3\tè‡ªèº«è¡€é‡æ­¸é›¶\n\t\tå›è¦†ä¸€åéšŠå‹  30è¡€",
 				Character_Data.Atk,Character_Data.both,
 				Character_Data.self,Character_Data.teammate_1,
 				2,3);
 
-		Character_Data char6 = new Character_Data("¨©­}ºûº¸",35,30,35,2,
-				"¦uÅ@»}¬ù¡]¨¾¿m¶¥¬q\n\n\t¯S®í2\t¼W¥[¥şÅé¨¾¿m10",
-				"»È¦â¤§µÃ¡]§ğÀ»¶¥¬q\n\n\t¯S®í2\t¼W¥[¦Û¨­§ğÀ»20",
+		Character_Data char6 = new Character_Data("è²è¿ªç¶­çˆ¾",35,30,35,2,
+				"å®ˆè­·èª“ç´„ï¼ˆé˜²ç¦¦éšæ®µ\n\n\tç‰¹æ®Š2\tå¢åŠ å…¨é«”é˜²ç¦¦10",
+				"éŠ€è‰²ä¹‹è…•ï¼ˆæ”»æ“Šéšæ®µ\n\n\tç‰¹æ®Š2\tå¢åŠ è‡ªèº«æ”»æ“Š20",
 				Character_Data.def,Character_Data.Atk,
 				Character_Data.teammate_all,Character_Data.self,
 				2,2);
 		
-		Character_Data char7 = new Character_Data("±Z´µ©Z",35,35,30,2,
-				"¶Ç©Óªº¯¬ºÖ¡]§ğÀ»¶¥¬q\n\n\t¯S®í1\t¼W¥[¦Û¨­§ğÀ»10",
-				"´d¶Ëªºµ²§½¡]§ğÀ»¶¥¬q\n\n\t¯S®í3\t¦Û¨­¦å¶qÂk¹s\n\t\t§Ú¤è¥şÅé¦^´_15¦å",
+		Character_Data char7 = new Character_Data("å´”æ–¯å¦",35,35,30,2,
+				"å‚³æ‰¿çš„ç¥ç¦ï¼ˆæ”»æ“Šéšæ®µ\n\n\tç‰¹æ®Š1\tå¢åŠ è‡ªèº«æ”»æ“Š10",
+				"æ‚²å‚·çš„çµå±€ï¼ˆæ”»æ“Šéšæ®µ\n\n\tç‰¹æ®Š3\tè‡ªèº«è¡€é‡æ­¸é›¶\n\t\tæˆ‘æ–¹å…¨é«”å›å¾©15è¡€",
 				Character_Data.Atk,Character_Data.Atk,
 				Character_Data.self,Character_Data.self,
 				1,3);
 		
-		Character_Data char8 = new Character_Data("¼¯®Ú°Çµá",30,30,40,2,
-				"ªvÂ¡¤§Án¡]¨¾¿m¡B§ğÀ»¶¥¬q\n\n\t¯S®í2\t¦^´_³æ¤@¶¤¤Í10¦å¶q",
-				"ÅÜ¤Æ¡]§ğÀ»¶¥¬q\n\n\t¯S®í3\t¤@¦^¦X¤º±N¦Û¨­§ğÀ»¤O¼Æ­È\n\t\tÅÜ¬°¤v¤è¨ä¤¤¤@¤H",
+		Character_Data char8 = new Character_Data("æ‘©æ ¹å‹’è²",30,30,40,2,
+				"æ²»ç™’ä¹‹è²ï¼ˆé˜²ç¦¦ã€æ”»æ“Šéšæ®µ\n\n\tç‰¹æ®Š2\tå›å¾©å–®ä¸€éšŠå‹10è¡€é‡",
+				"è®ŠåŒ–ï¼ˆæ”»æ“Šéšæ®µ\n\n\tç‰¹æ®Š3\tä¸€å›åˆå…§å°‡è‡ªèº«æ”»æ“ŠåŠ›æ•¸å€¼\n\t\tè®Šç‚ºå·±æ–¹å…¶ä¸­ä¸€äºº",
 				Character_Data.both,Character_Data.Atk,
 				Character_Data.teammate_1,Character_Data.teammate_1,
 				2,3);
 		
-		Character_Data char9 = new Character_Data("¥[©Ô«¢¼w",30,40,30,2,
-				"¸tªM¯¬ºÖ¡]¨¾¿m¶¥¬q\n\n\t¯S®í1\t¦Û¨­¸Ó¦^¦X¼W¥[10¨¾¿m",
-				"©¾­sÃM¤h¡]¨¾¿m¶¥¬q\n\n\t¯S®í3\t¨¾¿m¼W¥[5¡A±N¼Ä¤è§ğÀ»Âà²¾¦Ü¦Û¨­",
+		Character_Data char9 = new Character_Data("åŠ æ‹‰å“ˆå¾·",30,40,30,2,
+				"è–æ¯ç¥ç¦ï¼ˆé˜²ç¦¦éšæ®µ\n\n\tç‰¹æ®Š1\tè‡ªèº«è©²å›åˆå¢åŠ 10é˜²ç¦¦",
+				"å¿ è²é¨å£«ï¼ˆé˜²ç¦¦éšæ®µ\n\n\tç‰¹æ®Š3\té˜²ç¦¦å¢åŠ 5ï¼Œå°‡æ•µæ–¹æ”»æ“Šè½‰ç§»è‡³è‡ªèº«",
 				Character_Data.def,Character_Data.def,
 				Character_Data.self,Character_Data.self,
 				1,3);
 		
-		Character_Data char10 = new Character_Data("¬Ä¦è¥Ë",30,35,35,2,
-				"°í¼İºë¯«¡]¨¾¿m¶¥¬q\n\n\t¯S®í2\t´£¤É¤v¤è¤@¤H¨¾¿m15",
-				"¸tªM¦uÅ@ªÌ¡]§ğÀ»¡B¨¾¿m¶¥¬q\n\n\t¯S®í3\tÀò±o§ğÀ»/¨¾¿m»ë  ¦U2­Ó",
+		Character_Data char10 = new Character_Data("ç€è¥¿ç“¦",30,35,35,2,
+				"å …æ¯…ç²¾ç¥ï¼ˆé˜²ç¦¦éšæ®µ\n\n\tç‰¹æ®Š2\tæå‡å·±æ–¹ä¸€äººé˜²ç¦¦15",
+				"è–æ¯å®ˆè­·è€…ï¼ˆæ”»æ“Šã€é˜²ç¦¦éšæ®µ\n\n\tç‰¹æ®Š3\tç²å¾—æ”»æ“Š/é˜²ç¦¦éª°  å„2å€‹",
 				Character_Data.def,Character_Data.both,
 				Character_Data.teammate_1,Character_Data.self,
 				2,3);
 		
-		Character_Data char11 = new Character_Data("±öªL",20,35,45,2,
-				"¥Ã»·ªºªü¥Ë¶©¡]§ğÀ»¡B¨¾¿m¶¥¬q\n\n\t¯S®í3   «ü©w¤@¤H¦^´_15¦å",
-				"¹ÚÅ]¤§¤l¡]§ğÀ»¶¥¬q\n\n\t¯S®í2\t¼W¥[¤@¤H§ğÀ»20",
+		Character_Data char11 = new Character_Data("æ¢…æ—",20,35,45,2,
+				"æ°¸é çš„é˜¿ç“¦éš†ï¼ˆæ”»æ“Šã€é˜²ç¦¦éšæ®µ\n\n\tç‰¹æ®Š3   æŒ‡å®šä¸€äººå›å¾©15è¡€",
+				"å¤¢é­”ä¹‹å­ï¼ˆæ”»æ“Šéšæ®µ\n\n\tç‰¹æ®Š2\tå¢åŠ ä¸€äººæ”»æ“Š20",
 				Character_Data.both,Character_Data.Atk,
 				Character_Data.teammate_1,Character_Data.teammate_1,
 				3,2);
 		
-		Character_Data char12 = new Character_Data("»Ó©gºû¶®",20,40,40,2,
-				"¨ü¶A©Gªº·R±¡¡]¨¾¿m¶¥¬q\n	\n\t¯S®í2\t«ü©w¤@¤H¨¾¿m¼W¥[30\n\t\t¦Û¨­¦å¶q´î10",
-				"¤`°ê¤§©d¡]§ğÀ»¶¥¬q\n\n\t¯S®í3\t«ü©w¤@¤H§ğÀ»¼W¥[40\n\t\t«ü©wªº¤H¦å¶q´î20",
+		Character_Data char12 = new Character_Data("é–¨å¦®ç¶­é›…",20,40,40,2,
+				"å—è©›å’’çš„æ„›æƒ…ï¼ˆé˜²ç¦¦éšæ®µ\n	\n\tç‰¹æ®Š2\tæŒ‡å®šä¸€äººé˜²ç¦¦å¢åŠ 30\n\t\tè‡ªèº«è¡€é‡æ¸›10",
+				"äº¡åœ‹ä¹‹å¦»ï¼ˆæ”»æ“Šéšæ®µ\n\n\tç‰¹æ®Š3\tæŒ‡å®šä¸€äººæ”»æ“Šå¢åŠ 40\n\t\tæŒ‡å®šçš„äººè¡€é‡æ¸›20",
 				Character_Data.def,Character_Data.Atk,
 				Character_Data.teammate_1,Character_Data.teammate_1,
 				2,3);
