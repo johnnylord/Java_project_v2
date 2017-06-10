@@ -9,7 +9,7 @@
 	
 	<path id="build.path">
 		<fileset dir="${lib.dir}">
-				<include name="**/*.jar"/>
+			<include name="**/*.jar"/>
 		</fileset>
 	</path>
 	
@@ -20,9 +20,6 @@
 			<fileset dir="${bin.dir}"/>
 		</copy>
 		<mkdir dir="${build.dir}"/>
-		<copy todir="${build.dir}/resource">
-			<fileset dir="${resource.dir}"/>
-		</copy>
 	</target>
 	
 	<target name="compile" depends="prepare">
@@ -59,7 +56,7 @@
 		<jar destfile="${build.dir}/client.jar" basedir="${bin.dir}">
 			<manifest>
 				<attribute name="Main-Class" value="GameClient"/>
-				<attribute name="Class-Path" value="${mf.classpath}"/>
+				<attribute name="Class-Path" value="${mf.classpath} ${resource.dir}"/>
 			</manifest>
 		</jar>
 	</target>
