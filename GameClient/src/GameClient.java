@@ -1957,14 +1957,23 @@ public class GameClient {
 							
 							/*此處呼叫func 直接改變數值 (GameData packet) receive_attackpack_and_set_character_state*/
 							/*********************傳送封包告知對方所受傷害*/
+							System.out.println("up");
 							GameData packet = new GameData(GameData.attack_pack,reverse(attacker_judge),reverse(attack_judge));
+							System.out.println("down");
+							System.out.println("attacke+++++++++++++++++ : " + reverse(attacker_judge));
+							System.out.println("attack++++++++++++++++++ : " + reverse(attack_judge));
 							for(int i=0;i<6;i++)
 							{
 								int index = reverse(i);	
+								System.out.println(index);
 								packet.character[index].set_now_attack(character_data.character[picked[i]].get_now_attack());
+								System.out.println("1 OK");
 								packet.character[index].set_now_defence(character_data.character[picked[i]].get_now_defence());
+								System.out.println("2 OK");
 								packet.character[index].set_hp(character_data.character[picked[i]].get_hp());
-								packet.character[index].set_alive(character_alive[i]);
+								System.out.println("3 OK");
+								packet.character[index].set_alive(character_alive[i]);	
+								System.out.println("4 OK");
 							}
 							EventClient.send("GameClient::receive_attackpack_and_set_character_state($)",packet,enemyEventClientKey);
 							/************************************************************/	
@@ -1988,6 +1997,7 @@ public class GameClient {
 					{
 						JOptionPane.showMessageDialog(null, "輸入錯誤");
 						def_dise_enter.setText("");
+						ex.printStackTrace();
 					}
 				}
 			});
