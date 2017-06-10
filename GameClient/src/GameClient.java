@@ -952,7 +952,12 @@ public class GameClient {
 		// and close the bgmusic
 		//	get the Clip Dataline Connected to the mixer
 		try{
-		musicBeforeGame.stop(); 
+		if(musicBeforeGame.isActive())
+			musicBeforeGame.stop();
+
+		if(musicForGame.isActive())
+			musicForGame.stop();
+
 		DataLine.Info dataInfo = new DataLine.Info(Clip.class, null);
 		musicForGame = (Clip) mixer.getLine(dataInfo);
 		
