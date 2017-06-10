@@ -1895,7 +1895,7 @@ public class GameClient {
 							
 							//***********************************************************
 							
-							int damage = character_data.character[picked[attacker_test]].get_attack() - 
+							int damage = character_data.character[picked[attacker_test]].get_now_attack() - 
 									(character_data.character[picked[attack_test]].get_now_defence() + use_dise*10);						
 							if(damage>0)
 							{
@@ -1907,6 +1907,7 @@ public class GameClient {
 							}				
 							
 							returnToOriginalState();
+							null_construct();
 							wait_stage();
 							
 							//呼叫對方的 可以再次攻擊 can_attack_and_useSkill()
@@ -1924,6 +1925,7 @@ public class GameClient {
 								packet.character[index].set_alive(character_alive[i]);
 							}
 							EventClient.send("GameClient::receive_attackpack_and_set_character_state($)",packet,enemyEventClientKey);
+							
 							/************************************************************/
 							
 						}	
