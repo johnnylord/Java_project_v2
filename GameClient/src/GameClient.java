@@ -17,6 +17,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.*;
+import javax.swing.UIManager.*;
+import javax.swing.UIManager.LookAndFeelInfo;
 
 public class GameClient {
 
@@ -217,6 +219,12 @@ public class GameClient {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+						if ("Nimbus".equals(info.getName())) {
+						    UIManager.setLookAndFeel(info.getClassName());
+						    break;
+						}
+					}
 					GameClient window = new GameClient();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
@@ -330,15 +338,14 @@ public class GameClient {
 		JTextField PlayerGender = new JTextField("Enter Player Gender here.", 30);
 		PlayerGender.setFont(new Font("Liberation Mono", Font.BOLD | Font.ITALIC, 24));
 		PlayerGender.setBackground(Color.PINK);
-		PlayerGender.setLocation(865,295); 
+		PlayerGender.setLocation(865,230); 
 		PlayerGender.setSize(365,80);
-		
-		// Text Field for client to enter "PlayerMotto" 
-		JTextField PlayerMotto = new JTextField("Enter Player Motto here.", 30);
-		PlayerMotto.setFont(new Font("Liberation Mono", Font.BOLD | Font.ITALIC, 24));
-		PlayerMotto.setBackground(Color.PINK);
-		PlayerMotto.setLocation(865,540); 
-		PlayerMotto.setSize(365,80);
+
+		ImageIcon diceShow = new ImageIcon("../resource/image/dice.gif");
+		diceShow.setImage(diceShow.getImage().getScaledInstance(270,224,Image.SCALE_DEFAULT));
+		Icon diceIcon = diceShow;
+		JLabel diceGif = new JLabel(diceIcon);
+		diceGif.setBounds(919, 398, 270, 224);
 
 		// Button for client to confirm photo
 		JButton ConfirmPicture = new JButton("Confirm");
@@ -509,10 +516,9 @@ public class GameClient {
 		FindOpponent.addMouseListener(new MouseListener(){
 			//popUp reminder
 			public void mouseClicked(MouseEvent e){
-				System.out.println("Clicked...");
 				PlayerID_String = PlayerID.getText();
 				PlayerGender_String = PlayerGender.getText();
-				String PlayerMotto_String = PlayerMotto.getText();
+				System.out.println("Clicked...");
 				GameClient.scene2Reminder();
 			}
 			public void mouseEntered(MouseEvent e){
@@ -560,11 +566,11 @@ public class GameClient {
 		frame.getContentPane().add(panel);
 		frame.getContentPane().add(PlayerID);
 		frame.getContentPane().add(PlayerGender);
-		frame.getContentPane().add(PlayerMotto);
 		frame.getContentPane().add(ConfirmPicture);
 		frame.getContentPane().add(TakePicture);
 		frame.getContentPane().add(Default);
 		frame.getContentPane().add(FindOpponent);
+		frame.getContentPane().add(diceGif);
 		frame.getContentPane().doLayout();
 		frame.getContentPane().update(frame.getContentPane().getGraphics());
 	}
@@ -1984,14 +1990,23 @@ public class GameClient {
 							
 							/*此處呼叫func 直接改變數值 (GameData packet) receive_attackpack_and_set_character_state*/
 							/*********************傳送封包告知對方所受傷害*/
+							System.out.println("up");
 							GameData packet = new GameData(GameData.attack_pack,reverse(attacker_judge),reverse(attack_judge));
+							System.out.println("down");
+							System.out.println("attacke+++++++++++++++++ : " + reverse(attacker_judge));
+							System.out.println("attack++++++++++++++++++ : " + reverse(attack_judge));
 							for(int i=0;i<6;i++)
 							{
 								int index = reverse(i);	
+								System.out.println(index);
 								packet.character[index].set_now_attack(character_data.character[picked[i]].get_now_attack());
+								System.out.println("1 OK");
 								packet.character[index].set_now_defence(character_data.character[picked[i]].get_now_defence());
+								System.out.println("2 OK");
 								packet.character[index].set_hp(character_data.character[picked[i]].get_hp());
-								packet.character[index].set_alive(character_alive[i]);
+								System.out.println("3 OK");
+								packet.character[index].set_alive(character_alive[i]);	
+								System.out.println("4 OK");
 							}
 							EventClient.send("GameClient::receive_attackpack_and_set_character_state($)",packet,enemyEventClientKey);
 							update();
@@ -2017,6 +2032,7 @@ public class GameClient {
 					{
 						JOptionPane.showMessageDialog(null, "輸入錯誤");
 						def_dise_enter.setText("");
+						ex.printStackTrace();
 					}
 				}
 			});
@@ -2219,34 +2235,34 @@ public class GameClient {
 			
 			// local info
 			JLabel myPhoto = new JLabel(display);
-			myPhoto.setBounds(353, 301, 185, 186);
+			myPhoto.setBounds(355, 301, 185, 186);
 			chat.getContentPane().add(myPhoto);
 			
 			JLabel myGender = new JLabel(PlayerGender_String);
 			myGender.setFont(new Font("DejaVu Sans Condensed", Font.BOLD, 18));
-			myGender.setBounds(363, 463, 175, 70);
+			myGender.setBounds(355, 463, 175, 70);
 			chat.getContentPane().add(myGender);
 
 			JLabel playerID_Label = new JLabel("You: " + PlayerID_String);
-			playerID_Label.setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 18));
-			playerID_Label.setBounds(18, 500, 270, 37);
+			playerID_Label.setFont(new Font("DejaVu Sans", Font.BOLD, 18));
+			playerID_Label.setBounds(355, 500, 270, 37);
 			chat.getContentPane().add(playerID_Label);
 
 			// opponent info
 			opponentPhoto.setImage(opponentPhoto.getImage().getScaledInstance(185,186,Image.SCALE_DEFAULT));
 			Icon enemyIcon = opponentPhoto;
 			JLabel enemyPhoto = new JLabel(enemyIcon);
-			enemyPhoto.setBounds(353, 34, 185, 186);
+			enemyPhoto.setBounds(355, 34, 185, 186);
 			chat.getContentPane().add(enemyPhoto);
 			
 			JLabel enemyGender = new JLabel(opponentGender);
 			enemyGender.setFont(new Font("DejaVu Sans Condensed", Font.BOLD, 18));
-			enemyGender.setBounds(363, 199, 185, 77);
+			enemyGender.setBounds(355, 199, 185, 77);
 			chat.getContentPane().add(enemyGender);
 
 			JLabel opponentID_Label = new JLabel("Eneny: " + opponentID);
-			opponentID_Label.setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 18));
-			opponentID_Label.setBounds(18, 463, 270, 37);
+			opponentID_Label.setFont(new Font("DejaVu Sans", Font.BOLD, 18));
+			opponentID_Label.setBounds(355, 242, 270, 37);
 			chat.getContentPane().add(opponentID_Label);
 			
 	
@@ -2267,7 +2283,7 @@ public class GameClient {
 			chatContentDisplay = new JTextArea("",339,418);
 			chatContentDisplay.setFont(new Font("DejaVu Sans", Font.PLAIN, 16));
 			JScrollPane scrollablePane = new JScrollPane(chatContentDisplay);
-			scrollablePane.setBounds(12, 34, 339, 418);
+			scrollablePane.setBounds(12, 34, 329, 490);
 			chatContentDisplay.setEditable(false);
 			chatContentDisplay.setLineWrap(true);
 			chatContentDisplay.setRows(10); //
@@ -2275,10 +2291,10 @@ public class GameClient {
 			scrollablePane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 			chat.getContentPane().add(scrollablePane);
 			
-
+			// button which confirm to send msg 
 			JButton enterButton = new JButton("Enter");
 			enterButton.setFont(new Font("Dialog", Font.BOLD, 14));
-			enterButton.setBounds(353, 544, 124, 36);
+			enterButton.setBounds(340, 544, 124, 36);
 			chat.getContentPane().add(enterButton);
 			
 			enterButton.addActionListener(new ActionListener() {
@@ -2293,6 +2309,7 @@ public class GameClient {
 				}
 			});
 			
+			// KeyListener for 'Enter' key to send msg
 			inputField.addKeyListener(new KeyListener(){
 				public void keyPressed(KeyEvent event){
 					if(event.getKeyCode() == KeyEvent.VK_ENTER)
