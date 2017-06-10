@@ -245,7 +245,7 @@ public class GameClient {
 		//get the Clip Dataline Connected to the mixer
 		DataLine.Info dataInfo = new DataLine.Info(Clip.class, null);
 		musicBeforeGame = (Clip) mixer.getLine(dataInfo);
-		musicForGame = (Clip) mixer.
+		//musicForGame = (Clip) mixer
 
 		// the input Source: bgMusic
 		// Through the Dataline, let bgMusic data go into mixer and play.
@@ -753,13 +753,11 @@ public class GameClient {
 	public static void fourthScene(){
 		// refresh the frame
 		frame.getContentPane().removeAll();
-		//frame.getContentPane().doLayout();
-		//frame.getContentPane().update(frame.getContentPane().getGraphics());
-		
-		
+		JLabel gameBg = new JLabel();
+		gameBg.setIcon(new ImageIcon("../resource/image/gamebg"+(int)(Math.random()*3+1)+".jpg"));
+		frame.setContentPane(gameBg);
 		phase_stage = (firstSelect)?atk_stage:def_stage;
-		System.out.println("Your phase is : " + phase_stage);
-		
+		System.out.println("Your phase is : " + phase_stage);		
 		windows_construct();
 		null_construct();
 		frame.getContentPane().update(frame.getContentPane().getGraphics());
