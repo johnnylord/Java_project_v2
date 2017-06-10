@@ -229,7 +229,7 @@ public class GameClient {
 	public static int attack_test = 0;
 	
 	
-	public static boolean attack_all = false;
+	public static Boolean attack_all = false;
 	public static int attack_all_count = 0;
 
 
@@ -1375,6 +1375,8 @@ public class GameClient {
 		windows_stage_select(); //判斷攻擊、防禦階段 可使用按鈕有差別
 		stage_listener();
 		
+		character_state_mode = 8;
+		
 		//右邊骰子介面
 		windows_dice_state_construct();
 		//右邊角色介面(還有一個獨立的FUNC 來建構
@@ -2252,12 +2254,12 @@ public class GameClient {
 						if(use_dise> Integer.parseInt(def_num.getText()) || use_dise<0)
 						{
 							JOptionPane.showMessageDialog(null, "骰子數不足");
-							def_dise_enter.setText("");
+							def_dise_enter.setText("0");
 						}
 						else
 						{
 							def_num.setText(Integer.toString((Integer.valueOf(def_num.getText()) - use_dise)));
-							def_dise_enter.setText("");
+							def_dise_enter.setText("0");
 							
 							//***********************************************************
 							
@@ -2284,9 +2286,11 @@ public class GameClient {
 								//********************
 							}
 							
-							returnToOriginalState();
-							null_construct();
-							wait_stage();
+							//BUG點
+								returnToOriginalState();
+								null_construct();
+								wait_stage();
+
 							
 							//呼叫對方的 可以再次攻擊 can_attack_and_useSkill()
 							EventClient.send("GameClient::can_attack_and_useSkill()",enemyEventClientKey);
@@ -2310,7 +2314,7 @@ public class GameClient {
 					}catch(Exception ex)
 					{
 						JOptionPane.showMessageDialog(null, "輸入錯誤");
-						def_dise_enter.setText("");
+						def_dise_enter.setText("0");
 					}
 				}
 			});
@@ -2347,17 +2351,17 @@ public class GameClient {
 						if(use_dise> Integer.parseInt(atk_num.getText()) || use_dise<0)
 						{
 							JOptionPane.showMessageDialog(null, "骰子數不足");
-							atk_dise_enter.setText("");
+							atk_dise_enter.setText("1");
 						}
 						else if(use_dise==0)
 						{
 							JOptionPane.showMessageDialog(null, "至少需輸入1以上");
-							atk_dise_enter.setText("");
+							atk_dise_enter.setText("1");
 						}
 						else
 						{
 							atk_num.setText(Integer.toString((Integer.valueOf(atk_num.getText()) - use_dise)));
-							atk_dise_enter.setText("");
+							atk_dise_enter.setText("1");
 							
 								
 							//***********************************************************
@@ -2375,29 +2379,30 @@ public class GameClient {
 							//********************
 							*/
 							
-							/*此處呼叫func 直接改變數值 (GameData packet) receive_attackpack_and_set_character_state*/
-							/*********************傳送封包告知對方所受傷害*/
-							GameData packet = new GameData(GameData.attack_pack,reverse(attacker_judge),reverse(attack_judge));
-							for(int i=0;i<6;i++)
-							{
-								int index = reverse(i);	
-								packet.character[index].set_now_attack(character_data.character[picked[i]].get_now_attack());
-								packet.character[index].set_now_defence(character_data.character[picked[i]].get_now_defence());
-								packet.character[index].set_hp(character_data.character[picked[i]].get_hp());
-								packet.character[index].set_alive(character_alive[i]);	
-							}
-							EventClient.send("GameClient::receive_attackpack_and_set_character_state($)",packet,enemyEventClientKey);
-							update();
-							
-							/************************************************************/	
+							/*此處呼叫func 直接改變數值 (GameData packet) receive_attackpack_and_set_character_state*/	
 							
 							
 							if(attack_all)
 							{
 								if(character_alive[1])
 								{	
-									packet.set_attack(reverse(1));
+									/*********************傳送封包告知對方所受傷害*/
+									GameData packet = new GameData(GameData.attack_pack,reverse(attacker_judge),reverse(1));
+									for(int i=0;i<6;i++)
+									{
+										int index = reverse(i);	
+										packet.character[index].set_now_attack(character_data.character[picked[i]].get_now_attack());
+										packet.character[index].set_now_defence(character_data.character[picked[i]].get_now_defence());
+										packet.character[index].set_hp(character_data.character[picked[i]].get_hp());
+										packet.character[index].set_alive(character_alive[i]);	
+									}
+									EventClient.send("GameClient::receive_attackpack_and_set_character_state($)",packet,enemyEventClientKey);
+									update();
+							
+									/************************************************************/
 									EventClient.send("GameClient::check_use_skill_construct($)",packet,enemyEventClientKey);
+									
+									
 									/*呼叫敵方的防禦CONSTRUCT  check_use_skill_construct*/
 									//********************
 									String msg = character_english_name[picked[attacker_judge]]+" Attack, Attack is "+ character_data.character[picked[attacker_judge]].get_now_attack();
@@ -2411,6 +2416,20 @@ public class GameClient {
 							}
 							else
 							{
+								/*********************傳送封包告知對方所受傷害*/
+								GameData packet = new GameData(GameData.attack_pack,reverse(attacker_judge),reverse(attack_judge));
+								for(int i=0;i<6;i++)
+								{
+									int index = reverse(i);	
+									packet.character[index].set_now_attack(character_data.character[picked[i]].get_now_attack());
+									packet.character[index].set_now_defence(character_data.character[picked[i]].get_now_defence());
+									packet.character[index].set_hp(character_data.character[picked[i]].get_hp());
+									packet.character[index].set_alive(character_alive[i]);	
+								}
+								EventClient.send("GameClient::receive_attackpack_and_set_character_state($)",packet,enemyEventClientKey);
+								update();
+								
+								/************************************************************/
 								/*呼叫敵方的防禦CONSTRUCT  check_use_skill_construct*/
 								EventClient.send("GameClient::check_use_skill_construct($)",packet,enemyEventClientKey);
 								
@@ -2427,7 +2446,7 @@ public class GameClient {
 					}catch(Exception ex)
 					{
 						JOptionPane.showMessageDialog(null, "輸入錯誤");
-						def_dise_enter.setText("");
+						def_dise_enter.setText("1");
 						ex.printStackTrace();
 					}
 				}
@@ -2484,6 +2503,10 @@ public class GameClient {
 			thorw_dise.add(text_this_stage);
 		}
 
+		public static Boolean get_attack_all()
+		{
+			return attack_all;
+		}
 		
 		public static void my_ready_turn(){
 			character_state_mode = 7;
@@ -2651,8 +2674,8 @@ public class GameClient {
 			
 			/*通知SERVER*/
 			
-			String msg = (win)? "你贏了!":"你輸了";
-			msg = msg+ "\n是否重完?";
+			String msg = (win)? "YOU WIN!":"YOU LOSE";
+			msg = msg+ "\nRESTAT?";
 			
 			int restart = JOptionPane.showConfirmDialog(null, msg,"",JOptionPane.YES_NO_OPTION);
 			if(restart == 0)
@@ -2670,7 +2693,7 @@ public class GameClient {
 		
 		
 		public static void displayFightMsg(String msg,String id){
-            fightMsgDisplay.append(id+"\n\t"+msg + "\n");
+            fightMsgDisplay.append(id+"\n  "+msg + "\n");
         }    
 
         public static void display_fight_construct(){
