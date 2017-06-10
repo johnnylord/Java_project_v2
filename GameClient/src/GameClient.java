@@ -1,6 +1,6 @@
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
-import ch.qos.logback.classic.joran.action.InsertFromJNDIAction;
+//import ch.qos.logback.classic.joran.action.InsertFromJNDIAction;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.*;
@@ -20,7 +20,7 @@ import org.json.JSONObject;
 
 public class GameClient {
 
-	public static String SERVERIP = "192.168.5.40";
+	public static String SERVERIP = "127.0.0.1";
 	public static int PORT = 9487;
 	public static JFrame frame;
 	public static String gKey; // my GaneClient key
@@ -273,19 +273,19 @@ public class GameClient {
 				// set 'Default' button's color
 				Default.setBackground(Color.RED);
 				Default.setForeground(Color.BLACK);
-				
+
 				// remove 'Default' button's action listener
 				for(ActionListener remove_default_listener : Default.getActionListeners()) {
 					Default.removeActionListener(remove_default_listener);
 				}
-				
+
 				// take pictures
 				BufferedImage takedPhoto = webcam.getImage();
-			    BufferedImage bi = new BufferedImage(760, 754,BufferedImage.TRANSLUCENT);
-			    Graphics2D g2d = bi.createGraphics();
-			    g2d.addRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY));
-			    g2d.drawImage(takedPhoto, 0, 0, 760, 754, null);
-			    g2d.dispose();
+				BufferedImage bi = new BufferedImage(760, 754,BufferedImage.TRANSLUCENT);
+				Graphics2D g2d = bi.createGraphics();
+				g2d.addRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY));
+				g2d.drawImage(takedPhoto, 0, 0, 760, 754, null);
+				g2d.dispose();
 				try
 				{
 					ImageIO.write(bi, "PNG", new File("takedPhoto.png"));
@@ -297,20 +297,20 @@ public class GameClient {
 				webcam_check = 1;
 			}
 		});
-		
-		
+
+
 		Default.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				// set 'take picture' button's action listener
 				TakePicture.setBackground(Color.RED);
 				TakePicture.setForeground(Color.BLACK);
-				
+
 				// remove 'take picture' button's action listener
 				for(ActionListener remove_take_listener : TakePicture.getActionListeners()) {
 					TakePicture.removeActionListener(remove_take_listener);
 				}
-				
+
 				// show the default photo that can be choosed
 				frame.getContentPane().remove(panel);
 				frame.getContentPane().add(showup_default_photo);
