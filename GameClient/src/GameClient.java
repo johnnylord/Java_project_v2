@@ -2253,12 +2253,12 @@ public class GameClient {
 						if(use_dise> Integer.parseInt(def_num.getText()) || use_dise<0)
 						{
 							JOptionPane.showMessageDialog(null, "骰子數不足");
-							def_dise_enter.setText("");
+							def_dise_enter.setText("0");
 						}
 						else
 						{
 							def_num.setText(Integer.toString((Integer.valueOf(def_num.getText()) - use_dise)));
-							def_dise_enter.setText("");
+							def_dise_enter.setText("0");
 							
 							//***********************************************************
 							
@@ -2313,7 +2313,7 @@ public class GameClient {
 					}catch(Exception ex)
 					{
 						JOptionPane.showMessageDialog(null, "輸入錯誤");
-						def_dise_enter.setText("");
+						def_dise_enter.setText("0");
 					}
 				}
 			});
@@ -2350,17 +2350,17 @@ public class GameClient {
 						if(use_dise> Integer.parseInt(atk_num.getText()) || use_dise<0)
 						{
 							JOptionPane.showMessageDialog(null, "骰子數不足");
-							atk_dise_enter.setText("");
+							atk_dise_enter.setText("1");
 						}
 						else if(use_dise==0)
 						{
 							JOptionPane.showMessageDialog(null, "至少需輸入1以上");
-							atk_dise_enter.setText("");
+							atk_dise_enter.setText("1");
 						}
 						else
 						{
 							atk_num.setText(Integer.toString((Integer.valueOf(atk_num.getText()) - use_dise)));
-							atk_dise_enter.setText("");
+							atk_dise_enter.setText("1");
 							
 								
 							//***********************************************************
@@ -2378,29 +2378,30 @@ public class GameClient {
 							//********************
 							*/
 							
-							/*此處呼叫func 直接改變數值 (GameData packet) receive_attackpack_and_set_character_state*/
-							/*********************傳送封包告知對方所受傷害*/
-							GameData packet = new GameData(GameData.attack_pack,reverse(attacker_judge),reverse(attack_judge));
-							for(int i=0;i<6;i++)
-							{
-								int index = reverse(i);	
-								packet.character[index].set_now_attack(character_data.character[picked[i]].get_now_attack());
-								packet.character[index].set_now_defence(character_data.character[picked[i]].get_now_defence());
-								packet.character[index].set_hp(character_data.character[picked[i]].get_hp());
-								packet.character[index].set_alive(character_alive[i]);	
-							}
-							EventClient.send("GameClient::receive_attackpack_and_set_character_state($)",packet,enemyEventClientKey);
-							update();
-							
-							/************************************************************/	
+							/*此處呼叫func 直接改變數值 (GameData packet) receive_attackpack_and_set_character_state*/	
 							
 							
 							if(attack_all)
 							{
 								if(character_alive[1])
 								{	
-									packet.set_attack(reverse(1));
+									/*********************傳送封包告知對方所受傷害*/
+									GameData packet = new GameData(GameData.attack_pack,reverse(attacker_judge),reverse(1));
+									for(int i=0;i<6;i++)
+									{
+										int index = reverse(i);	
+										packet.character[index].set_now_attack(character_data.character[picked[i]].get_now_attack());
+										packet.character[index].set_now_defence(character_data.character[picked[i]].get_now_defence());
+										packet.character[index].set_hp(character_data.character[picked[i]].get_hp());
+										packet.character[index].set_alive(character_alive[i]);	
+									}
+									EventClient.send("GameClient::receive_attackpack_and_set_character_state($)",packet,enemyEventClientKey);
+									update();
+							
+									/************************************************************/
 									EventClient.send("GameClient::check_use_skill_construct($)",packet,enemyEventClientKey);
+									
+									
 									/*呼叫敵方的防禦CONSTRUCT  check_use_skill_construct*/
 									//********************
 									String msg = character_english_name[picked[attacker_judge]]+" Attack, Attack is "+ character_data.character[picked[attacker_judge]].get_now_attack();
@@ -2414,6 +2415,20 @@ public class GameClient {
 							}
 							else
 							{
+								/*********************傳送封包告知對方所受傷害*/
+								GameData packet = new GameData(GameData.attack_pack,reverse(attacker_judge),reverse(attack_judge));
+								for(int i=0;i<6;i++)
+								{
+									int index = reverse(i);	
+									packet.character[index].set_now_attack(character_data.character[picked[i]].get_now_attack());
+									packet.character[index].set_now_defence(character_data.character[picked[i]].get_now_defence());
+									packet.character[index].set_hp(character_data.character[picked[i]].get_hp());
+									packet.character[index].set_alive(character_alive[i]);	
+								}
+								EventClient.send("GameClient::receive_attackpack_and_set_character_state($)",packet,enemyEventClientKey);
+								update();
+								
+								/************************************************************/
 								/*呼叫敵方的防禦CONSTRUCT  check_use_skill_construct*/
 								EventClient.send("GameClient::check_use_skill_construct($)",packet,enemyEventClientKey);
 								
@@ -2430,7 +2445,7 @@ public class GameClient {
 					}catch(Exception ex)
 					{
 						JOptionPane.showMessageDialog(null, "輸入錯誤");
-						def_dise_enter.setText("");
+						def_dise_enter.setText("1");
 						ex.printStackTrace();
 					}
 				}
