@@ -56,7 +56,7 @@
 		<jar destfile="${build.dir}/client.jar" basedir="${bin.dir}">
 			<manifest>
 				<attribute name="Main-Class" value="GameClient"/>
-				<attribute name="Class-Path" value="${mf.classpath} ${resource.dir}"/>
+				<attribute name="Class-Path" value="${mf.classpath} ."/>
 			</manifest>
 		</jar>
 	</target>
