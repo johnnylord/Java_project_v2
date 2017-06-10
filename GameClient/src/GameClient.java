@@ -1425,7 +1425,7 @@ public class GameClient {
 		JLabel opponent_character_1_data_HP_text = new JLabel("HP:");
 		opponent_character_1_data_HP_text.setBounds(50,375-20,50,20);
 		opponent_character_1_data_HP_text.setHorizontalAlignment(SwingConstants.CENTER);
-		setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 24));
+		//setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 24));
 		opponent_character_1_data_HP.setOrientation(SwingConstants.HORIZONTAL);
 		opponent_character_1_data_HP.setBounds(100, 375-20, 150, 20);
 		opponent_character_1_data_HP.setMaximum(100);
@@ -1437,7 +1437,7 @@ public class GameClient {
 		JLabel opponent_character_1_data_atk_text = new JLabel("ATK:");
 		opponent_character_1_data_atk_text.setBounds(50,375,50,20);
 		opponent_character_1_data_atk_text.setHorizontalAlignment(SwingConstants.CENTER);
-		setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 24));
+		//setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 24));
 		opponent_character_1_data_atk.setOrientation(SwingConstants.HORIZONTAL);
 		opponent_character_1_data_atk.setBounds(100, 375, 150, 20);
 		opponent_character_1_data_atk.setMaximum(100);
@@ -1449,7 +1449,7 @@ public class GameClient {
 		JLabel opponent_character_1_data_def_text = new JLabel("DEF:");
 		opponent_character_1_data_def_text.setBounds(50,375+20,50,20);
 		opponent_character_1_data_def_text.setHorizontalAlignment(SwingConstants.CENTER);
-		setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 24));
+		//setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 24));
 		opponent_character_1_data_def.setOrientation(SwingConstants.HORIZONTAL);
 		opponent_character_1_data_def.setBounds(100, 375+20, 150, 20);
 		opponent_character_1_data_def.setMaximum(100);
