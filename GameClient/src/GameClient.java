@@ -2188,14 +2188,14 @@ public class GameClient {
 									update();
 								}
 								//********************
-								String msg = character_data.character[picked[attack_test] + "受到了 " + damage + " 傷害";
+								String msg = character_data.character[picked[attack_test]] + "受到了 " + damage + " 傷害";
 								displayFightMsg(msg);
 								EventClient.send("GameClient::displayFightMsg($)",msg,enemyEventClientKey);
 								//********************
 							}
 							else{
 								//********************
-								String msg = character_data.character[picked[attack_test] + "受到了 0 傷害";
+								String msg = character_data.character[picked[attack_test]] + "受到了 0 傷害";
 								displayFightMsg(msg);
 								EventClient.send("GameClient::displayFightMsg($)",msg,enemyEventClientKey);
 								//********************
@@ -2283,14 +2283,14 @@ public class GameClient {
 							System.out.println(character_data.character[picked[attacker_judge]].get_name() +"發動攻擊");
 							System.out.println("攻擊："+ character_data.character[picked[attacker_judge]].get_now_attack());
 							//***********************************************************
-							
+							/*
 							//********************
 							String msg = character_data.character[picked[attacker_judge]].get_name() +"發動攻擊，" 
 										+ "攻擊："+ character_data.character[picked[attacker_judge]].get_now_attack();
 							displayFightMsg(msg);
 							EventClient.send("GameClient::displayFightMsg($)",msg,enemyEventClientKey);
 							//********************
-							
+							*/
 							
 							/*此處呼叫func 直接改變數值 (GameData packet) receive_attackpack_and_set_character_state*/
 							/*********************傳送封包告知對方所受傷害*/
@@ -2568,10 +2568,10 @@ public class GameClient {
 		public static void jump_result(Boolean win){
 			
 			String msg = (win)? "你贏了!":"你輸了";
-			msg = msg+ "\n是否重完?"
+			msg = msg+ "\n是否重完?";
 			
-			Boolean restart = JOptionPane.showConfirmDialog(null, msg,"",JOptionPane.YES_NO_OPTION);
-			if(restart)
+			int restart = JOptionPane.showConfirmDialog(null, msg,"",JOptionPane.YES_NO_OPTION);
+			if(restart == 0)
 			{
 				frame.getContentPane().removeAll();
 				frame.getContentPane().doLayout();
