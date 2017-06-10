@@ -45,6 +45,7 @@ public class GameClient {
 	public static Webcam webcam ;
 	public static WebcamPanel panel = null;
 	public static ImageIcon confirmedToSend = null;
+	public static JLabel FindOpponent = null; 
 	// Data of opponent
 	public static String opponentID;
 	public static String opponentGender;
@@ -626,7 +627,7 @@ public class GameClient {
 		
 		// Label for client to find opponent
 		Icon opponentIcon = new ImageIcon("./resource/image/findopponent_button.png");
-		JLabel FindOpponent = new JLabel(opponentIcon);	
+		FindOpponent = new JLabel(opponentIcon);	
 		FindOpponent.setLocation(878,691); 
 		FindOpponent.setSize(336,237);
 
@@ -645,9 +646,6 @@ public class GameClient {
                 for(ActionListener remove_confirm_listener : ConfirmPicture.getActionListeners()) {
                     ConfirmPicture.removeActionListener(remove_confirm_listener);
                 }
-				for(ActionListener remove_find_listener: FindOpponent.getActionListeners()){
-					FindOpponent.removeActionListener(remove_find_listener);
-				}
 				
 				System.out.println("Clicked...");
 				GameClient.scene2Reminder();
@@ -725,6 +723,9 @@ public class GameClient {
 		btn1.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				// Send to tell server group me and other player
+				for(MouseListener remove_find_listener : FindOpponent.getMouseListeners()) {
+                    FindOpponent.removeMouseListener(remove_find_listener);
+                }
                 for(ActionListener remove_btn1_listener: btn1.getActionListeners()){
                     btn1.removeActionListener(remove_btn1_listener);
                 }
