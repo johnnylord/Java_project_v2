@@ -22,7 +22,7 @@ import javax.swing.UIManager.LookAndFeelInfo;
 
 public class GameClient {
 
-	public static String SERVERIP = "172.20.10.10";
+	public static String SERVERIP = "172.20.10.2";
 	public static int PORT = 9487;
 	public static JFrame frame;
 	public static String gKey; // my GaneClient key
