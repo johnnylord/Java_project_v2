@@ -163,6 +163,7 @@ public class GameClient {
 	public static JButton attack = new JButton("Attack");
 	public static JButton end = new JButton("End Phase");
 	public static JButton surrender = new JButton("Surrender");
+	public static JTextArea fightMsgDisplay = null;
 	
 	//存放該場遊戲雙方所選擇的角色
 	public static Boolean[] character_alive = new Boolean[]{true,true,true,true,true,true};
@@ -197,6 +198,8 @@ public class GameClient {
 	public static int attack_all_count = 0;
 
 
+	public static Boolean winner ;
+	
 	// Chat room 
 	public static JTextArea chatContentDisplay = null; // Text Show in this area
 	public static String get = null; 
@@ -1255,7 +1258,9 @@ public class GameClient {
 		//右邊骰子介面
 		windows_dice_state_construct();
 		//右邊角色介面(還有一個獨立的FUNC 來建構
-		windows_characterState_construct();		
+		windows_characterState_construct();	
+
+		display_fight_construct();
 		
 	}	
 
@@ -1458,8 +1463,8 @@ public class GameClient {
 				int surrender = JOptionPane.showConfirmDialog(null, "確定投降?","",JOptionPane.YES_NO_OPTION);
 				if(surrender==0) //contentPane.setVisible(false);//法二傳送至主機端(請她delete)
 				{
-					//GameData packet = new GameData(GameData.surrend_pack);
-					System.exit(0);
+					jump_result(false);
+					EventClient.send("GameClient::jump_result($)",false,enemyEventClientKey);
 				}
 			}
 		});
@@ -1672,6 +1677,13 @@ public class GameClient {
 							}
 							EventClient.send("GameClient::receive_attackpack_and_set_character_state($)",packet,enemyEventClientKey);
 							/************************************************************/	
+							//**********************************************
+							String msg = character_data.character[picked[window_skillUse_character]].get_name() 
+									+ "發動了" + character_data.character[picked[window_skillUse_character]].get_skill1();
+							displayFightMsg(msg);
+							EventClient.send("GameClient::displayFightMsg($)",msg,enemyEventClientKey);
+							//************************************
+							end_the_game_judge();
 							
 						}
 					}
@@ -1749,6 +1761,13 @@ public class GameClient {
 								packet.character[index].set_alive(character_alive[i]);
 							}
 							EventClient.send("GameClient::receive_attackpack_and_set_character_state($)",packet,enemyEventClientKey);
+							//**********************************************
+							String msg = character_data.character[picked[window_skillUse_character]].get_name() 
+									+ "發動了" + character_data.character[picked[window_skillUse_character]].get_skill2();
+							displayFightMsg(msg);
+							EventClient.send("GameClient::displayFightMsg($)",msg,enemyEventClientKey);
+							//************************************
+							end_the_game_judge();
 							/************************************************************/	
 						}
 					}
@@ -1929,7 +1948,19 @@ public class GameClient {
 								{
 									update();
 								}
-							}				
+								//********************
+								String msg = character_data.character[picked[attack_test] + "受到了 " + damage + " 傷害";
+								displayFightMsg(msg);
+								EventClient.send("GameClient::displayFightMsg($)",msg,enemyEventClientKey);
+								//********************
+							}
+							else{
+								//********************
+								String msg = character_data.character[picked[attack_test] + "受到了 0 傷害";
+								displayFightMsg(msg);
+								EventClient.send("GameClient::displayFightMsg($)",msg,enemyEventClientKey);
+								//********************
+							}
 							
 							returnToOriginalState();
 							null_construct();
@@ -1950,7 +1981,7 @@ public class GameClient {
 								packet.character[index].set_alive(character_alive[i]);
 							}
 							EventClient.send("GameClient::receive_attackpack_and_set_character_state($)",packet,enemyEventClientKey);
-							
+							end_the_game_judge();
 							/************************************************************/
 							
 						}	
@@ -2014,6 +2045,13 @@ public class GameClient {
 							System.out.println("攻擊："+ character_data.character[picked[attacker_judge]].get_now_attack());
 							//***********************************************************
 							
+							//********************
+							String msg = character_data.character[picked[attacker_judge]].get_name() +"發動攻擊，" 
+										+ "攻擊："+ character_data.character[picked[attacker_judge]].get_now_attack();
+							displayFightMsg(msg);
+							EventClient.send("GameClient::displayFightMsg($)",msg,enemyEventClientKey);
+							//********************
+							
 							
 							/*此處呼叫func 直接改變數值 (GameData packet) receive_attackpack_and_set_character_state*/
 							/*********************傳送封包告知對方所受傷害*/
@@ -2039,6 +2077,12 @@ public class GameClient {
 									packet.set_attack(reverse(1));
 									EventClient.send("GameClient::check_use_skill_construct($)",packet,enemyEventClientKey);
 									/*呼叫敵方的防禦CONSTRUCT  check_use_skill_construct*/
+									//********************
+									String msg = character_data.character[picked[attacker_judge]].get_name() +"發動攻擊，" 
+												+ "攻擊："+ character_data.character[picked[attacker_judge]].get_now_attack();
+									displayFightMsg(msg);
+									EventClient.send("GameClient::displayFightMsg($)",msg,enemyEventClientKey);
+									//********************
 								}
 								else{
 									can_attack_and_useSkill();
@@ -2048,6 +2092,15 @@ public class GameClient {
 							{
 								/*呼叫敵方的防禦CONSTRUCT  check_use_skill_construct*/
 								EventClient.send("GameClient::check_use_skill_construct($)",packet,enemyEventClientKey);
+								
+								//********************
+								String msg = character_data.character[picked[attacker_judge]].get_name() +"發動攻擊，"
+											+ "攻擊："+ character_data.character[picked[attacker_judge]].get_now_attack();
+											
+								displayFightMsg(msg);
+								EventClient.send("GameClient::displayFightMsg($)",msg,enemyEventClientKey);
+								//********************
+								
 								returnToOriginalState();
 							}
 							null_construct();
@@ -2165,6 +2218,7 @@ public class GameClient {
 						/*呼叫敵方的防禦CONSTRUCT  check_use_skill_construct*/
 						EventClient.send("GameClient::check_use_skill_construct($)",packet,enemyEventClientKey);
 					}
+					character_state_mode = 0;
 					attack_all_count=0;
 					attack_all = false;
 					returnToOriginalState();
@@ -2172,6 +2226,7 @@ public class GameClient {
 			}
 			else
 			{
+				character_state_mode = 0;
 				ready.setEnabled(false);
 				attack.setEnabled(true);
 				end.setEnabled(true);
@@ -2245,11 +2300,58 @@ public class GameClient {
 		}
 		
 		public static void wait_stage(){
+			character_state_mode = 8;
 			ready.setEnabled(false);
 			attack.setEnabled(false);	
 			end.setEnabled(false);
 		}		
 
+		
+		public static void end_the_game_judge(){
+			if(!character_alive[0] && !character_alive[2] && !character_alive[4]) //all character died
+			{
+				jump_result(false);
+				EventClient.send("GameClient::jump_result($)",false,enemyEventClientKey);
+			}
+		}
+		
+		public static void jump_result(Boolean win){
+			
+			String msg = (win)? "你贏了!":"你輸了";
+			msg = msg+ "\n是否重完?"
+			
+			Boolean restart = JOptionPane.showConfirmDialog(null, msg,"",JOptionPane.YES_NO_OPTION);
+			if(restart)
+			{
+				frame.getContentPane().removeAll();
+				frame.getContentPane().doLayout();
+				secondScene();
+				frame.getContentPane().update(frame.getContentPane().getGraphics());	
+			}
+			else{
+				System.exit(0);
+			}
+		}
+		
+		
+		public static void displayFightMsg(String msg){
+            fightMsgDisplay.append(msg + "\n");
+        }    
+
+        public static void display_fight_construct(){
+            fightMsgDisplay = new JTextArea("");
+            fightMsgDisplay.setFont(new Font("DejaVu Sans", Font.BOLD, 24));
+            JScrollPane fightMsgPane = new JScrollPane(fightMsgDisplay);
+            fightMsgPane.setBounds(725, 627, 535, 318);
+            fightMsgDisplay.setEditable(false);
+            fightMsgDisplay.setLineWrap(true);
+            fightMsgPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+            fightMsgPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+            frame.getContentPane().add(fightMsgPane);                                                                  
+        }
+		
+		
+		
 		// Show the message in the text field of chat room
 		public static void recvMsg(String msg){
 			chatContentDisplay.append(opponentID + ":\n" + "    " + msg);
