@@ -2360,38 +2360,39 @@ public class GameClient {
 							}
 							
 							//BUG點
-							/*Boolean opp_attack_all;
-							EventClient.send(o->opp_attack_all(o), "GameClient::get_attack_all()", enemyEventClientKey);
-							
-							if(opp_attack_all)
-							{
-								null_construct();
-								wait_stage();
-							}
-							else{*/
-								returnToOriginalState();
-								null_construct();
-								wait_stage();
-							//}
+							EventClient.send(o -> {
+								Boolean opp_attack_all = (Boolean)o;
+								if(opp_attack_all)
+								{
+									null_construct();
+									wait_stage();
+								}
+								else{
+									returnToOriginalState();
+									null_construct();
+									wait_stage();
+								}
 
-							
-							//呼叫對方的 可以再次攻擊 can_attack_and_useSkill()
-							EventClient.send("GameClient::can_attack_and_useSkill()",enemyEventClientKey);
-							
-							
-							/*********************傳送封包告知對方所受傷害*/
-							GameData packet = new GameData(GameData.defense_pack);
-							for(int i=0;i<6;i++)
-							{
-								int index = reverse(i);	
-								packet.character[index].set_now_attack(character_data.character[picked[i]].get_now_attack());
-								packet.character[index].set_now_defence(character_data.character[picked[i]].get_now_defence());
-								packet.character[index].set_hp(character_data.character[picked[i]].get_hp());
-								packet.character[index].set_alive(character_alive[i]);
-							}
-							EventClient.send("GameClient::receive_attackpack_and_set_character_state($)",packet,enemyEventClientKey);
-							end_the_game_judge();
-							/************************************************************/
+								
+								//呼叫對方的 可以再次攻擊 can_attack_and_useSkill()
+								EventClient.send("GameClient::can_attack_and_useSkill()",enemyEventClientKey);
+								
+								
+								/*********************傳送封包告知對方所受傷害*/
+								GameData packet = new GameData(GameData.defense_pack);
+								for(int i=0;i<6;i++)
+								{
+									int index = reverse(i);	
+									packet.character[index].set_now_attack(character_data.character[picked[i]].get_now_attack());
+									packet.character[index].set_now_defence(character_data.character[picked[i]].get_now_defence());
+									packet.character[index].set_hp(character_data.character[picked[i]].get_hp());
+									packet.character[index].set_alive(character_alive[i]);
+								}
+								EventClient.send("GameClient::receive_attackpack_and_set_character_state($)",packet,enemyEventClientKey);
+								end_the_game_judge();
+								/************************************************************/
+								return null;
+							}, "GameClient::get_attack_all()", enemyEventClientKey);
 							
 						}	
 					}catch(Exception ex)
