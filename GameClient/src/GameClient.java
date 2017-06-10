@@ -22,7 +22,7 @@ import javax.swing.UIManager.LookAndFeelInfo;
 
 public class GameClient {
 
-	public static String SERVERIP = "172.20.10.2";
+	public static String SERVERIP = null;
 	public static int PORT = 9487;
 	public static JFrame frame;
 	public static String gKey; // my GaneClient key
@@ -41,7 +41,7 @@ public class GameClient {
 	public static JLabel confirmedPhoto = null;
 	public static Icon confirmedIcon = null;
 	public static int photoIndex = 1, webcam_check = 0;
-	public static Webcam webcam = Webcam.getDefault();
+	public static Webcam webcam ;
 	public static WebcamPanel panel = null;
 	public static ImageIcon confirmedToSend = null;
 	// Data of opponent
@@ -51,6 +51,7 @@ public class GameClient {
 
 	// Scene3Data
 	public static String[] character = {"亞瑟王","高文","莫德雷德","蘭斯洛特","加雷斯","貝迪維爾","崔斯坦","摩根勒菲","加拉哈德","珀西瓦","梅林","閨妮維雅"};
+	public static String[] character_english_name = {"Arthur","Gawain","Mordred","Lancelot","Gareth","Bedivere","Tristram","Morgana","Galahad","Percivale","Merlin","Guinevere"};
 	public static JLabel character_data_label = new JLabel("");
 	public static JComboBox comboBox = new JComboBox<String>(character);
 	public static JLabel label = new JLabel("");
@@ -227,7 +228,7 @@ public class GameClient {
 	public static int attack_test = 0;
 	
 	
-	public static boolean attack_all = false;
+	public static Boolean attack_all = false;
 	public static int attack_all_count = 0;
 
 
@@ -299,6 +300,9 @@ public class GameClient {
 		AudioInputStream audioInput = AudioSystem.getAudioInputStream(bgMusic);
 		musicBeforeGame.open(audioInput);
 		musicBeforeGame.loop(Clip.LOOP_CONTINUOUSLY);
+		
+		thirdScene_listener();
+		fourthScene_listener();
 	}
 
 	/*
@@ -312,8 +316,22 @@ public class GameClient {
 
 		// Setting Backgroung image
 		JLabel contentPane = new JLabel();
-		contentPane.setIcon(new ImageIcon("./resource/image/homepage.jpg"));
+		ImageIcon diceBackground = new ImageIcon("./resource/image/dicebackground.jpg");
+		diceBackground.setImage(diceBackground.getImage().getScaledInstance(1280,960,Image.SCALE_DEFAULT));
+		contentPane.setIcon(diceBackground);
 		frame.setContentPane(contentPane);
+
+		// text field which can enter Server's IP
+        JTextField targetIP = new JTextField("");
+        targetIP.setBounds(537,680,206,40);
+		targetIP.setFont(new Font("Liberation Mono", Font.BOLD, 20));
+        frame.getContentPane().add(targetIP);
+
+		JLabel remindIP = new JLabel("Server IP:");
+		remindIP.setBounds(407,680,140,40);
+		remindIP.setFont(new Font("Liberation Mono", Font.BOLD, 22));
+		remindIP.setForeground(Color.GREEN);
+		frame.getContentPane().add(remindIP);
 
 		// Setting the size and location of the frame [ width: 1280px , height:960px ]
 		frame.setBounds(960-640, 540-480, 1280, 960);
@@ -332,6 +350,8 @@ public class GameClient {
 		JButton StartButton = new JButton("Start Game");
 		StartButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+					
+					SERVERIP = targetIP.getText();
 
 					// Connect to server and get the EventClient.thisKey
 					EventClient.initialize(SERVERIP);
@@ -372,25 +392,32 @@ public class GameClient {
 	 */
 	public static void secondScene() {
 
+		webcam = Webcam.getDefault();
 		// Text Field for client to enter "PlayerID" 
-		JTextField PlayerID = new JTextField("Enter Player ID here.", 30);
-		PlayerID.setBackground(Color.PINK);
+		JTextField PlayerID = new JTextField("", 30);
+		PlayerID.setBackground(Color.GREEN);
 		PlayerID.setFont(new Font("Liberation Mono", Font.BOLD | Font.ITALIC, 24));
-		PlayerID.setLocation(865,50); // 50 + 760
-		PlayerID.setSize(365,80);
+		PlayerID.setLocation(865,150); // 50 + 760
+		PlayerID.setSize(349,48);
+
+		// Label for reminding client to enter ID
+		JLabel showRemindMsg_ID = new JLabel("Enter Player ID here:");
+		showRemindMsg_ID.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 28));
+		showRemindMsg_ID.setForeground(Color.WHITE);
+		showRemindMsg_ID.setBounds(835, 100, 450, 38);
 		
 		// Text Field for client to enter "PlayGender" 
-		JTextField PlayerGender = new JTextField("Enter Player Gender here.", 30);
+		JTextField PlayerGender = new JTextField("", 30);
 		PlayerGender.setFont(new Font("Liberation Mono", Font.BOLD | Font.ITALIC, 24));
-		PlayerGender.setBackground(Color.PINK);
-		PlayerGender.setLocation(865,230); 
-		PlayerGender.setSize(365,80);
+		PlayerGender.setBackground(Color.GREEN);
+		PlayerGender.setLocation(865,280); 
+		PlayerGender.setSize(349,48);
 
-		ImageIcon diceShow = new ImageIcon("./resource/image/dice.gif");
-		diceShow.setImage(diceShow.getImage().getScaledInstance(270,224,Image.SCALE_DEFAULT));
-		Icon diceIcon = diceShow;
-		JLabel diceGif = new JLabel(diceIcon);
-		diceGif.setBounds(919, 398, 270, 224);
+		// Label for reminding client to enter Gender
+		JLabel showRemindMsg_Gender = new JLabel("Enter Player's Gender here:");
+		showRemindMsg_Gender.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 28));
+		showRemindMsg_Gender.setForeground(Color.WHITE);
+		showRemindMsg_Gender.setBounds(835, 230, 450, 38);
 
 		// Button for client to confirm photo
 		JButton ConfirmPicture = new JButton("Confirm");
@@ -415,6 +442,44 @@ public class GameClient {
 		Default.setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 24));
 		Default.setLocation(580,850); 
 		Default.setSize(230,80);
+
+		// use Picture and Text to instruct client
+		JLabel noteRemindInfo = new JLabel("Find Opponent");
+		noteRemindInfo.setForeground(Color.GREEN);
+		noteRemindInfo.setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 24));
+		noteRemindInfo.setBounds(976, 600, 270, 55);
+		frame.getContentPane().add(noteRemindInfo);
+		
+		JLabel noteRemindPhoto = new JLabel("Choose Yout Photo");
+		noteRemindPhoto.setForeground(Color.GREEN);
+		noteRemindPhoto.setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 24));
+		noteRemindPhoto.setBounds(917, 492, 270, 55);
+		frame.getContentPane().add(noteRemindPhoto);
+		
+		JLabel noteRemindFind = new JLabel("Enter Yout Info");
+		noteRemindFind.setForeground(Color.GREEN);
+		noteRemindFind.setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 24));
+		noteRemindFind.setBounds(976, 368, 270, 55);
+		frame.getContentPane().add(noteRemindFind);
+		
+		
+		ImageIcon oneNumber = new ImageIcon("./resource/image/number1.png");
+		oneNumber.setImage(oneNumber.getImage().getScaledInstance(100,100,Image.SCALE_DEFAULT));
+		JLabel numberOne = new JLabel((Icon)oneNumber);
+		numberOne.setBounds(885, 310, 80, 140);
+		frame.getContentPane().add(numberOne);
+		
+		ImageIcon twoNumber = new ImageIcon("./resource/image/number2.png");
+		twoNumber.setImage(twoNumber.getImage().getScaledInstance(100,100,Image.SCALE_DEFAULT));
+		JLabel numberTwo = new JLabel((Icon)twoNumber);
+		numberTwo.setBounds(791, 477, 140, 80);
+		frame.getContentPane().add(numberTwo);
+		
+		ImageIcon threeNumber = new ImageIcon("./resource/image/number3.png");
+		threeNumber.setImage(threeNumber.getImage().getScaledInstance(100,100,Image.SCALE_DEFAULT));
+		JLabel numberThree = new JLabel((Icon)threeNumber);
+		numberThree.setBounds(894, 572, 80, 140);
+		frame.getContentPane().add(numberThree);
 		
 		// set default photo data
 		Icon[] defaultPhotoArray = new ImageIcon[6];
@@ -437,6 +502,8 @@ public class GameClient {
 				TakePicture.setForeground(Color.BLACK);
 				Default.setBackground(Color.RED);
 				Default.setForeground(Color.BLACK);
+                ConfirmPicture.setBackground(Color.RED);
+                ConfirmPicture.setForeground(Color.BLACK);
 				
 				// remove the other buttons' action listener
 				for(ActionListener remove_take_listener : TakePicture.getActionListeners()) {
@@ -445,6 +512,10 @@ public class GameClient {
 				for(ActionListener remove_default_listener : Default.getActionListeners()) {
 					Default.removeActionListener(remove_default_listener);
 				}
+                for(ActionListener remove_confirm_listener : ConfirmPicture.getActionListeners()) {
+                    ConfirmPicture.removeActionListener(remove_confirm_listener);
+                }
+
 				
 				// set and display choosed photo
 				if(webcam_check == 1){
@@ -563,6 +634,20 @@ public class GameClient {
 			public void mouseClicked(MouseEvent e){
 				PlayerID_String = PlayerID.getText();
 				PlayerGender_String = PlayerGender.getText();
+
+                for(ActionListener remove_take_listener : TakePicture.getActionListeners()) {
+                    TakePicture.removeActionListener(remove_take_listener);
+                }    
+                for(ActionListener remove_default_listener : Default.getActionListeners()) {
+                    Default.removeActionListener(remove_default_listener);
+                }    
+                for(ActionListener remove_confirm_listener : ConfirmPicture.getActionListeners()) {
+                    ConfirmPicture.removeActionListener(remove_confirm_listener);
+                }
+				for(ActionListener remove_find_listener: FindOpponent.getActionListeners()){
+					FindOpponent.removeActionListener(remove_find_listener);
+				}
+				
 				System.out.println("Clicked...");
 				GameClient.scene2Reminder();
 			}
@@ -615,7 +700,8 @@ public class GameClient {
 		frame.getContentPane().add(TakePicture);
 		frame.getContentPane().add(Default);
 		frame.getContentPane().add(FindOpponent);
-		frame.getContentPane().add(diceGif);
+		frame.getContentPane().add(showRemindMsg_ID);
+        frame.getContentPane().add(showRemindMsg_Gender);
 		frame.getContentPane().doLayout();
 		frame.getContentPane().update(frame.getContentPane().getGraphics());
 	}
@@ -638,10 +724,27 @@ public class GameClient {
 		btn1.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				// Send to tell server group me and other player
+                for(ActionListener remove_btn1_listener: btn1.getActionListeners()){
+                    btn1.removeActionListener(remove_btn1_listener);
+                }
+                for(ActionListener remove_btn2_listener: btn2.getActionListeners()){
+                    btn2.removeActionListener(remove_btn2_listener);                                                   
+                }
 				EventClient.send("GameServer::match($)",EventClient.getKey(),null);
 				reminder.dispose();
 			}
 		});
+        btn2.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                reminder.dispose();
+                for(ActionListener remove_btn1_listener: btn1.getActionListeners()){
+                    btn1.removeActionListener(remove_btn1_listener);
+                }
+                for(ActionListener remove_btn2_listener: btn2.getActionListeners()){
+                    btn2.removeActionListener(remove_btn2_listener);                                                   
+                }
+            }
+        });
 		reminder.add(msg);
 		reminder.add(btn1);
 		reminder.add(btn2);
@@ -678,17 +781,8 @@ public class GameClient {
 	 *Third Scene:
 	 * Select the Heros 
 	 */
-	public static void thirdScene() {
-		// refresh the frame
-		frame.getContentPane().removeAll();
-		frame.getContentPane().doLayout();
-		frame.getContentPane().update(frame.getContentPane().getGraphics());
-		
-		// add Combo box 
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"亞瑟王","高文","莫德雷德","蘭斯洛特","加雷斯","貝迪維爾","崔斯坦","摩根勒菲","加拉哈德","珀西瓦","梅林","閨妮維雅"}));
-		comboBox.setForeground(Color.BLACK);
-		comboBox.setFont(new Font("標楷體", Font.BOLD, 40));
-		comboBox.setBounds(512, 40, 200, 50);
+	 
+	public static void thirdScene_listener(){
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -705,20 +799,7 @@ public class GameClient {
 				
 			}
 		} );
-
-
-		// used to display the selected car
-		ImageIcon display = new ImageIcon("./resource/image/亞瑟王.png");
-		display.setImage(display.getImage().getScaledInstance(400,590,Image.SCALE_DEFAULT));
-		Icon img = display;
-		character_data_label.setIcon(img);
-		character_data_label.setBounds(425, 150, 400, 590);
 		
-		//press the "select" button (action)
-		btnNewButton.setFont(new Font("標楷體", Font.BOLD, 30));
-		btnNewButton.setBounds(559, 802, 131, 56);
-		label.setBounds(47, 94, 57, 19);
-		btnNewButton.setEnabled((firstSelect)? true:false);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {	
 				if(seleted[comboBox.getSelectedIndex()]==0)
@@ -755,6 +836,46 @@ public class GameClient {
 				comboBox.setSelectedIndex(0);
 			}
 		});
+	}
+	public static void thirdScene() {
+		// refresh the frame
+		frame.getContentPane().removeAll();
+		frame.getContentPane().doLayout();
+		frame.getContentPane().update(frame.getContentPane().getGraphics());
+		
+		picked = new int[6];
+		myCount = 0;
+		oppCount = 1;
+		for(int i=0;i<6;i++)
+		{
+			select[i].setIcon(null);
+		}
+		for(int i=0;i<12;i++)
+		{
+			seleted[i] = 0;
+		}
+		
+		// add Combo box 
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"亞瑟王","高文","莫德雷德","蘭斯洛特","加雷斯","貝迪維爾","崔斯坦","摩根勒菲","加拉哈德","珀西瓦","梅林","閨妮維雅"}));
+		comboBox.setForeground(Color.BLACK);
+		comboBox.setFont(new Font("標楷體", Font.BOLD, 40));
+		comboBox.setBounds(512, 40, 200, 50);
+		
+
+
+		// used to display the selected car
+		ImageIcon display = new ImageIcon("./resource/image/亞瑟王.png");
+		display.setImage(display.getImage().getScaledInstance(400,590,Image.SCALE_DEFAULT));
+		Icon img = display;
+		character_data_label.setIcon(img);
+		character_data_label.setBounds(425, 150, 400, 590);
+		
+		//press the "select" button (action)
+		btnNewButton.setFont(new Font("標楷體", Font.BOLD, 30));
+		btnNewButton.setBounds(559, 802, 131, 56);
+		label.setBounds(47, 94, 57, 19);
+		btnNewButton.setEnabled((firstSelect)? true:false);
+		
 		
 		// the placeholder for selected card
 		player1_character_1.setBounds(110, 10, 200, 295);
@@ -801,6 +922,18 @@ public class GameClient {
 		GameClient.fourthScene();
 	}
 
+	
+	
+	public static void fourthScene_listener(){
+		characterButton_listener();
+		stage_listener();
+		characterStates_atkDise_choose_listener();
+		characterStates_defDise_choose_listener();
+		characterState_skill_data_listener();
+		characterState_skill_listener();
+		characterState_attackCharacterSelect_listener();
+		characterState_useSkillCheck_listener();
+	}
 	public static void fourthScene(){
 		// refresh the frame
 		frame.getContentPane().removeAll();
@@ -1286,12 +1419,15 @@ public class GameClient {
 		//角色目前狀況
 		windows_character_button_construct();
 		windows_character_state_construct();
-		characterButton_listener();
+		
 		
 		//左中選單
 		windows_stage_select_construct();
 		windows_stage_select(); //判斷攻擊、防禦階段 可使用按鈕有差別
-		stage_listener();
+		
+		
+		character_state_mode = 7;
+		null_construct();
 		
 		//右邊骰子介面
 		windows_dice_state_construct();
@@ -1665,10 +1801,10 @@ public class GameClient {
 					 	   " / Hp " + character_data.character[picked[i]].get_hp(); 
 			character_label_state[i].setText(state);
 			*/
-			character_label_state_HP[i].setValue(character_data.character[picked[i]].get_hp());
+			character_label_state_HP[i].setValue(character_data.character[picked[i]].origin_hp);
 			character_label_state_atk[i].setValue(character_data.character[picked[i]].get_attack());
 			character_label_state_def[i].setValue(character_data.character[picked[i]].get_defence());
-
+			frame.getContentPane().update(frame.getContentPane().getGraphics());
 		}
 	}
 	
@@ -1706,7 +1842,7 @@ public class GameClient {
 				if(surrender==0) //contentPane.setVisible(false);//法二傳送至主機端(請她delete)
 				{
 					jump_result(false);
-					EventClient.send("GameClient::jump_result($)",false,enemyEventClientKey);
+					EventClient.send("GameClient::jump_result($)",true,enemyEventClientKey);
 				}
 			}
 		});
@@ -1800,27 +1936,27 @@ public class GameClient {
 		
 		//mode6
 		windows_characterStates_atkDise_choose_construct();
-		characterStates_atkDise_choose_listener();
+		
 		
 		//mode5
 		windows_characterStates_defDise_choose_construct();
-		characterStates_defDise_choose_listener();
+		
 		
 		//mode1
 		windows_characterState_skill_data_construct();
-		characterState_skill_data_listener();
+		
 		
 		//mode2
 		windows_characterState_skill_useCharacter_construct();
-		characterState_skill_listener();
+		
 		
 		//mode3
 		windows_characterState_attackCharacterSelect_construct();
-		characterState_attackCharacterSelect_listener();
+		
 		
 		//mode4
 		windows_characterState_useSkillCheck_construct();
-		characterState_useSkillCheck_listener();	
+			
 	}
 		//select mode 1 選擇要否發動技能
 		//select mode 1 角色技能資訊查看
@@ -1920,10 +2056,9 @@ public class GameClient {
 							EventClient.send("GameClient::receive_attackpack_and_set_character_state($)",packet,enemyEventClientKey);
 							/************************************************************/	
 							//**********************************************
-							String msg = character_data.character[picked[window_skillUse_character]].get_name() 
-									+ "發動了" + character_data.character[picked[window_skillUse_character]].get_skill1();
-							displayFightMsg(msg);
-							EventClient.send("GameClient::displayFightMsg($)",msg,enemyEventClientKey);
+							String msg = character_english_name[picked[window_skillUse_character]]+ " use skill1";
+							displayFightMsg(msg,PlayerID_String);
+							EventClient.send("GameClient::displayFightMsg($...)",new Object[]{msg,PlayerID_String},enemyEventClientKey);
 							//************************************
 							end_the_game_judge();
 							
@@ -2004,10 +2139,9 @@ public class GameClient {
 							}
 							EventClient.send("GameClient::receive_attackpack_and_set_character_state($)",packet,enemyEventClientKey);
 							//**********************************************
-							String msg = character_data.character[picked[window_skillUse_character]].get_name() 
-									+ "發動了" + character_data.character[picked[window_skillUse_character]].get_skill2();
-							displayFightMsg(msg);
-							EventClient.send("GameClient::displayFightMsg($)",msg,enemyEventClientKey);
+							String msg = character_english_name[picked[window_skillUse_character]] + " use skill2";
+							displayFightMsg(msg,PlayerID_String);
+							EventClient.send("GameClient::displayFightMsg($...)",new Object[]{msg,PlayerID_String},enemyEventClientKey);
 							//************************************
 							end_the_game_judge();
 							/************************************************************/	
@@ -2106,8 +2240,9 @@ public class GameClient {
 					for(int i=0;i<=4;i=i+2)
 					{
 						//如果全都是攻擊階段的技能
-						if(character_data.character[picked[i]].skill1_use_stage()==Character_Data.def||
-						   character_data.character[picked[i]].skill2_use_stage()==Character_Data.def)
+						if(character_alive[i]&&
+						  (character_data.character[picked[i]].skill1_use_stage()==Character_Data.def||
+						   character_data.character[picked[i]].skill2_use_stage()==Character_Data.def))
 						{
 							null_construct();
 							break;
@@ -2172,12 +2307,12 @@ public class GameClient {
 						if(use_dise> Integer.parseInt(def_num.getText()) || use_dise<0)
 						{
 							JOptionPane.showMessageDialog(null, "骰子數不足");
-							def_dise_enter.setText("");
+							def_dise_enter.setText("0");
 						}
 						else
 						{
 							def_num.setText(Integer.toString((Integer.valueOf(def_num.getText()) - use_dise)));
-							def_dise_enter.setText("");
+							def_dise_enter.setText("0");
 							
 							//***********************************************************
 							
@@ -2186,27 +2321,29 @@ public class GameClient {
 							if(damage>0)
 							{
 								character_data.character[picked[attack_test]].set_hp(character_data.character[picked[attack_test]].get_hp() - damage);
-								if(character_data.character[picked[attack_test]].get_hp()<0)
+								if(character_data.character[picked[attack_test]].get_hp()<=0)
 								{
 									update();
 								}
 								//********************
-								String msg = character_data.character[picked[attack_test]] + "受到了 " + damage + " 傷害";
-								displayFightMsg(msg);
-								EventClient.send("GameClient::displayFightMsg($)",msg,enemyEventClientKey);
+								String msg = character_english_name[picked[attack_test]] + " take " + damage + " damage";
+								displayFightMsg(msg,PlayerID_String);
+								EventClient.send("GameClient::displayFightMsg($...)",new Object[]{msg,PlayerID_String},enemyEventClientKey);
 								//********************
 							}
 							else{
 								//********************
-								String msg = character_data.character[picked[attack_test]] + "受到了 0 傷害";
-								displayFightMsg(msg);
-								EventClient.send("GameClient::displayFightMsg($)",msg,enemyEventClientKey);
+								String msg = character_english_name[picked[attack_test]] + " doesn't take any damage";
+								displayFightMsg(msg,PlayerID_String);
+								EventClient.send("GameClient::displayFightMsg($...)",new Object[]{msg,PlayerID_String},enemyEventClientKey);
 								//********************
 							}
 							
-							returnToOriginalState();
-							null_construct();
-							wait_stage();
+							//BUG點
+								returnToOriginalState();
+								null_construct();
+								wait_stage();
+
 							
 							//呼叫對方的 可以再次攻擊 can_attack_and_useSkill()
 							EventClient.send("GameClient::can_attack_and_useSkill()",enemyEventClientKey);
@@ -2230,7 +2367,7 @@ public class GameClient {
 					}catch(Exception ex)
 					{
 						JOptionPane.showMessageDialog(null, "輸入錯誤");
-						def_dise_enter.setText("");
+						def_dise_enter.setText("0");
 					}
 				}
 			});
@@ -2267,17 +2404,17 @@ public class GameClient {
 						if(use_dise> Integer.parseInt(atk_num.getText()) || use_dise<0)
 						{
 							JOptionPane.showMessageDialog(null, "骰子數不足");
-							atk_dise_enter.setText("");
+							atk_dise_enter.setText("1");
 						}
 						else if(use_dise==0)
 						{
 							JOptionPane.showMessageDialog(null, "至少需輸入1以上");
-							atk_dise_enter.setText("");
+							atk_dise_enter.setText("1");
 						}
 						else
 						{
 							atk_num.setText(Integer.toString((Integer.valueOf(atk_num.getText()) - use_dise)));
-							atk_dise_enter.setText("");
+							atk_dise_enter.setText("1");
 							
 								
 							//***********************************************************
@@ -2295,35 +2432,35 @@ public class GameClient {
 							//********************
 							*/
 							
-							/*此處呼叫func 直接改變數值 (GameData packet) receive_attackpack_and_set_character_state*/
-							/*********************傳送封包告知對方所受傷害*/
-							GameData packet = new GameData(GameData.attack_pack,reverse(attacker_judge),reverse(attack_judge));
-							for(int i=0;i<6;i++)
-							{
-								int index = reverse(i);	
-								packet.character[index].set_now_attack(character_data.character[picked[i]].get_now_attack());
-								packet.character[index].set_now_defence(character_data.character[picked[i]].get_now_defence());
-								packet.character[index].set_hp(character_data.character[picked[i]].get_hp());
-								packet.character[index].set_alive(character_alive[i]);	
-							}
-							EventClient.send("GameClient::receive_attackpack_and_set_character_state($)",packet,enemyEventClientKey);
-							update();
-							
-							/************************************************************/	
+							/*此處呼叫func 直接改變數值 (GameData packet) receive_attackpack_and_set_character_state*/	
 							
 							
 							if(attack_all)
 							{
 								if(character_alive[1])
 								{	
-									packet.set_attack(reverse(1));
+									/*********************傳送封包告知對方所受傷害*/
+									GameData packet = new GameData(GameData.attack_pack,reverse(attacker_judge),reverse(1));
+									for(int i=0;i<6;i++)
+									{
+										int index = reverse(i);	
+										packet.character[index].set_now_attack(character_data.character[picked[i]].get_now_attack());
+										packet.character[index].set_now_defence(character_data.character[picked[i]].get_now_defence());
+										packet.character[index].set_hp(character_data.character[picked[i]].get_hp());
+										packet.character[index].set_alive(character_alive[i]);	
+									}
+									EventClient.send("GameClient::receive_attackpack_and_set_character_state($)",packet,enemyEventClientKey);
+									update();
+							
+									/************************************************************/
 									EventClient.send("GameClient::check_use_skill_construct($)",packet,enemyEventClientKey);
+									
+									
 									/*呼叫敵方的防禦CONSTRUCT  check_use_skill_construct*/
 									//********************
-									String msg = character_data.character[picked[attacker_judge]].get_name() +"發動攻擊，" 
-												+ "攻擊："+ character_data.character[picked[attacker_judge]].get_now_attack();
-									displayFightMsg(msg);
-									EventClient.send("GameClient::displayFightMsg($)",msg,enemyEventClientKey);
+									String msg = character_english_name[picked[attacker_judge]]+" Attack, Attack is "+ character_data.character[picked[attacker_judge]].get_now_attack();
+									displayFightMsg(msg,PlayerID_String);
+									EventClient.send("GameClient::displayFightMsg($...)",new Object[]{msg,PlayerID_String},enemyEventClientKey);
 									//********************
 								}
 								else{
@@ -2332,18 +2469,29 @@ public class GameClient {
 							}
 							else
 							{
+								/*********************傳送封包告知對方所受傷害*/
+								GameData packet = new GameData(GameData.attack_pack,reverse(attacker_judge),reverse(attack_judge));
+								for(int i=0;i<6;i++)
+								{
+									int index = reverse(i);	
+									packet.character[index].set_now_attack(character_data.character[picked[i]].get_now_attack());
+									packet.character[index].set_now_defence(character_data.character[picked[i]].get_now_defence());
+									packet.character[index].set_hp(character_data.character[picked[i]].get_hp());
+									packet.character[index].set_alive(character_alive[i]);	
+								}
+								EventClient.send("GameClient::receive_attackpack_and_set_character_state($)",packet,enemyEventClientKey);
+								update();
+								
+								/************************************************************/
 								/*呼叫敵方的防禦CONSTRUCT  check_use_skill_construct*/
 								EventClient.send("GameClient::check_use_skill_construct($)",packet,enemyEventClientKey);
 								
 								//********************
-								String msg = character_data.character[picked[attacker_judge]].get_name() +"發動攻擊，"
-											+ "攻擊："+ character_data.character[picked[attacker_judge]].get_now_attack();
+								String msg = character_english_name[picked[attacker_judge]]+" Attack, Attack is "+ character_data.character[picked[attacker_judge]].get_now_attack();
 											
-								displayFightMsg(msg);
-								EventClient.send("GameClient::displayFightMsg($)",msg,enemyEventClientKey);
+								displayFightMsg(msg,PlayerID_String);
+								EventClient.send("GameClient::displayFightMsg($...)",new Object[]{msg,PlayerID_String},enemyEventClientKey);
 								//********************
-								
-								returnToOriginalState();
 							}
 							null_construct();
 							wait_stage();
@@ -2351,7 +2499,7 @@ public class GameClient {
 					}catch(Exception ex)
 					{
 						JOptionPane.showMessageDialog(null, "輸入錯誤");
-						def_dise_enter.setText("");
+						def_dise_enter.setText("1");
 						ex.printStackTrace();
 					}
 				}
@@ -2408,6 +2556,10 @@ public class GameClient {
 			thorw_dise.add(text_this_stage);
 		}
 
+		public static Boolean get_attack_all()
+		{
+			return attack_all;
+		}
 		
 		public static void my_ready_turn(){
 			character_state_mode = 7;
@@ -2461,17 +2613,20 @@ public class GameClient {
 						EventClient.send("GameClient::check_use_skill_construct($)",packet,enemyEventClientKey);
 					}
 					character_state_mode = 0;
+					null_construct();
 					attack_all_count=0;
 					attack_all = false;
 					returnToOriginalState();
 				}
 			}
 			else
-			{
+			{	
 				character_state_mode = 0;
+				null_construct();
 				ready.setEnabled(false);
 				attack.setEnabled(true);
 				end.setEnabled(true);
+				returnToOriginalState();
 			}		
 		}
 		
@@ -2526,6 +2681,7 @@ public class GameClient {
 				character_label_state_atk[i].setValue(character_data.character[picked[i]].get_now_attack());
 				character_label_state_def[i].setValue(character_data.character[picked[i]].get_now_defence());
 				character_button_select[i].setEnabled(character_alive[i]);
+				frame.getContentPane().update(frame.getContentPane().getGraphics());
 			}
 		}
 		
@@ -2549,6 +2705,7 @@ public class GameClient {
 				character_label_state_atk[i].setValue(character_data.character[picked[i]].get_now_attack());
 				character_label_state_def[i].setValue(character_data.character[picked[i]].get_now_defence());
 				character_button_select[i].setEnabled(character_alive[i]);
+				frame.getContentPane().update(frame.getContentPane().getGraphics());
 			}
 		}
 		
@@ -2564,14 +2721,16 @@ public class GameClient {
 			if(!character_alive[0] && !character_alive[2] && !character_alive[4]) //all character died
 			{
 				jump_result(false);
-				EventClient.send("GameClient::jump_result($)",false,enemyEventClientKey);
+				EventClient.send("GameClient::jump_result($)",true,enemyEventClientKey);
 			}
 		}
 		
 		public static void jump_result(Boolean win){
 			
-			String msg = (win)? "你贏了!":"你輸了";
-			msg = msg+ "\n是否重完?";
+			/*通知SERVER*/
+			
+			String msg = (win)? "YOU WIN!":"YOU LOSE";
+			msg = msg+ "\nRESTAT?";
 			
 			int restart = JOptionPane.showConfirmDialog(null, msg,"",JOptionPane.YES_NO_OPTION);
 			if(restart == 0)
@@ -2579,6 +2738,7 @@ public class GameClient {
 				frame.getContentPane().removeAll();
 				frame.getContentPane().doLayout();
 				secondScene();
+				chat.dispose();
 				frame.getContentPane().update(frame.getContentPane().getGraphics());	
 			}
 			else{
@@ -2587,8 +2747,8 @@ public class GameClient {
 		}
 		
 		
-		public static void displayFightMsg(String msg){
-            fightMsgDisplay.append(msg + "\n");
+		public static void displayFightMsg(String msg,String id){
+            fightMsgDisplay.append(id+"\n  "+msg + "\n");
         }    
 
         public static void display_fight_construct(){
