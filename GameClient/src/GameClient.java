@@ -640,6 +640,7 @@ public class GameClient {
 				}
 				webcam_check = 2;
 				confirmedToSend = new ImageIcon(filepath[photoIndex-1]);
+				webcam.close();
 			}
 		});
 		
@@ -664,7 +665,7 @@ public class GameClient {
                 for(ActionListener remove_confirm_listener : ConfirmPicture.getActionListeners()) {
                     ConfirmPicture.removeActionListener(remove_confirm_listener);
                 }
-				
+				webcam.close();
 				System.out.println("Clicked...");
 				GameClient.scene2Reminder();
 			}
