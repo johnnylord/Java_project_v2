@@ -712,6 +712,13 @@ public class GameClient {
 				reminder.dispose();
 			}
 		});
+
+		btn2.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				// Send to tell server group me and other player
+				reminder.dispose();
+			}
+		});
 		reminder.add(msg);
 		reminder.add(btn1);
 		reminder.add(btn2);
