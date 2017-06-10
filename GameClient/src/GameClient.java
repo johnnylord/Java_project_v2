@@ -301,6 +301,9 @@ public class GameClient {
 		AudioInputStream audioInput = AudioSystem.getAudioInputStream(bgMusic);
 		musicBeforeGame.open(audioInput);
 		musicBeforeGame.loop(Clip.LOOP_CONTINUOUSLY);
+		
+		thirdScene_listener();
+		fourthScene_listener();
 	}
 
 	/*
@@ -632,6 +635,20 @@ public class GameClient {
 			public void mouseClicked(MouseEvent e){
 				PlayerID_String = PlayerID.getText();
 				PlayerGender_String = PlayerGender.getText();
+
+                for(ActionListener remove_take_listener : TakePicture.getActionListeners()) {
+                    TakePicture.removeActionListener(remove_take_listener);
+                }    
+                for(ActionListener remove_default_listener : Default.getActionListeners()) {
+                    Default.removeActionListener(remove_default_listener);
+                }    
+                for(ActionListener remove_confirm_listener : ConfirmPicture.getActionListeners()) {
+                    ConfirmPicture.removeActionListener(remove_confirm_listener);
+                }
+				for(ActionListener remove_find_listener: FindOpponent.getActionListeners()){
+					FindOpponent.removeActionListener(remove_find_listener);
+				}
+				
 				System.out.println("Clicked...");
 				GameClient.scene2Reminder();
 			}
@@ -708,17 +725,28 @@ public class GameClient {
 		btn1.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				// Send to tell server group me and other player
+                for(ActionListener remove_btn1_listener: btn1.getActionListeners()){
+                    btn1.removeActionListener(remove_btn1_listener);
+                }
+                for(ActionListener remove_btn2_listener: btn2.getActionListeners()){
+                    btn2.removeActionListener(remove_btn2_listener);                                                   
+                }
 				EventClient.send("GameServer::match($)",EventClient.getKey(),null);
 				reminder.dispose();
 			}
 		});
+        btn2.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                reminder.dispose();
+                for(ActionListener remove_btn1_listener: btn1.getActionListeners()){
+                    btn1.removeActionListener(remove_btn1_listener);
+                }
+                for(ActionListener remove_btn2_listener: btn2.getActionListeners()){
+                    btn2.removeActionListener(remove_btn2_listener);                                                   
+                }
+            }
+        });
 
-		btn2.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				// Send to tell server group me and other player
-				reminder.dispose();
-			}
-		});
 		reminder.add(msg);
 		reminder.add(btn1);
 		reminder.add(btn2);
@@ -755,29 +783,8 @@ public class GameClient {
 	 *Third Scene:
 	 * Select the Heros 
 	 */
-	public static void thirdScene() {
-		// refresh the frame
-		frame.getContentPane().removeAll();
-		frame.getContentPane().doLayout();
-		frame.getContentPane().update(frame.getContentPane().getGraphics());
-		
-		picked = new int[6];
-		myCount = 0;
-		oppCount = 1;
-		for(int i=0;i<6;i++)
-		{
-			select[i].setIcon(null);
-		}
-		for(int i=0;i<12;i++)
-		{
-			seleted[i] = 0;
-		}
-		
-		// add Combo box 
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"亞瑟王","高文","莫德雷德","蘭斯洛特","加雷斯","貝迪維爾","崔斯坦","摩根勒菲","加拉哈德","珀西瓦","梅林","閨妮維雅"}));
-		comboBox.setForeground(Color.BLACK);
-		comboBox.setFont(new Font("標楷體", Font.BOLD, 40));
-		comboBox.setBounds(512, 40, 200, 50);
+	 
+	public static void thirdScene_listener(){
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -794,20 +801,7 @@ public class GameClient {
 				
 			}
 		} );
-
-
-		// used to display the selected car
-		ImageIcon display = new ImageIcon("./resource/image/亞瑟王.png");
-		display.setImage(display.getImage().getScaledInstance(400,590,Image.SCALE_DEFAULT));
-		Icon img = display;
-		character_data_label.setIcon(img);
-		character_data_label.setBounds(425, 150, 400, 590);
 		
-		//press the "select" button (action)
-		btnNewButton.setFont(new Font("標楷體", Font.BOLD, 30));
-		btnNewButton.setBounds(559, 802, 131, 56);
-		label.setBounds(47, 94, 57, 19);
-		btnNewButton.setEnabled((firstSelect)? true:false);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {	
 				if(seleted[comboBox.getSelectedIndex()]==0)
@@ -844,6 +838,46 @@ public class GameClient {
 				comboBox.setSelectedIndex(0);
 			}
 		});
+	}
+	public static void thirdScene() {
+		// refresh the frame
+		frame.getContentPane().removeAll();
+		frame.getContentPane().doLayout();
+		frame.getContentPane().update(frame.getContentPane().getGraphics());
+		
+		picked = new int[6];
+		myCount = 0;
+		oppCount = 1;
+		for(int i=0;i<6;i++)
+		{
+			select[i].setIcon(null);
+		}
+		for(int i=0;i<12;i++)
+		{
+			seleted[i] = 0;
+		}
+		
+		// add Combo box 
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"亞瑟王","高文","莫德雷德","蘭斯洛特","加雷斯","貝迪維爾","崔斯坦","摩根勒菲","加拉哈德","珀西瓦","梅林","閨妮維雅"}));
+		comboBox.setForeground(Color.BLACK);
+		comboBox.setFont(new Font("標楷體", Font.BOLD, 40));
+		comboBox.setBounds(512, 40, 200, 50);
+		
+
+
+		// used to display the selected car
+		ImageIcon display = new ImageIcon("./resource/image/亞瑟王.png");
+		display.setImage(display.getImage().getScaledInstance(400,590,Image.SCALE_DEFAULT));
+		Icon img = display;
+		character_data_label.setIcon(img);
+		character_data_label.setBounds(425, 150, 400, 590);
+		
+		//press the "select" button (action)
+		btnNewButton.setFont(new Font("標楷體", Font.BOLD, 30));
+		btnNewButton.setBounds(559, 802, 131, 56);
+		label.setBounds(47, 94, 57, 19);
+		btnNewButton.setEnabled((firstSelect)? true:false);
+		
 		
 		// the placeholder for selected card
 		player1_character_1.setBounds(110, 10, 200, 295);
@@ -890,6 +924,18 @@ public class GameClient {
 		GameClient.fourthScene();
 	}
 
+	
+	
+	public static void fourthScene_listener(){
+		characterButton_listener();
+		stage_listener();
+		characterStates_atkDise_choose_listener();
+		characterStates_defDise_choose_listener();
+		characterState_skill_data_listener();
+		characterState_skill_listener();
+		characterState_attackCharacterSelect_listener();
+		characterState_useSkillCheck_listener();
+	}
 	public static void fourthScene(){
 		// refresh the frame
 		frame.getContentPane().removeAll();
@@ -1375,14 +1421,15 @@ public class GameClient {
 		//角色目前狀況
 		windows_character_button_construct();
 		windows_character_state_construct();
-		characterButton_listener();
+		
 		
 		//左中選單
 		windows_stage_select_construct();
 		windows_stage_select(); //判斷攻擊、防禦階段 可使用按鈕有差別
-		stage_listener();
 		
-		character_state_mode = 8;
+		
+		character_state_mode = 7;
+		null_construct();
 		
 		//右邊骰子介面
 		windows_dice_state_construct();
@@ -1756,7 +1803,7 @@ public class GameClient {
 					 	   " / Hp " + character_data.character[picked[i]].get_hp(); 
 			character_label_state[i].setText(state);
 			*/
-			character_label_state_HP[i].setValue(character_data.character[picked[i]].get_hp());
+			character_label_state_HP[i].setValue(character_data.character[picked[i]].origin_hp);
 			character_label_state_atk[i].setValue(character_data.character[picked[i]].get_attack());
 			character_label_state_def[i].setValue(character_data.character[picked[i]].get_defence());
 			frame.getContentPane().update(frame.getContentPane().getGraphics());
@@ -1891,27 +1938,27 @@ public class GameClient {
 		
 		//mode6
 		windows_characterStates_atkDise_choose_construct();
-		characterStates_atkDise_choose_listener();
+		
 		
 		//mode5
 		windows_characterStates_defDise_choose_construct();
-		characterStates_defDise_choose_listener();
+		
 		
 		//mode1
 		windows_characterState_skill_data_construct();
-		characterState_skill_data_listener();
+		
 		
 		//mode2
 		windows_characterState_skill_useCharacter_construct();
-		characterState_skill_listener();
+		
 		
 		//mode3
 		windows_characterState_attackCharacterSelect_construct();
-		characterState_attackCharacterSelect_listener();
+		
 		
 		//mode4
 		windows_characterState_useSkillCheck_construct();
-		characterState_useSkillCheck_listener();	
+			
 	}
 		//select mode 1 選擇要否發動技能
 		//select mode 1 角色技能資訊查看
@@ -2195,8 +2242,9 @@ public class GameClient {
 					for(int i=0;i<=4;i=i+2)
 					{
 						//如果全都是攻擊階段的技能
-						if(character_data.character[picked[i]].skill1_use_stage()==Character_Data.def||
-						   character_data.character[picked[i]].skill2_use_stage()==Character_Data.def)
+						if(character_alive[i]&&
+						  (character_data.character[picked[i]].skill1_use_stage()==Character_Data.def||
+						   character_data.character[picked[i]].skill2_use_stage()==Character_Data.def))
 						{
 							null_construct();
 							break;
@@ -2567,6 +2615,7 @@ public class GameClient {
 						EventClient.send("GameClient::check_use_skill_construct($)",packet,enemyEventClientKey);
 					}
 					character_state_mode = 0;
+					null_construct();
 					attack_all_count=0;
 					attack_all = false;
 					returnToOriginalState();
@@ -2575,6 +2624,7 @@ public class GameClient {
 			else
 			{	
 				character_state_mode = 0;
+				null_construct();
 				ready.setEnabled(false);
 				attack.setEnabled(true);
 				end.setEnabled(true);
