@@ -228,7 +228,7 @@ public class GameClient {
 	public static int attack_test = 0;
 	
 	
-	public static boolean attack_all = false;
+	public static Boolean attack_all = false;
 	public static int attack_all_count = 0;
 
 
@@ -1366,6 +1366,8 @@ public class GameClient {
 		windows_stage_select(); //判斷攻擊、防禦階段 可使用按鈕有差別
 		stage_listener();
 		
+		character_state_mode = 8;
+		
 		//右邊骰子介面
 		windows_dice_state_construct();
 		//右邊角色介面(還有一個獨立的FUNC 來建構
@@ -2275,9 +2277,11 @@ public class GameClient {
 								//********************
 							}
 							
-							returnToOriginalState();
-							null_construct();
-							wait_stage();
+							//BUG點
+								returnToOriginalState();
+								null_construct();
+								wait_stage();
+
 							
 							//呼叫對方的 可以再次攻擊 can_attack_and_useSkill()
 							EventClient.send("GameClient::can_attack_and_useSkill()",enemyEventClientKey);
@@ -2475,6 +2479,10 @@ public class GameClient {
 			thorw_dise.add(text_this_stage);
 		}
 
+		public static Boolean get_attack_all()
+		{
+			return attack_all;
+		}
 		
 		public static void my_ready_turn(){
 			character_state_mode = 7;
@@ -2642,8 +2650,8 @@ public class GameClient {
 			
 			/*通知SERVER*/
 			
-			String msg = (win)? "你贏了!":"你輸了";
-			msg = msg+ "\n是否重完?";
+			String msg = (win)? "YOU WIN!":"YOU LOSE";
+			msg = msg+ "\nRESTAT?";
 			
 			int restart = JOptionPane.showConfirmDialog(null, msg,"",JOptionPane.YES_NO_OPTION);
 			if(restart == 0)
@@ -2661,7 +2669,7 @@ public class GameClient {
 		
 		
 		public static void displayFightMsg(String msg,String id){
-            fightMsgDisplay.append(id+"\n\t"+msg + "\n");
+            fightMsgDisplay.append(id+"\n  "+msg + "\n");
         }    
 
         public static void display_fight_construct(){
