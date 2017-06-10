@@ -927,7 +927,7 @@ public class GameClient {
 	public static void check_use_skill_construct(GameData gameData){
 		character_state_mode = 4;
 		//mode1
-		/*skill1.setVisible(false);  
+		skill1.setVisible(false);  
 		skill2.setVisible(false);
 		//mode2
 		select_char.setVisible(false);
@@ -940,33 +940,39 @@ public class GameClient {
 		//mode6
 		attack_dise_choose.setVisible(false);
 		//mode7
-		thorw_dise.setVisible(false);*/
+		thorw_dise.setVisible(false);
+		
 		
 		attacker_test = gameData.get_attacker();
 		attack_test = gameData.get_attacked();
 		
-		end_using_skill = false;
-		null_construct();	  
+		end_using_skill = false;  
+
 		
 		//***********************************************************
 			System.out.println(character_data.character[picked[attacker_test]].get_name() +"發動攻擊");
 			System.out.println("攻擊："+ character_data.character[picked[attacker_test]].get_now_attack());
 			System.out.println(character_data.character[picked[attack_test]].get_name() +"承受攻擊");
+			System.out.println("character_state_mode = " +character_state_mode);
 		//***********************************************************
+		
 		
 		frame.getContentPane().update(frame.getContentPane().getGraphics());
 		//receive_attackpack_and_set_character_state(gamedata);
 		 
-		 /*
+		 
 		ImageIcon img = new ImageIcon("../resource/image/"+ character[picked[attacker_test]]+".png");
 		img.setImage(img.getImage().getScaledInstance(200,295,Image.SCALE_DEFAULT));
 		who_attack_skill_use.setIcon(img);
 
 		img = new ImageIcon("../resource/image/"+ character[picked[attack_test]]+".png");
 		img.setImage(img.getImage().getScaledInstance(200,295,Image.SCALE_DEFAULT));
-		attack_who_skill_use.setIcon(img);*/
+		attack_who_skill_use.setIcon(img);
 	}
 	public static void check_use_skill_construct_V2(){
+		
+		System.out.println("in check_use_skill_construct_V2");
+		
 		character_state_mode = 4;
 		//mode1
 		skill1.setVisible(false);  
@@ -1980,6 +1986,8 @@ public class GameClient {
 								packet.character[index].set_alive(character_alive[i]);
 							}
 							EventClient.send("GameClient::receive_attackpack_and_set_character_state($)",packet,enemyEventClientKey);
+							update();
+							
 							/************************************************************/	
 							
 							
