@@ -315,8 +315,10 @@ public class GameClient {
 		frame.getContentPane().setLayout(null);
 
 		// Label for gif
-		JLabel cardBoy = new JLabel((Icon) new ImageIcon ("../resource/image/use1.gif"));
-		cardBoy.setBounds(300,300,500,500);
+		ImageIcon atMainGifIcon = new ImageIcon("../resource/image/use1.gif");
+		atMainGifIcon.setImage(atMainGifIcon.getImage().getScaledInstance(700,440,Image.SCALE_DEFAULT));
+		JLabel cardBoy = new JLabel((Icon) atMainGifIcon);
+		cardBoy.setBounds(290,155,700,500);
 		frame.getContentPane().add(cardBoy);
 
 		// StartGame button
@@ -1035,7 +1037,7 @@ public class GameClient {
 	}
 	public static void check_use_skill_construct_V2(){
 		
-		System.out.println("in check_use_skill_construct_V2");
+		//System.out.println("in check_use_skill_construct_V2");
 		
 		character_state_mode = 4;
 		//mode1
@@ -1120,10 +1122,10 @@ public class GameClient {
 			character_data.character[picked[i]].set_hp(gamedata.get_character_state(i).get_hp());
 			character_alive[i] = gamedata.get_character_state(i).get_alive();	
 			
-			System.out.println(character_data.character[picked[i]].get_name());
-			System.out.println("ATK" +character_data.character[picked[i]].get_now_attack());
-			System.out.println("DEF" +character_data.character[picked[i]].get_now_defence());
-			System.out.println("HP" +character_data.character[picked[i]].get_hp());
+			//System.out.println(character_data.character[picked[i]].get_name());
+			//System.out.println("ATK " +character_data.character[picked[i]].get_now_attack());
+			//System.out.println("DEF " +character_data.character[picked[i]].get_now_defence());
+			//System.out.println("HP " +character_data.character[picked[i]].get_hp());
 		}
 		update();
 		frame.getContentPane().update(frame.getContentPane().getGraphics());
@@ -1919,8 +1921,8 @@ public class GameClient {
 										character_data.character[picked[window_skillUse_character]],
 										character_data.character[picked[tmp2]], 
 										character_data.character[picked[tmp3]]);
-								System.out.println("tmp2 = "+tmp2);
-								System.out.println("tmp3 = "+tmp3);
+								//System.out.println("tmp2 = "+tmp2);
+								//System.out.println("tmp3 = "+tmp3);
 								
 								character_button_select[window_skillUse_character].setEnabled(false);
 								character_alive[window_skillUse_character] = false;
@@ -1948,7 +1950,7 @@ public class GameClient {
 										character_data.character[picked[tmp1]]);
 							}
 								
-							System.out.println(tmp1);
+							//System.out.println(tmp1);
 							
 							if(skill_type==character_data.character_skill.change_attack)
 								attack_test = window_skillUse_character;
@@ -2256,9 +2258,9 @@ public class GameClient {
 							
 							if(attack_all)
 							{
-								if(character_alive[3])
+								if(character_alive[1])
 								{	
-									packet.set_attack(1);
+									packet.set_attack(reverse(1));
 									EventClient.send("GameClient::check_use_skill_construct($)",packet,enemyEventClientKey);
 									/*呼叫敵方的防禦CONSTRUCT  check_use_skill_construct*/
 								}
