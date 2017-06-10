@@ -10,11 +10,6 @@ public class Character_state implements Serializable{
 	private int hp;
 	private boolean alive;
 	
-	public Character_state()
-	{
-		;
-	}
-	
 	
 	public int get_now_attack(){return this.now_atk;}
 	public int get_now_defence(){return this.now_def;}
