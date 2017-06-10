@@ -752,8 +752,8 @@ public class GameClient {
 	public static void fourthScene(){
 		// refresh the frame
 		frame.getContentPane().removeAll();
-		frame.getContentPane().doLayout();
-		frame.getContentPane().update(frame.getContentPane().getGraphics());
+		//frame.getContentPane().doLayout();
+		//frame.getContentPane().update(frame.getContentPane().getGraphics());
 		
 		
 		phase_stage = (firstSelect)?atk_stage:def_stage;
@@ -761,6 +761,7 @@ public class GameClient {
 		
 		windows_construct();
 		null_construct();
+		frame.getContentPane().update(frame.getContentPane().getGraphics());
 	}
 
 	//清空(完全不顯示
