@@ -22,7 +22,8 @@ import javax.swing.UIManager.LookAndFeelInfo;
 
 public class GameClient {
 
-	public static String SERVERIP = "172.20.10.10";
+
+	public static String SERVERIP = null;
 	public static int PORT = 9487;
 	public static JFrame frame;
 	public static String gKey; // my GaneClient key
@@ -51,6 +52,7 @@ public class GameClient {
 
 	// Scene3Data
 	public static String[] character = {"亞瑟王","高文","莫德雷德","蘭斯洛特","加雷斯","貝迪維爾","崔斯坦","摩根勒菲","加拉哈德","珀西瓦","梅林","閨妮維雅"};
+	public static String[] character_english_name = {"Arthur","Gawain","Mordred","Lancelot","Gareth","Bedivere","Tristram","Morgana","Galahad","Percivale","Merlin","Guinevere"};
 	public static JLabel character_data_label = new JLabel("");
 	public static JComboBox comboBox = new JComboBox<String>(character);
 	public static JLabel label = new JLabel("");
@@ -312,8 +314,14 @@ public class GameClient {
 
 		// Setting Backgroung image
 		JLabel contentPane = new JLabel();
-		contentPane.setIcon(new ImageIcon("./resource/image/homepage.jpg"));
+		ImageIcon diceBackground = new ImageIcon("./resource/image/dicebackground.jpg");
+		diceBackground.setImage(diceBackground.getImage().getScaledInstance(1280,960,Image.SCALE_DEFAULT));
+		contentPane.setIcon(diceBackground);
 		frame.setContentPane(contentPane);
+
+        JTextField targetIP = new JTextField("");
+        targetIP.setBounds(540,680,200,50);
+        frame.getContentPane().add(targetIP);
 
 		// Setting the size and location of the frame [ width: 1280px , height:960px ]
 		frame.setBounds(960-640, 540-480, 1280, 960);
@@ -332,6 +340,8 @@ public class GameClient {
 		JButton StartButton = new JButton("Start Game");
 		StartButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+					
+					SERVERIP = targetIP.getText();
 
 					// Connect to server and get the EventClient.thisKey
 					EventClient.initialize(SERVERIP);
@@ -374,24 +384,30 @@ public class GameClient {
 
 		webcam = Webcam.getDefault();
 		// Text Field for client to enter "PlayerID" 
-		JTextField PlayerID = new JTextField("Enter Player ID here.", 30);
-		PlayerID.setBackground(Color.PINK);
+		JTextField PlayerID = new JTextField("", 30);
+		PlayerID.setBackground(Color.GREEN);
 		PlayerID.setFont(new Font("Liberation Mono", Font.BOLD | Font.ITALIC, 24));
-		PlayerID.setLocation(865,50); // 50 + 760
-		PlayerID.setSize(365,80);
+		PlayerID.setLocation(865,150); // 50 + 760
+		PlayerID.setSize(349,48);
+
+		// Label for reminding client to enter ID
+		JLabel showRemindMsg_ID = new JLabel("Enter Player ID here:");
+		showRemindMsg_ID.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 28));
+		showRemindMsg_ID.setForeground(Color.WHITE);
+		showRemindMsg_ID.setBounds(835, 100, 450, 38);
 		
 		// Text Field for client to enter "PlayGender" 
-		JTextField PlayerGender = new JTextField("Enter Player Gender here.", 30);
+		JTextField PlayerGender = new JTextField("", 30);
 		PlayerGender.setFont(new Font("Liberation Mono", Font.BOLD | Font.ITALIC, 24));
-		PlayerGender.setBackground(Color.PINK);
-		PlayerGender.setLocation(865,230); 
-		PlayerGender.setSize(365,80);
+		PlayerGender.setBackground(Color.GREEN);
+		PlayerGender.setLocation(865,280); 
+		PlayerGender.setSize(349,48);
 
-		ImageIcon diceShow = new ImageIcon("./resource/image/dice.gif");
-		diceShow.setImage(diceShow.getImage().getScaledInstance(270,224,Image.SCALE_DEFAULT));
-		Icon diceIcon = diceShow;
-		JLabel diceGif = new JLabel(diceIcon);
-		diceGif.setBounds(919, 398, 270, 224);
+		// Label for reminding client to enter Gender
+		JLabel showRemindMsg_Gender = new JLabel("Enter Player's Gender here:");
+		showRemindMsg_Gender.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 28));
+		showRemindMsg_Gender.setForeground(Color.WHITE);
+		showRemindMsg_Gender.setBounds(835, 230, 450, 38);
 
 		// Button for client to confirm photo
 		JButton ConfirmPicture = new JButton("Confirm");
@@ -416,6 +432,44 @@ public class GameClient {
 		Default.setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 24));
 		Default.setLocation(580,850); 
 		Default.setSize(230,80);
+
+		// use Picture and Text to instruct client
+		JLabel noteRemindInfo = new JLabel("Find Opponent");
+		noteRemindInfo.setForeground(Color.GREEN);
+		noteRemindInfo.setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 24));
+		noteRemindInfo.setBounds(976, 600, 270, 55);
+		frame.getContentPane().add(noteRemindInfo);
+		
+		JLabel noteRemindPhoto = new JLabel("Choose Yout Photo");
+		noteRemindPhoto.setForeground(Color.GREEN);
+		noteRemindPhoto.setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 24));
+		noteRemindPhoto.setBounds(917, 492, 270, 55);
+		frame.getContentPane().add(noteRemindPhoto);
+		
+		JLabel noteRemindFind = new JLabel("Enter Yout Info");
+		noteRemindFind.setForeground(Color.GREEN);
+		noteRemindFind.setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 24));
+		noteRemindFind.setBounds(976, 368, 270, 55);
+		frame.getContentPane().add(noteRemindFind);
+		
+		
+		ImageIcon oneNumber = new ImageIcon("./resource/image/number1.png");
+		oneNumber.setImage(oneNumber.getImage().getScaledInstance(100,100,Image.SCALE_DEFAULT));
+		JLabel numberOne = new JLabel((Icon)oneNumber);
+		numberOne.setBounds(885, 310, 80, 140);
+		frame.getContentPane().add(numberOne);
+		
+		ImageIcon twoNumber = new ImageIcon("./resource/image/number2.png");
+		twoNumber.setImage(twoNumber.getImage().getScaledInstance(100,100,Image.SCALE_DEFAULT));
+		JLabel numberTwo = new JLabel((Icon)twoNumber);
+		numberTwo.setBounds(791, 477, 140, 80);
+		frame.getContentPane().add(numberTwo);
+		
+		ImageIcon threeNumber = new ImageIcon("./resource/image/number3.png");
+		threeNumber.setImage(threeNumber.getImage().getScaledInstance(100,100,Image.SCALE_DEFAULT));
+		JLabel numberThree = new JLabel((Icon)threeNumber);
+		numberThree.setBounds(894, 572, 80, 140);
+		frame.getContentPane().add(numberThree);
 		
 		// set default photo data
 		Icon[] defaultPhotoArray = new ImageIcon[6];
@@ -438,6 +492,8 @@ public class GameClient {
 				TakePicture.setForeground(Color.BLACK);
 				Default.setBackground(Color.RED);
 				Default.setForeground(Color.BLACK);
+                ConfirmPicture.setBackground(Color.RED);
+                ConfirmPicture.setForeground(Color.BLACK);
 				
 				// remove the other buttons' action listener
 				for(ActionListener remove_take_listener : TakePicture.getActionListeners()) {
@@ -446,6 +502,10 @@ public class GameClient {
 				for(ActionListener remove_default_listener : Default.getActionListeners()) {
 					Default.removeActionListener(remove_default_listener);
 				}
+                for(ActionListener remove_confirm_listener : Default.getActionListeners()) {
+                    ConfirmPicture.removeActionListener(remove_confirm_listener);
+                }
+
 				
 				// set and display choosed photo
 				if(webcam_check == 1){
@@ -616,7 +676,8 @@ public class GameClient {
 		frame.getContentPane().add(TakePicture);
 		frame.getContentPane().add(Default);
 		frame.getContentPane().add(FindOpponent);
-		frame.getContentPane().add(diceGif);
+		frame.getContentPane().add(showRemindMsg_ID);
+        frame.getContentPane().add(showRemindMsg_Gender);
 		frame.getContentPane().doLayout();
 		frame.getContentPane().update(frame.getContentPane().getGraphics());
 	}
@@ -685,9 +746,9 @@ public class GameClient {
 		frame.getContentPane().doLayout();
 		frame.getContentPane().update(frame.getContentPane().getGraphics());
 		
+		picked = new int[6];
 		for(int i=0;i<6;i++)
 		{
-			picked = new int[6];
 			select[i].setIcon(null);
 		}
 		for(int i=0;i<12;i++)
@@ -1717,7 +1778,7 @@ public class GameClient {
 				if(surrender==0) //contentPane.setVisible(false);//法二傳送至主機端(請她delete)
 				{
 					jump_result(false);
-					EventClient.send("GameClient::jump_result($)",false,enemyEventClientKey);
+					EventClient.send("GameClient::jump_result($)",true,enemyEventClientKey);
 				}
 			}
 		});
@@ -1931,8 +1992,7 @@ public class GameClient {
 							EventClient.send("GameClient::receive_attackpack_and_set_character_state($)",packet,enemyEventClientKey);
 							/************************************************************/	
 							//**********************************************
-							String msg = character_data.character[picked[window_skillUse_character]].get_name() 
-									+ "發動了" + character_data.character[picked[window_skillUse_character]].get_skill1();
+							String msg = character_english_name[picked[window_skillUse_character]]+ "use skill1";
 							displayFightMsg(msg);
 							EventClient.send("GameClient::displayFightMsg($)",msg,enemyEventClientKey);
 							//************************************
@@ -2015,8 +2075,7 @@ public class GameClient {
 							}
 							EventClient.send("GameClient::receive_attackpack_and_set_character_state($)",packet,enemyEventClientKey);
 							//**********************************************
-							String msg = character_data.character[picked[window_skillUse_character]].get_name() 
-									+ "發動了" + character_data.character[picked[window_skillUse_character]].get_skill2();
+							String msg = character_english_name[picked[window_skillUse_character]] + "use skill2";
 							displayFightMsg(msg);
 							EventClient.send("GameClient::displayFightMsg($)",msg,enemyEventClientKey);
 							//************************************
@@ -2197,19 +2256,19 @@ public class GameClient {
 							if(damage>0)
 							{
 								character_data.character[picked[attack_test]].set_hp(character_data.character[picked[attack_test]].get_hp() - damage);
-								if(character_data.character[picked[attack_test]].get_hp()<0)
+								if(character_data.character[picked[attack_test]].get_hp()<=0)
 								{
 									update();
 								}
 								//********************
-								String msg = character_data.character[picked[attack_test]] + "受到了 " + damage + " 傷害";
+								String msg = character_english_name[picked[attack_test]] + "take " + damage + " damage";
 								displayFightMsg(msg);
 								EventClient.send("GameClient::displayFightMsg($)",msg,enemyEventClientKey);
 								//********************
 							}
 							else{
 								//********************
-								String msg = character_data.character[picked[attack_test]] + "受到了 0 傷害";
+								String msg = character_data.character[picked[attack_test]] + "doesn't take any damage";
 								displayFightMsg(msg);
 								EventClient.send("GameClient::displayFightMsg($)",msg,enemyEventClientKey);
 								//********************
@@ -2331,8 +2390,7 @@ public class GameClient {
 									EventClient.send("GameClient::check_use_skill_construct($)",packet,enemyEventClientKey);
 									/*呼叫敵方的防禦CONSTRUCT  check_use_skill_construct*/
 									//********************
-									String msg = character_data.character[picked[attacker_judge]].get_name() +"發動攻擊，" 
-												+ "攻擊："+ character_data.character[picked[attacker_judge]].get_now_attack();
+									String msg = character_english_name[picked[attacker_judge]]+"Attack, Attack："+ character_data.character[picked[attacker_judge]].get_now_attack();
 									displayFightMsg(msg);
 									EventClient.send("GameClient::displayFightMsg($)",msg,enemyEventClientKey);
 									//********************
@@ -2347,14 +2405,11 @@ public class GameClient {
 								EventClient.send("GameClient::check_use_skill_construct($)",packet,enemyEventClientKey);
 								
 								//********************
-								String msg = character_data.character[picked[attacker_judge]].get_name() +"發動攻擊，"
-											+ "攻擊："+ character_data.character[picked[attacker_judge]].get_now_attack();
+								String msg = character_english_name[picked[attacker_judge]]+"Attack, Attack："+ character_data.character[picked[attacker_judge]].get_now_attack();
 											
 								displayFightMsg(msg);
 								EventClient.send("GameClient::displayFightMsg($)",msg,enemyEventClientKey);
 								//********************
-								
-								returnToOriginalState();
 							}
 							null_construct();
 							wait_stage();
@@ -2478,11 +2533,12 @@ public class GameClient {
 				}
 			}
 			else
-			{
+			{	
 				character_state_mode = 0;
 				ready.setEnabled(false);
 				attack.setEnabled(true);
 				end.setEnabled(true);
+				returnToOriginalState();
 			}		
 		}
 		
@@ -2577,7 +2633,7 @@ public class GameClient {
 			if(!character_alive[0] && !character_alive[2] && !character_alive[4]) //all character died
 			{
 				jump_result(false);
-				EventClient.send("GameClient::jump_result($)",false,enemyEventClientKey);
+				EventClient.send("GameClient::jump_result($)",true,enemyEventClientKey);
 			}
 		}
 		
