@@ -22,7 +22,7 @@ import javax.swing.UIManager.LookAndFeelInfo;
 
 public class GameClient {
 
-	public static String SERVERIP = "172.20.10.2";
+	public static String SERVERIP = "172.20.10.10";
 	public static int PORT = 9487;
 	public static JFrame frame;
 	public static String gKey; // my GaneClient key
@@ -280,6 +280,11 @@ public class GameClient {
 		frame.setBounds(960-640, 540-480, 1280, 960);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+
+		// Label for gif
+		JLabel cardBoy = new JLabel((Icon) new ImageIcon ("../resource/image/use1.gif"));
+		cardBoy.setBounds(300,300,500,500);
+		frame.getContentPane().add(cardBoy);
 
 		// StartGame button
 		// When start Game Button pressed, Connect to the server
