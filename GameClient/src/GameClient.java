@@ -2150,11 +2150,12 @@ public class GameClient {
 			end.setEnabled(false);
 		}		
 
-		public static void recvMsg(String msg)
-		{
+		// Show the message in the text field of chat room
+		public static void recvMsg(String msg){
 			chatContentDisplay.append(opponentID + ":\n" + "    " + msg);
 		}
 
+		// Chat Room GUI initialize
 		public static void chatRoom(){
 			chat = new JFrame("ChatRoom");
 			chat.getContentPane().setBackground(Color.WHITE);
@@ -2270,6 +2271,7 @@ public class GameClient {
 			chat.setVisible(true);
 			chat.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		}
+		
 }
 
 
