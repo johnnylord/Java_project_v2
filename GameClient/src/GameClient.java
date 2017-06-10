@@ -631,6 +631,20 @@ public class GameClient {
 			public void mouseClicked(MouseEvent e){
 				PlayerID_String = PlayerID.getText();
 				PlayerGender_String = PlayerGender.getText();
+
+                for(ActionListener remove_take_listener : TakePicture.getActionListeners()) {
+                    TakePicture.removeActionListener(remove_take_listener);
+                }    
+                for(ActionListener remove_default_listener : Default.getActionListeners()) {
+                    Default.removeActionListener(remove_default_listener);
+                }    
+                for(ActionListener remove_confirm_listener : ConfirmPicture.getActionListeners()) {
+                    ConfirmPicture.removeActionListener(remove_confirm_listener);
+                }
+				for(ActionListener remove_find_listener: FindOpponent.getActionListeners()){
+					FindOpponent.removeActionListener(remove_find_listener);
+				}
+				
 				System.out.println("Clicked...");
 				GameClient.scene2Reminder();
 			}
@@ -707,10 +721,27 @@ public class GameClient {
 		btn1.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				// Send to tell server group me and other player
+                for(ActionListener remove_btn1_listener: btn1.getActionListeners()){
+                    btn1.removeActionListener(remove_btn1_listener);
+                }
+                for(ActionListener remove_btn2_listener: btn2.getActionListeners()){
+                    btn2.removeActionListener(remove_btn2_listener);                                                   
+                }
 				EventClient.send("GameServer::match($)",EventClient.getKey(),null);
 				reminder.dispose();
 			}
 		});
+        btn2.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                reminder.dispose();
+                for(ActionListener remove_btn1_listener: btn1.getActionListeners()){
+                    btn1.removeActionListener(remove_btn1_listener);
+                }
+                for(ActionListener remove_btn2_listener: btn2.getActionListeners()){
+                    btn2.removeActionListener(remove_btn2_listener);                                                   
+                }
+            }
+        });
 		reminder.add(msg);
 		reminder.add(btn1);
 		reminder.add(btn2);
