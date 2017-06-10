@@ -967,10 +967,11 @@ public class GameClient {
 		// and close the bgmusic
 		//	get the Clip Dataline Connected to the mixer
 		try{
+
 		if(musicBeforeGame.isActive())
 			musicBeforeGame.stop();
 
-		if(musicForGame.isActive())
+		if(musicForGame != null)
 			musicForGame.stop();
 
 		DataLine.Info dataInfo = new DataLine.Info(Clip.class, null);
