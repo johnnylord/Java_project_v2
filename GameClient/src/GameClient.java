@@ -281,6 +281,11 @@ public class GameClient {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
+		// Label for gif
+		JLabel cardBoy = new JLabel((Icon) new ImageIcon ("../resource/image/use1.gif"));
+		cardBoy.setBounds(300,300,500,500);
+		frame.getContentPane().add(cardBoy);
+
 		// StartGame button
 		// When start Game Button pressed, Connect to the server
 		JButton StartButton = new JButton("Start Game");
@@ -1935,7 +1940,7 @@ public class GameClient {
 							
 							
 							/*********************傳送封包告知對方所受傷害*/
-							GameData packet = new GameData(GameData.def);
+							GameData packet = new GameData(GameData.defense_pack);
 							for(int i=0;i<6;i++)
 							{
 								int index = reverse(i);	
