@@ -1564,6 +1564,7 @@ public class GameClient {
 			img.setImage(img.getImage().getScaledInstance(200,295,Image.SCALE_DEFAULT));
 			character_button_select[i].setIcon(img);
 			character_button_select[i].setText("");
+			character_button_select[i].setEnabled(true);
 		}
 	}
 
