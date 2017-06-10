@@ -300,6 +300,9 @@ public class GameClient {
 		AudioInputStream audioInput = AudioSystem.getAudioInputStream(bgMusic);
 		musicBeforeGame.open(audioInput);
 		musicBeforeGame.loop(Clip.LOOP_CONTINUOUSLY);
+		
+		thirdScene_listener();
+		fourthScene_listener();
 	}
 
 	/*
@@ -747,29 +750,8 @@ public class GameClient {
 	 *Third Scene:
 	 * Select the Heros 
 	 */
-	public static void thirdScene() {
-		// refresh the frame
-		frame.getContentPane().removeAll();
-		frame.getContentPane().doLayout();
-		frame.getContentPane().update(frame.getContentPane().getGraphics());
-		
-		picked = new int[6];
-		myCount = 0;
-		oppCount = 1;
-		for(int i=0;i<6;i++)
-		{
-			select[i].setIcon(null);
-		}
-		for(int i=0;i<12;i++)
-		{
-			seleted[i] = 0;
-		}
-		
-		// add Combo box 
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"亞瑟王","高文","莫德雷德","蘭斯洛特","加雷斯","貝迪維爾","崔斯坦","摩根勒菲","加拉哈德","珀西瓦","梅林","閨妮維雅"}));
-		comboBox.setForeground(Color.BLACK);
-		comboBox.setFont(new Font("標楷體", Font.BOLD, 40));
-		comboBox.setBounds(512, 40, 200, 50);
+	 
+	public static void thirdScene_listener(){
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -786,20 +768,7 @@ public class GameClient {
 				
 			}
 		} );
-
-
-		// used to display the selected car
-		ImageIcon display = new ImageIcon("./resource/image/亞瑟王.png");
-		display.setImage(display.getImage().getScaledInstance(400,590,Image.SCALE_DEFAULT));
-		Icon img = display;
-		character_data_label.setIcon(img);
-		character_data_label.setBounds(425, 150, 400, 590);
 		
-		//press the "select" button (action)
-		btnNewButton.setFont(new Font("標楷體", Font.BOLD, 30));
-		btnNewButton.setBounds(559, 802, 131, 56);
-		label.setBounds(47, 94, 57, 19);
-		btnNewButton.setEnabled((firstSelect)? true:false);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {	
 				if(seleted[comboBox.getSelectedIndex()]==0)
@@ -836,6 +805,46 @@ public class GameClient {
 				comboBox.setSelectedIndex(0);
 			}
 		});
+	}
+	public static void thirdScene() {
+		// refresh the frame
+		frame.getContentPane().removeAll();
+		frame.getContentPane().doLayout();
+		frame.getContentPane().update(frame.getContentPane().getGraphics());
+		
+		picked = new int[6];
+		myCount = 0;
+		oppCount = 1;
+		for(int i=0;i<6;i++)
+		{
+			select[i].setIcon(null);
+		}
+		for(int i=0;i<12;i++)
+		{
+			seleted[i] = 0;
+		}
+		
+		// add Combo box 
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"亞瑟王","高文","莫德雷德","蘭斯洛特","加雷斯","貝迪維爾","崔斯坦","摩根勒菲","加拉哈德","珀西瓦","梅林","閨妮維雅"}));
+		comboBox.setForeground(Color.BLACK);
+		comboBox.setFont(new Font("標楷體", Font.BOLD, 40));
+		comboBox.setBounds(512, 40, 200, 50);
+		
+
+
+		// used to display the selected car
+		ImageIcon display = new ImageIcon("./resource/image/亞瑟王.png");
+		display.setImage(display.getImage().getScaledInstance(400,590,Image.SCALE_DEFAULT));
+		Icon img = display;
+		character_data_label.setIcon(img);
+		character_data_label.setBounds(425, 150, 400, 590);
+		
+		//press the "select" button (action)
+		btnNewButton.setFont(new Font("標楷體", Font.BOLD, 30));
+		btnNewButton.setBounds(559, 802, 131, 56);
+		label.setBounds(47, 94, 57, 19);
+		btnNewButton.setEnabled((firstSelect)? true:false);
+		
 		
 		// the placeholder for selected card
 		player1_character_1.setBounds(110, 10, 200, 295);
@@ -882,6 +891,18 @@ public class GameClient {
 		GameClient.fourthScene();
 	}
 
+	
+	
+	public static void fourthScene_listener(){
+		characterButton_listener();
+		stage_listener();
+		characterStates_atkDise_choose_listener();
+		characterStates_defDise_choose_listener();
+		characterState_skill_data_listener();
+		characterState_skill_listener();
+		characterState_attackCharacterSelect_listener();
+		characterState_useSkillCheck_listener();
+	}
 	public static void fourthScene(){
 		// refresh the frame
 		frame.getContentPane().removeAll();
@@ -1367,12 +1388,12 @@ public class GameClient {
 		//角色目前狀況
 		windows_character_button_construct();
 		windows_character_state_construct();
-		characterButton_listener();
+		
 		
 		//左中選單
 		windows_stage_select_construct();
 		windows_stage_select(); //判斷攻擊、防禦階段 可使用按鈕有差別
-		stage_listener();
+		
 		
 		character_state_mode = 7;
 		null_construct();
@@ -1884,27 +1905,27 @@ public class GameClient {
 		
 		//mode6
 		windows_characterStates_atkDise_choose_construct();
-		characterStates_atkDise_choose_listener();
+		
 		
 		//mode5
 		windows_characterStates_defDise_choose_construct();
-		characterStates_defDise_choose_listener();
+		
 		
 		//mode1
 		windows_characterState_skill_data_construct();
-		characterState_skill_data_listener();
+		
 		
 		//mode2
 		windows_characterState_skill_useCharacter_construct();
-		characterState_skill_listener();
+		
 		
 		//mode3
 		windows_characterState_attackCharacterSelect_construct();
-		characterState_attackCharacterSelect_listener();
+		
 		
 		//mode4
 		windows_characterState_useSkillCheck_construct();
-		characterState_useSkillCheck_listener();	
+			
 	}
 		//select mode 1 選擇要否發動技能
 		//select mode 1 角色技能資訊查看
