@@ -340,13 +340,12 @@ public class GameClient {
 		PlayerGender.setBackground(Color.PINK);
 		PlayerGender.setLocation(865,295); 
 		PlayerGender.setSize(365,80);
-		
-		// Text Field for client to enter "PlayerMotto" 
-		JTextField PlayerMotto = new JTextField("Enter Player Motto here.", 30);
-		PlayerMotto.setFont(new Font("Liberation Mono", Font.BOLD | Font.ITALIC, 24));
-		PlayerMotto.setBackground(Color.PINK);
-		PlayerMotto.setLocation(865,540); 
-		PlayerMotto.setSize(365,80);
+
+		ImageIcon diceShow = new ImageIcon("../resource/image/dice.gif");
+		diceShow.setImage(diceShow.getImage().getScaledInstance(270,224,Image.SCALE_DEFAULT));
+		Icon diceIcon = diceShow;
+		JLabel diceGif = new JLabel(diceIcon);
+		diceGif.setBounds(919, 398, 270, 224);
 
 		// Button for client to confirm photo
 		JButton ConfirmPicture = new JButton("Confirm");
@@ -519,7 +518,6 @@ public class GameClient {
 			public void mouseClicked(MouseEvent e){
 				PlayerID_String = PlayerID.getText();
 				PlayerGender_String = PlayerGender.getText();
-				String PlayerMotto_String = PlayerMotto.getText();
 				System.out.println("Clicked...");
 				GameClient.scene2Reminder();
 			}
@@ -568,7 +566,6 @@ public class GameClient {
 		frame.getContentPane().add(panel);
 		frame.getContentPane().add(PlayerID);
 		frame.getContentPane().add(PlayerGender);
-		frame.getContentPane().add(PlayerMotto);
 		frame.getContentPane().add(ConfirmPicture);
 		frame.getContentPane().add(TakePicture);
 		frame.getContentPane().add(Default);
