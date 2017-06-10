@@ -1924,18 +1924,21 @@ public class GameClient {
 		atk_num.setHorizontalAlignment(SwingConstants.CENTER);
 		atk_num.setFont(new Font("新細明體", Font.PLAIN, 20));
 		atk_num.setBounds(107, 51, 57, 19);
+		atk_num.setText("0");
 		dice_state.add(atk_num);
 		
 		//text def
 		def_num.setHorizontalAlignment(SwingConstants.CENTER);
 		def_num.setFont(new Font("新細明體", Font.PLAIN, 20));
 		def_num.setBounds(280, 51, 57, 19);
+		def_num.setText("2");
 		dice_state.add(def_num);
 		
 		//text spec
 		spec_num.setHorizontalAlignment(SwingConstants.CENTER);
 		spec_num.setFont(new Font("新細明體", Font.PLAIN, 20));
 		spec_num.setBounds(456, 51, 57, 19);
+		spec_num.setText("2");
 		dice_state.add(spec_num);
 	}
 	
