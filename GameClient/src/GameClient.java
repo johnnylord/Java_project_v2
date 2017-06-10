@@ -1405,7 +1405,8 @@ public class GameClient {
 		windows_stage_select(); //判斷攻擊、防禦階段 可使用按鈕有差別
 		stage_listener();
 		
-		character_state_mode = 8;
+		character_state_mode = 7;
+		null_construct();
 		
 		//右邊骰子介面
 		windows_dice_state_construct();
@@ -1779,7 +1780,7 @@ public class GameClient {
 					 	   " / Hp " + character_data.character[picked[i]].get_hp(); 
 			character_label_state[i].setText(state);
 			*/
-			character_label_state_HP[i].setValue(character_data.character[picked[i]].get_hp());
+			character_label_state_HP[i].setValue(character_data.character[picked[i]].origin_hp);
 			character_label_state_atk[i].setValue(character_data.character[picked[i]].get_attack());
 			character_label_state_def[i].setValue(character_data.character[picked[i]].get_defence());
 			frame.getContentPane().update(frame.getContentPane().getGraphics());
@@ -2218,8 +2219,9 @@ public class GameClient {
 					for(int i=0;i<=4;i=i+2)
 					{
 						//如果全都是攻擊階段的技能
-						if(character_data.character[picked[i]].skill1_use_stage()==Character_Data.def||
-						   character_data.character[picked[i]].skill2_use_stage()==Character_Data.def)
+						if(character_alive[i]&&
+						  (character_data.character[picked[i]].skill1_use_stage()==Character_Data.def||
+						   character_data.character[picked[i]].skill2_use_stage()==Character_Data.def))
 						{
 							null_construct();
 							break;
@@ -2590,6 +2592,7 @@ public class GameClient {
 						EventClient.send("GameClient::check_use_skill_construct($)",packet,enemyEventClientKey);
 					}
 					character_state_mode = 0;
+					null_construct();
 					attack_all_count=0;
 					attack_all = false;
 					returnToOriginalState();
@@ -2598,6 +2601,7 @@ public class GameClient {
 			else
 			{	
 				character_state_mode = 0;
+				null_construct();
 				ready.setEnabled(false);
 				attack.setEnabled(true);
 				end.setEnabled(true);
