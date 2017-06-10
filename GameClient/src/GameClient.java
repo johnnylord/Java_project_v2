@@ -319,9 +319,17 @@ public class GameClient {
 		contentPane.setIcon(diceBackground);
 		frame.setContentPane(contentPane);
 
+		// text field which can enter Server's IP
         JTextField targetIP = new JTextField("");
-        targetIP.setBounds(540,680,200,50);
+        targetIP.setBounds(537,680,206,40);
+		targetIP.setFont(new Font("Liberation Mono", Font.BOLD, 20));
         frame.getContentPane().add(targetIP);
+
+		JLabel remindIP = new JLabel("Server IP:");
+		remindIP.setBounds(407,680,140,40);
+		remindIP.setFont(new Font("Liberation Mono", Font.BOLD, 22));
+		remindIP.setForeground(Color.GREEN);
+		frame.getContentPane().add(remindIP);
 
 		// Setting the size and location of the frame [ width: 1280px , height:960px ]
 		frame.setBounds(960-640, 540-480, 1280, 960);
@@ -502,7 +510,7 @@ public class GameClient {
 				for(ActionListener remove_default_listener : Default.getActionListeners()) {
 					Default.removeActionListener(remove_default_listener);
 				}
-                for(ActionListener remove_confirm_listener : Default.getActionListeners()) {
+                for(ActionListener remove_confirm_listener : ConfirmPicture.getActionListeners()) {
                     ConfirmPicture.removeActionListener(remove_confirm_listener);
                 }
 
@@ -747,6 +755,8 @@ public class GameClient {
 		frame.getContentPane().update(frame.getContentPane().getGraphics());
 		
 		picked = new int[6];
+		myCount = 0;
+		oppCount = 1;
 		for(int i=0;i<6;i++)
 		{
 			select[i].setIcon(null);
@@ -1992,9 +2002,9 @@ public class GameClient {
 							EventClient.send("GameClient::receive_attackpack_and_set_character_state($)",packet,enemyEventClientKey);
 							/************************************************************/	
 							//**********************************************
-							String msg = character_english_name[picked[window_skillUse_character]]+ "use skill1";
-							displayFightMsg(msg);
-							EventClient.send("GameClient::displayFightMsg($)",msg,enemyEventClientKey);
+							String msg = character_english_name[picked[window_skillUse_character]]+ " use skill1";
+							displayFightMsg(msg,PlayerID_String);
+							EventClient.send("GameClient::displayFightMsg($...)",new Object[]{msg,PlayerID_String},enemyEventClientKey);
 							//************************************
 							end_the_game_judge();
 							
@@ -2075,9 +2085,9 @@ public class GameClient {
 							}
 							EventClient.send("GameClient::receive_attackpack_and_set_character_state($)",packet,enemyEventClientKey);
 							//**********************************************
-							String msg = character_english_name[picked[window_skillUse_character]] + "use skill2";
-							displayFightMsg(msg);
-							EventClient.send("GameClient::displayFightMsg($)",msg,enemyEventClientKey);
+							String msg = character_english_name[picked[window_skillUse_character]] + " use skill2";
+							displayFightMsg(msg,PlayerID_String);
+							EventClient.send("GameClient::displayFightMsg($...)",new Object[]{msg,PlayerID_String},enemyEventClientKey);
 							//************************************
 							end_the_game_judge();
 							/************************************************************/	
@@ -2261,16 +2271,16 @@ public class GameClient {
 									update();
 								}
 								//********************
-								String msg = character_english_name[picked[attack_test]] + "take " + damage + " damage";
-								displayFightMsg(msg);
-								EventClient.send("GameClient::displayFightMsg($)",msg,enemyEventClientKey);
+								String msg = character_english_name[picked[attack_test]] + " take " + damage + " damage";
+								displayFightMsg(msg,PlayerID_String);
+								EventClient.send("GameClient::displayFightMsg($...)",new Object[]{msg,PlayerID_String},enemyEventClientKey);
 								//********************
 							}
 							else{
 								//********************
-								String msg = character_data.character[picked[attack_test]] + "doesn't take any damage";
-								displayFightMsg(msg);
-								EventClient.send("GameClient::displayFightMsg($)",msg,enemyEventClientKey);
+								String msg = character_english_name[picked[attack_test]] + " doesn't take any damage";
+								displayFightMsg(msg,PlayerID_String);
+								EventClient.send("GameClient::displayFightMsg($...)",new Object[]{msg,PlayerID_String},enemyEventClientKey);
 								//********************
 							}
 							
@@ -2390,9 +2400,9 @@ public class GameClient {
 									EventClient.send("GameClient::check_use_skill_construct($)",packet,enemyEventClientKey);
 									/*呼叫敵方的防禦CONSTRUCT  check_use_skill_construct*/
 									//********************
-									String msg = character_english_name[picked[attacker_judge]]+"Attack, Attack："+ character_data.character[picked[attacker_judge]].get_now_attack();
-									displayFightMsg(msg);
-									EventClient.send("GameClient::displayFightMsg($)",msg,enemyEventClientKey);
+									String msg = character_english_name[picked[attacker_judge]]+" Attack, Attack is "+ character_data.character[picked[attacker_judge]].get_now_attack();
+									displayFightMsg(msg,PlayerID_String);
+									EventClient.send("GameClient::displayFightMsg($...)",new Object[]{msg,PlayerID_String},enemyEventClientKey);
 									//********************
 								}
 								else{
@@ -2405,10 +2415,10 @@ public class GameClient {
 								EventClient.send("GameClient::check_use_skill_construct($)",packet,enemyEventClientKey);
 								
 								//********************
-								String msg = character_english_name[picked[attacker_judge]]+"Attack, Attack："+ character_data.character[picked[attacker_judge]].get_now_attack();
+								String msg = character_english_name[picked[attacker_judge]]+" Attack, Attack is "+ character_data.character[picked[attacker_judge]].get_now_attack();
 											
-								displayFightMsg(msg);
-								EventClient.send("GameClient::displayFightMsg($)",msg,enemyEventClientKey);
+								displayFightMsg(msg,PlayerID_String);
+								EventClient.send("GameClient::displayFightMsg($...)",new Object[]{msg,PlayerID_String},enemyEventClientKey);
 								//********************
 							}
 							null_construct();
@@ -2650,6 +2660,7 @@ public class GameClient {
 				frame.getContentPane().removeAll();
 				frame.getContentPane().doLayout();
 				secondScene();
+				chat.dispose();
 				frame.getContentPane().update(frame.getContentPane().getGraphics());	
 			}
 			else{
@@ -2658,8 +2669,8 @@ public class GameClient {
 		}
 		
 		
-		public static void displayFightMsg(String msg){
-            fightMsgDisplay.append(msg + "\n");
+		public static void displayFightMsg(String msg,String id){
+            fightMsgDisplay.append(id+"\n\t"+msg + "\n");
         }    
 
         public static void display_fight_construct(){
