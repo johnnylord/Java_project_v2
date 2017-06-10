@@ -942,6 +942,13 @@ public class GameClient {
 		end_using_skill = false;
 		null_construct();	  
 		
+		//***********************************************************
+			System.out.println(character_data.character[picked[attacker_test]].get_name() +"發動攻擊");
+			System.out.println("攻擊："+ character_data.character[picked[attacker_test]].get_now_attack());
+			System.out.println(character_data.character[picked[attack_test]].get_name() +"承受攻擊");
+		//***********************************************************
+		
+		
 		//receive_attackpack_and_set_character_state(gamedata);
 		 
 		 /*
