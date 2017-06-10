@@ -33,3 +33,4 @@ clear:
 	rm -rf ./bin
 	rm -rf ./build
 	rm -rf ./bak
+	rm ./takedPhoto.png
