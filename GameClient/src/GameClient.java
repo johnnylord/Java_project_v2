@@ -22,7 +22,7 @@ import javax.swing.UIManager.LookAndFeelInfo;
 
 public class GameClient {
 
-	public static String SERVERIP = "172.20.10.2";
+	public static String SERVERIP = "172.20.10.10";
 	public static int PORT = 9487;
 	public static JFrame frame;
 	public static String gKey; // my GaneClient key
@@ -687,7 +687,7 @@ public class GameClient {
 		
 		for(int i=0;i<6;i++)
 		{
-			picked[i] = new int[6];
+			picked = new int[6];
 			select[i].setIcon(null);
 		}
 		for(int i=0;i<12;i++)
