@@ -2357,19 +2357,19 @@ public class GameClient {
 							}
 							
 							//BUG點
-							Boolean opp_attack_all;
-							EvevtClient.send(o->opp_attack_all(o), "GameClient::get_attack_all()", enemyEventClientKey);
+							/*Boolean opp_attack_all;
+							EventClient.send(o->opp_attack_all(o), "GameClient::get_attack_all()", enemyEventClientKey);
 							
 							if(opp_attack_all)
 							{
 								null_construct();
 								wait_stage();
 							}
-							else{
+							else{*/
 								returnToOriginalState();
 								null_construct();
 								wait_stage();
-							}
+							//}
 
 							
 							//呼叫對方的 可以再次攻擊 can_attack_and_useSkill()
