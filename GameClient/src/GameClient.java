@@ -573,6 +573,20 @@ public class GameClient {
 					e1.printStackTrace();
 				}
 				webcam_check = 1;
+
+				// set client taked photo
+				confirmedToSend = new ImageIcon("./takedPhoto.png");
+                confirmedPhoto = new JLabel(confirmedIcon);
+                confirmedPhoto.setLocation(50,50);                                                                     
+                confirmedPhoto.setSize(760,754);
+
+                // remove useless component
+                webcam.close();
+                frame.getContentPane().remove(panel);
+                frame.getContentPane().remove(showup_default_photo);
+                frame.getContentPane().add(confirmedPhoto);                                                            
+                frame.getContentPane().doLayout();
+                frame.getContentPane().update(frame.getContentPane().getGraphics());
 			}
 		});
 
@@ -624,6 +638,7 @@ public class GameClient {
 					break;
 				}
 				webcam_check = 2;
+				confirmedToSend = new ImageIcon(filepath[photoIndex-1]);
 			}
 		});
 		
