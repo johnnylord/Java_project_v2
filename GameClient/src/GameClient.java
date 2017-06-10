@@ -921,7 +921,7 @@ public class GameClient {
 	public static void check_use_skill_construct(GameData gameData){
 		character_state_mode = 4;
 		//mode1
-		skill1.setVisible(false);  
+		/*skill1.setVisible(false);  
 		skill2.setVisible(false);
 		//mode2
 		select_char.setVisible(false);
@@ -934,26 +934,24 @@ public class GameClient {
 		//mode6
 		attack_dise_choose.setVisible(false);
 		//mode7
-		thorw_dise.setVisible(false);
+		thorw_dise.setVisible(false);*/
 		
-		
-		end_using_skill = false;
-		null_construct();
-		
-		//要改寫
-		
-		  
 		attacker_test = gameData.get_attacker();
 		attack_test = gameData.get_attacked();
+		
+		end_using_skill = false;
+		null_construct();	  
+		
 		//receive_attackpack_and_set_character_state(gamedata);
 		 
+		 /*
 		ImageIcon img = new ImageIcon("../resource/image/"+ character[picked[attacker_test]]+".png");
 		img.setImage(img.getImage().getScaledInstance(200,295,Image.SCALE_DEFAULT));
 		who_attack_skill_use.setIcon(img);
 
 		img = new ImageIcon("../resource/image/"+ character[picked[attack_test]]+".png");
 		img.setImage(img.getImage().getScaledInstance(200,295,Image.SCALE_DEFAULT));
-		attack_who_skill_use.setIcon(img);
+		attack_who_skill_use.setIcon(img);*/
 	}
 	public static void check_use_skill_construct_V2(){
 		character_state_mode = 4;
@@ -974,7 +972,7 @@ public class GameClient {
 		thorw_dise.setVisible(false);
 		
 		
-		end_using_skill = false;
+		//end_using_skill = false;
 		null_construct();
 		 
 		ImageIcon img = new ImageIcon("../resource/image/"+ character[picked[attacker_test]]+".png");
@@ -1950,7 +1948,7 @@ public class GameClient {
 							int atk = character_data.character[picked[attacker_judge]].get_now_attack()+use_dise*10;
 							character_data.character[picked[attacker_judge]].set_now_attack(atk);
 							System.out.println(character_data.character[picked[attacker_judge]].get_name() +"發動攻擊");
-							System.out.println("攻擊："+atk);
+							System.out.println("攻擊："+ character_data.character[picked[attacker_judge]].get_now_attack());
 							//***********************************************************
 							
 							
