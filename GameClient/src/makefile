@@ -37,4 +37,5 @@ clear:
 	rm -rf *.class
 	rm -rf ./event/*.class
 	rm -rf takedPhoto.png
+	rm -rf ./packageData/*.class
 

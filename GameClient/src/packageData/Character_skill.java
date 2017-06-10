@@ -6,64 +6,64 @@ public class Character_skill {
 		int skill_action(Character_Data chara1,Character_Data chara2,Character_Data chara3);
 	}
 	
-	//µo°ÊªÌ ¹ï¹³ ²Ä¤T¦W
+	//ç™¼å‹•è€… å°åƒ ç¬¬ä¸‰å
 	public Skill[] character_skill_array = new Skill[]{
-			//¨È·æ¤ı
+			//äºç‘Ÿç‹
 			new Skill(){public int skill_action(Character_Data chara1,Character_Data chara2,Character_Data chara3){ 
 				return ch1_skill1(chara1); }},
 			new Skill(){public int skill_action(Character_Data chara1,Character_Data chara2,Character_Data chara3){ 
 				return 0;	} },
-			//°ª¤å
+			//é«˜æ–‡
 			new Skill(){public int skill_action(Character_Data chara1,Character_Data chara2,Character_Data chara3){ 
 				return ch2_skill1(chara1); }},
 			new Skill(){public int skill_action(Character_Data chara1,Character_Data chara2,Character_Data chara3){ 
 				return 0;	} },
-			//²ö¼w¹p±o
+			//è«å¾·é›·å¾—
 			new Skill(){public int skill_action(Character_Data chara1,Character_Data chara2,Character_Data chara3){ 
 				return ch3_skill1(chara1); }},
 			new Skill(){public int skill_action(Character_Data chara1,Character_Data chara2,Character_Data chara3){ 
 				return 0;	} },
-			//Äõ´µ¬¥¯S
+			//è˜­æ–¯æ´›ç‰¹
 			new Skill(){public int skill_action(Character_Data chara1,Character_Data chara2,Character_Data chara3){ 
 				return ch4_skill1(chara1); }},
 			new Skill(){public int skill_action(Character_Data chara1,Character_Data chara2,Character_Data chara3){ 
 				return 0;	} },
-			//"¥[¹p´µ",
+			//"åŠ é›·æ–¯",
 			new Skill(){public int skill_action(Character_Data chara1,Character_Data chara2,Character_Data chara3){ 
 				return ch5_skill1(chara1); }},
 			new Skill(){public int skill_action(Character_Data chara1,Character_Data chara2,Character_Data chara3){ 
 				return ch5_skill2(chara1, chara2);	} },
-			//"¨©­}ºûº¸",
+			//"è²è¿ªç¶­çˆ¾",
 			new Skill(){public int skill_action(Character_Data chara1,Character_Data chara2,Character_Data chara3){ 
 				return ch6_skill1( chara1, chara2, chara3); }},
 			new Skill(){public int skill_action(Character_Data chara1,Character_Data chara2,Character_Data chara3){ 
 				return ch6_skill2( chara1);	} },
-			//"±Z´µ©Z",
+			//"å´”æ–¯å¦",
 			new Skill(){public int skill_action(Character_Data chara1,Character_Data chara2,Character_Data chara3){ 
 				return ch7_skill1( chara1); }},
 			new Skill(){public int skill_action(Character_Data chara1,Character_Data chara2,Character_Data chara3){ 
 				return ch7_skill2( chara1, chara2, chara3);	} },
-			//"¼¯®Ú°Çµá",
+			//"æ‘©æ ¹å‹’è²",
 			new Skill(){public int skill_action(Character_Data chara1,Character_Data chara2,Character_Data chara3){ 
 				return ch8_skill1( chara1, chara2); }},
 			new Skill(){public int skill_action(Character_Data chara1,Character_Data chara2,Character_Data chara3){ 
 				return ch8_skill2( chara1, chara2);	} },
-			//"¥[©Ô«¢¼w",
+			//"åŠ æ‹‰å“ˆå¾·",
 			new Skill(){public int skill_action(Character_Data chara1,Character_Data chara2,Character_Data chara3){ 
 				return ch9_skill1( chara1); }},
 			new Skill(){public int skill_action(Character_Data chara1,Character_Data chara2,Character_Data chara3){ 
 				return ch9_skill2( chara1);	} },
-			//"¬Ä¦è¥Ë",
+			//"ç€è¥¿ç“¦",
 			new Skill(){public int skill_action(Character_Data chara1,Character_Data chara2,Character_Data chara3){ 
 				return ch10_skill1( chara1, chara2); }},
 			new Skill(){public int skill_action(Character_Data chara1,Character_Data chara2,Character_Data chara3){ 
 				return ch10_skill2( chara1);	} },
-			//"±öªL",
+			//"æ¢…æ—",
 			new Skill(){public int skill_action(Character_Data chara1,Character_Data chara2,Character_Data chara3){ 
 				return ch11_skill1( chara1, chara2); }},
 			new Skill(){public int skill_action(Character_Data chara1,Character_Data chara2,Character_Data chara3){ 
 				return ch11_skill2( chara1, chara2);	} },
-			//"»Ó©gºû¶®"
+			//"é–¨å¦®ç¶­é›…"
 			new Skill(){public int skill_action(Character_Data chara1,Character_Data chara2,Character_Data chara3){ 
 				return ch12_skill1( chara1, chara2); }},
 			new Skill(){public int skill_action(Character_Data chara1,Character_Data chara2,Character_Data chara3){ 
@@ -80,10 +80,10 @@ public class Character_skill {
 	
 
 	
-	public int ch1_skill1(Character_Data chara1)//"»}¬ù³Ó§Q¤§¼C¡]§ğÀ»¶¥¬q\n\n\t¯S®í3\t¸Ó¦^¦X¹ï¥şÅé§ğÀ»¤@¦¸"
+	public int ch1_skill1(Character_Data chara1)//"èª“ç´„å‹åˆ©ä¹‹åŠï¼ˆæ”»æ“Šéšæ®µ\n\n\tç‰¹æ®Š3\tè©²å›åˆå°å…¨é«”æ”»æ“Šä¸€æ¬¡"
 	{
-		//¯S®íMODE
-		System.out.println("»}¬ù³Ó§Q¤§¼C");
+		//ç‰¹æ®ŠMODE
+		System.out.println("èª“ç´„å‹åˆ©ä¹‹åŠ");
 		int mode = attack_all;
 		return mode;
 	}
@@ -93,9 +93,9 @@ public class Character_skill {
 		int mode = no_skill;
 		return mode;
 	}
-	public int ch2_skill1(Character_Data chara1)//"¸tªÌªº¼Æ¦r¡]§ğÀ»¶¥¬q\n\n\t¯S®í2\t¼W¥[¦Û¨­§ğÀ»20¡A30%¾÷²v¦A¥[15",
+	public int ch2_skill1(Character_Data chara1)//"è–è€…çš„æ•¸å­—ï¼ˆæ”»æ“Šéšæ®µ\n\n\tç‰¹æ®Š2\tå¢åŠ è‡ªèº«æ”»æ“Š20ï¼Œ30%æ©Ÿç‡å†åŠ 15",
 	{
-		System.out.println("¸tªÌªº¼Æ¦r");
+		System.out.println("è–è€…çš„æ•¸å­—");
 		int mode = general_skill;
 		Random rand = new Random();
 		if(rand.nextInt(10)<3)
@@ -114,9 +114,9 @@ public class Character_skill {
 		int mode = 0;
 		return mode;
 	}
-	public int ch3_skill1(Character_Data chara1)//"¤£©¾ªº«H¥õ¡]§ğÀ»¶¥¬q\n\n\t¯S®í3\t­°§C¦Û¨­15¦å¶q\n\t\t¸Ó¦^¦X¼W¥[40§ğÀ»",
+	public int ch3_skill1(Character_Data chara1)//"ä¸å¿ çš„ä¿¡ä»°ï¼ˆæ”»æ“Šéšæ®µ\n\n\tç‰¹æ®Š3\té™ä½è‡ªèº«15è¡€é‡\n\t\tè©²å›åˆå¢åŠ 40æ”»æ“Š",
 	{
-		System.out.println("¤£©¾ªº«H¥õ");
+		System.out.println("ä¸å¿ çš„ä¿¡ä»°");
 		int mode = general_skill;
 		chara1.set_now_attack(chara1.get_now_attack()+40);
 		chara1.set_hp(chara1.get_hp() - 15);
@@ -128,9 +128,9 @@ public class Character_skill {
 		int mode = no_skill;
 		return mode;
 	}
-	public int ch4_skill1(Character_Data chara1)//"´ò¤§ÃM¤h¡]§ğÀ»¶¥¬q\n\n\t¯S®í2\t¼W¥[¦Û¨­§ğÀ»25",
+	public int ch4_skill1(Character_Data chara1)//"æ¹–ä¹‹é¨å£«ï¼ˆæ”»æ“Šéšæ®µ\n\n\tç‰¹æ®Š2\tå¢åŠ è‡ªèº«æ”»æ“Š25",
 	{
-		System.out.println("´ò¤§ÃM¤h");
+		System.out.println("æ¹–ä¹‹é¨å£«");
 		int mode = general_skill;
 		chara1.set_now_attack(chara1.get_now_attack()+25);
 		return mode;
@@ -141,17 +141,17 @@ public class Character_skill {
 		int mode = no_skill;
 		return mode;
 	}
-	public int ch5_skill1(Character_Data chara1)//"Áô½ª¡]§ğÀ»¶¥¬q\n\n\t¯S®í2\t¦Û¨­¦å¶q´î¤Ö10ÂI¡A§ğÀ»¤O¼W¥[30",
+	public int ch5_skill1(Character_Data chara1)//"éš±è”½ï¼ˆæ”»æ“Šéšæ®µ\n\n\tç‰¹æ®Š2\tè‡ªèº«è¡€é‡æ¸›å°‘10é»ï¼Œæ”»æ“ŠåŠ›å¢åŠ 30",
 	{
-		System.out.println("Áô½ª");
+		System.out.println("éš±è”½");
 		int mode = general_skill;
 		chara1.set_now_attack(chara1.get_now_attack()+30);
 		chara1.set_hp(chara1.get_hp() - 10);
 		return mode;
 	}
-	public int ch5_skill2(Character_Data chara1,Character_Data chara2)//"±Ë¤v¬°¤H¡]§ğÀ»¡B¨¾¿m¶¥¬q\n\n\t¯S®í3\t¦Û¨­¦å¶qÂk¹s\n\t\t¦^ÂĞ¤@¦W¶¤¤Í  30¦å",
+	public int ch5_skill2(Character_Data chara1,Character_Data chara2)//"æ¨å·±ç‚ºäººï¼ˆæ”»æ“Šã€é˜²ç¦¦éšæ®µ\n\n\tç‰¹æ®Š3\tè‡ªèº«è¡€é‡æ­¸é›¶\n\t\tå›è¦†ä¸€åéšŠå‹  30è¡€",
 	{
-		System.out.println("±Ë¤v¬°¤H");
+		System.out.println("æ¨å·±ç‚ºäºº");
 		int mode = suicide;
 		if(chara2.get_hp()>0);
 		{
@@ -160,32 +160,32 @@ public class Character_skill {
 		chara1.set_hp(0);
 		return mode;
 	}
-	public int ch6_skill1(Character_Data chara1,Character_Data chara2,Character_Data chara3)//¦uÅ@»}¬ù¡]¨¾¿m¶¥¬q\n\n\t¯S®í2\t¼W¥[¥şÅé¨¾¿m10",
+	public int ch6_skill1(Character_Data chara1,Character_Data chara2,Character_Data chara3)//å®ˆè­·èª“ç´„ï¼ˆé˜²ç¦¦éšæ®µ\n\n\tç‰¹æ®Š2\tå¢åŠ å…¨é«”é˜²ç¦¦10",
 	{
-		System.out.println("¦uÅ@»}¬ù");
+		System.out.println("å®ˆè­·èª“ç´„");
 		int mode = general_skill;
 		chara1.set_now_defence(chara1.get_now_defence() +10 );
 		chara2.set_now_defence(chara2.get_now_defence() +10 );
 		chara3.set_now_defence(chara3.get_now_defence() +10 );
 		return mode;
 	}
-	public int ch6_skill2(Character_Data chara1)//"»È¦â¤§µÃ¡]§ğÀ»¶¥¬q\n\n\t¯S®í2\t¼W¥[¦Û¨­§ğÀ»20",
+	public int ch6_skill2(Character_Data chara1)//"éŠ€è‰²ä¹‹è…•ï¼ˆæ”»æ“Šéšæ®µ\n\n\tç‰¹æ®Š2\tå¢åŠ è‡ªèº«æ”»æ“Š20",
 	{
-		System.out.println("»È¦â¤§µÃ");
+		System.out.println("éŠ€è‰²ä¹‹è…•");
 		int mode = general_skill;
 		chara1.set_now_attack(chara1.get_now_attack()+20);
 		return mode;
 	}
-	public int ch7_skill1(Character_Data chara1)//"¶Ç©Óªº¯¬ºÖ¡]§ğÀ»¶¥¬q\n\n\t¯S®í1\t¼W¥[¦Û¨­§ğÀ»10",
+	public int ch7_skill1(Character_Data chara1)//"å‚³æ‰¿çš„ç¥ç¦ï¼ˆæ”»æ“Šéšæ®µ\n\n\tç‰¹æ®Š1\tå¢åŠ è‡ªèº«æ”»æ“Š10",
 	{
-		System.out.println("¶Ç©Óªº¯¬ºÖ");
+		System.out.println("å‚³æ‰¿çš„ç¥ç¦");
 		int mode = general_skill;
-		chara1.set_now_defence(chara1.get_now_defence() +10 );
+		chara1.set_now_defence(chara1.get_now_attack() +10 );
 		return mode;
 	}
-	public int ch7_skill2(Character_Data chara1,Character_Data chara2,Character_Data chara3)//"´d¶Ëªºµ²§½¡]§ğÀ»¶¥¬q\n\n\t¯S®í3\t¦Û¨­¦å¶qÂk¹s\n\t\t§Ú¤è¥şÅé¦^´_15¦å",
+	public int ch7_skill2(Character_Data chara1,Character_Data chara2,Character_Data chara3)//"æ‚²å‚·çš„çµå±€ï¼ˆæ”»æ“Šéšæ®µ\n\n\tç‰¹æ®Š3\tè‡ªèº«è¡€é‡æ­¸é›¶\n\t\tæˆ‘æ–¹å…¨é«”å›å¾©15è¡€",
 	{
-		System.out.println("´d¶Ëªºµ²§½");
+		System.out.println("æ‚²å‚·çš„çµå±€");
 		int mode = suicide;
 		
 		if(chara2.get_hp()>0);
@@ -199,71 +199,71 @@ public class Character_skill {
 		chara1.set_hp(0);
 		return mode;
 	}
-	public int ch8_skill1(Character_Data chara1,Character_Data chara2)//"ªvÂ¡¤§Án¡]¨¾¿m¡B§ğÀ»¶¥¬q\n\n\t¯S®í2\t¦^´_³æ¤@¶¤¤Í10¦å¶q",
+	public int ch8_skill1(Character_Data chara1,Character_Data chara2)//"æ²»ç™’ä¹‹è²ï¼ˆé˜²ç¦¦ã€æ”»æ“Šéšæ®µ\n\n\tç‰¹æ®Š2\tå›å¾©å–®ä¸€éšŠå‹10è¡€é‡",
 	{
-		System.out.println("ªvÂ¡¤§Án");
+		System.out.println("æ²»ç™’ä¹‹è²");
 		int mode = general_skill;
 		chara2.set_hp(chara2.get_hp() + 10);
 		return mode;
 	}
-	public int ch8_skill2(Character_Data chara1,Character_Data chara2)//"ÅÜ¤Æ¡]§ğÀ»¶¥¬q\n\n\t¯S®í3\t¤@¦^¦X¤º±N¦Û¨­§ğÀ»¤O¼Æ­È\n\t\tÅÜ¬°¤v¤è¨ä¤¤¤@¤H",
+	public int ch8_skill2(Character_Data chara1,Character_Data chara2)//"è®ŠåŒ–ï¼ˆæ”»æ“Šéšæ®µ\n\n\tç‰¹æ®Š3\tä¸€å›åˆå…§å°‡è‡ªèº«æ”»æ“ŠåŠ›æ•¸å€¼\n\t\tè®Šç‚ºå·±æ–¹å…¶ä¸­ä¸€äºº",
 	{
-		System.out.println("ÅÜ¤Æ");
+		System.out.println("è®ŠåŒ–");
 		int mode = general_skill;
 		chara1.set_now_attack(chara2.get_attack());
 		return mode;
 	}
-	public int ch9_skill1(Character_Data chara1)//"¸tªM¯¬ºÖ¡]¨¾¿m¶¥¬q\n\n\t¯S®í1\t¦Û¨­¸Ó¦^¦X¼W¥[10¨¾¿m",
+	public int ch9_skill1(Character_Data chara1)//"è–æ¯ç¥ç¦ï¼ˆé˜²ç¦¦éšæ®µ\n\n\tç‰¹æ®Š1\tè‡ªèº«è©²å›åˆå¢åŠ 10é˜²ç¦¦",
 	{
-		System.out.println("¸tªM¯¬ºÖ");
+		System.out.println("è–æ¯ç¥ç¦");
 		int mode = general_skill;
 		chara1.set_now_defence(chara1.get_now_defence()+10);
 		return mode;
 	}
-	public int ch9_skill2(Character_Data chara1)//"©¾­sÃM¤h¡]¨¾¿m¶¥¬q\n\n\t¯S®í3\t¨¾¿m¼W¥[5¡A±N¼Ä¤è§ğÀ»Âà²¾¦Ü¦Û¨­",
+	public int ch9_skill2(Character_Data chara1)//"å¿ è²é¨å£«ï¼ˆé˜²ç¦¦éšæ®µ\n\n\tç‰¹æ®Š3\té˜²ç¦¦å¢åŠ 5ï¼Œå°‡æ•µæ–¹æ”»æ“Šè½‰ç§»è‡³è‡ªèº«",
 	{
-		System.out.println("©¾­sÃM¤h");
+		System.out.println("å¿ è²é¨å£«");
 		int mode = change_attack;
 		return mode;
 	}
-	public int ch10_skill1(Character_Data chara1,Character_Data chara2)//"°í¼İºë¯«¡]¨¾¿m¶¥¬q\n\n\t¯S®í2\t´£¤É¤v¤è¤@¤H¨¾¿m15",
+	public int ch10_skill1(Character_Data chara1,Character_Data chara2)//"å …æ¯…ç²¾ç¥ï¼ˆé˜²ç¦¦éšæ®µ\n\n\tç‰¹æ®Š2\tæå‡å·±æ–¹ä¸€äººé˜²ç¦¦15",
 	{
-		System.out.println("°í¼İºë¯«");
+		System.out.println("å …æ¯…ç²¾ç¥");
 		int mode = general_skill;
 		chara2.set_now_defence(chara2.get_now_defence()+15);
 		return mode;
 	}
-	public int ch10_skill2(Character_Data chara1)//"¸tªM¦uÅ@ªÌ¡]§ğÀ»¡B¨¾¿m¶¥¬q\n\n\t¯S®í3\tÀò±o§ğÀ»/¨¾¿m»ë  ¦U2­Ó",
+	public int ch10_skill2(Character_Data chara1)//"è–æ¯å®ˆè­·è€…ï¼ˆæ”»æ“Šã€é˜²ç¦¦éšæ®µ\n\n\tç‰¹æ®Š3\tç²å¾—æ”»æ“Š/é˜²ç¦¦éª°  å„2å€‹",
 	{
-		System.out.println("¸tªM¦uÅ@ªÌ");
+		System.out.println("è–æ¯å®ˆè­·è€…");
 		int mode = add_dise;
 		return mode;
 	}
-	public int ch11_skill1(Character_Data chara1,Character_Data chara2)//"¥Ã»·ªºªü¥Ë¶©¡]§ğÀ»¡B¨¾¿m¶¥¬q\n\n\t¯S®í3   «ü©w¤@¤H¦^´_15¦å",
+	public int ch11_skill1(Character_Data chara1,Character_Data chara2)//"æ°¸é çš„é˜¿ç“¦éš†ï¼ˆæ”»æ“Šã€é˜²ç¦¦éšæ®µ\n\n\tç‰¹æ®Š3   æŒ‡å®šä¸€äººå›å¾©15è¡€",
 	{
-		System.out.println("¥Ã»·ªºªü¥Ë¶©");
+		System.out.println("æ°¸é çš„é˜¿ç“¦éš†");
 		int mode = general_skill;
 		chara2.set_hp(chara2.get_hp()+15);
 		return mode;
 	}
-	public int ch11_skill2(Character_Data chara1,Character_Data chara2)//"¹ÚÅ]¤§¤l¡]§ğÀ»¶¥¬q\n\n\t¯S®í2\t¼W¥[¤@¤H§ğÀ»20",
+	public int ch11_skill2(Character_Data chara1,Character_Data chara2)//"å¤¢é­”ä¹‹å­ï¼ˆæ”»æ“Šéšæ®µ\n\n\tç‰¹æ®Š2\tå¢åŠ ä¸€äººæ”»æ“Š20",
 	{
-		System.out.println("¹ÚÅ]¤§¤l");
+		System.out.println("å¤¢é­”ä¹‹å­");
 		int mode = general_skill;
 		chara2.set_now_attack(chara2.get_now_attack()+20);
 		return mode;
 	}
-	public int ch12_skill1(Character_Data chara1,Character_Data chara2)//"¨ü¶A©Gªº·R±¡¡]¨¾¿m¶¥¬q\n	\n\t¯S®í2\t«ü©w¤@¤H¨¾¿m¼W¥[30\n\t\t¦Û¨­¦å¶q´î10",
+	public int ch12_skill1(Character_Data chara1,Character_Data chara2)//"å—è©›å’’çš„æ„›æƒ…ï¼ˆé˜²ç¦¦éšæ®µ\n	\n\tç‰¹æ®Š2\tæŒ‡å®šä¸€äººé˜²ç¦¦å¢åŠ 30\n\t\tè‡ªèº«è¡€é‡æ¸›10",
 	{
-		System.out.println("¨ü¶A©Gªº·R±¡");
+		System.out.println("å—è©›å’’çš„æ„›æƒ…");
 		int mode = general_skill;
 		chara2.set_now_defence(chara2.get_now_defence()+30);
 		chara1.set_hp(chara1.get_hp()-10);
 		return mode;
 	}
-	public int ch12_skill2(Character_Data chara1,Character_Data chara2)//"¤`°ê¤§©d¡]§ğÀ»¶¥¬q\n\n\t¯S®í3\t«ü©w¤@¤H§ğÀ»¼W¥[40\n\t\t«ü©wªº¤H¦å¶q´î20",
+	public int ch12_skill2(Character_Data chara1,Character_Data chara2)//"äº¡åœ‹ä¹‹å¦»ï¼ˆæ”»æ“Šéšæ®µ\n\n\tç‰¹æ®Š3\tæŒ‡å®šä¸€äººæ”»æ“Šå¢åŠ 40\n\t\tæŒ‡å®šçš„äººè¡€é‡æ¸›20",
 	{
-		System.out.println("¤`°ê¤§©d");
+		System.out.println("äº¡åœ‹ä¹‹å¦»");
 		int mode = general_skill;
 		chara2.set_now_attack(chara2.get_now_attack()+40);
 		chara2.set_hp(chara2.get_hp()-20);

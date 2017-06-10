@@ -20,7 +20,7 @@ import org.json.JSONObject;
 
 public class GameClient {
 
-	public static String SERVERIP = "127.0.0.1";
+	public static String SERVERIP = "192.168.43.244";
 	public static int PORT = 9487;
 	public static JFrame frame;
 	public static String gKey; // my GaneClient key
@@ -519,13 +519,13 @@ public class GameClient {
 					
 					//when the character are all selected
 					if(myCount==6 && !firstSelect){	
-						EventClient.send("GameClient::my_turn_to_select($...)",new Object[]{comboBox.getSelectedIndex(),oppCount},key);
-						EventClient.send("GameClient::game_is_getting_to_start()",,key);	
+						EventClient.send("GameClient::my_turn_to_select($...)",new Object[]{comboBox.getSelectedIndex(),oppCount},enemyEventClientKey);
+						EventClient.send("GameClient::game_is_getting_to_start()",enemyEventClientKey);	
 						JOptionPane.showMessageDialog(null, "遊戲即將開始");
 						//change to scene 4
 					}
 					else{
-						EventClient.send("GameClient::my_turn_to_select($...)",new Object[]{comboBox.getSelectedIndex(),oppCount},key);
+						EventClient.send("GameClient::my_turn_to_select($...)",new Object[]{comboBox.getSelectedIndex(),oppCount},enemyEventClientKey);
 						oppCount+=2;
 					};
 						
