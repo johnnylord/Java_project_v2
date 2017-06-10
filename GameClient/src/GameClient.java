@@ -1934,7 +1934,7 @@ public class GameClient {
 							
 							
 							/*********************傳送封包告知對方所受傷害*/
-							GameData packet = new GameData(GameData.def);
+							GameData packet = new GameData(GameData.defense_pack);
 							for(int i=0;i<6;i++)
 							{
 								int index = reverse(i);	
