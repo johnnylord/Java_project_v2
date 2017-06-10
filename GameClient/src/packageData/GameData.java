@@ -30,7 +30,13 @@ public class GameData implements Serializable{
 		
 	}
 	
-	public GameData(int packet_type){	this.packet_type = packet_type;	}
+	public GameData(int packet_type){	
+		this.packet_type = packet_type;	
+		for(int i=0;i<6;i++)
+		{
+			character[i] = new Character_state();
+		}
+	}
 	
 	public int get_packet_type(){	return this.packet_type;	}
 	public int get_attacker(){	return this.attacker;	}
