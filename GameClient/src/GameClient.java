@@ -46,7 +46,7 @@ public class GameClient {
 	public static WebcamPanel panel = null;
 	public static ImageIcon confirmedToSend = null;
 	public static JLabel FindOpponent = null; 
-	public static JLabel contentPane = null;
+	public static JLabel mainBackGround = null;
 	// Data of opponent
 	public static String opponentID;
 	public static String opponentGender;
@@ -320,11 +320,11 @@ public class GameClient {
 		frame.setResizable(false);
 
 		// Setting Backgroung image
-		contentPane = new JLabel();
+		mainBackGround = new JLabel();
 		ImageIcon diceBackground = new ImageIcon("./resource/image/dicebackground.jpg");
 		diceBackground.setImage(diceBackground.getImage().getScaledInstance(1280,960,Image.SCALE_DEFAULT));
-		contentPane.setIcon(diceBackground);
-		frame.setContentPane(contentPane);
+		mainBackGround.setIcon(diceBackground);
+		frame.setContentPane(mainBackGround);
 
 		// text field which can enter Server's IP
         JTextField targetIP = new JTextField("");
@@ -2790,7 +2790,7 @@ public class GameClient {
 			{
 				frame.getContentPane().removeAll();
 				frame.getContentPane().doLayout();
-				frame.setContentPane(contentPane);
+				frame.setContentPane(mainBackGround);
 				secondScene();
 
 				//to debug
