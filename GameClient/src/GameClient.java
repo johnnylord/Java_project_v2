@@ -338,7 +338,7 @@ public class GameClient {
 		JTextField PlayerGender = new JTextField("Enter Player Gender here.", 30);
 		PlayerGender.setFont(new Font("Liberation Mono", Font.BOLD | Font.ITALIC, 24));
 		PlayerGender.setBackground(Color.PINK);
-		PlayerGender.setLocation(865,295); 
+		PlayerGender.setLocation(865,230); 
 		PlayerGender.setSize(365,80);
 
 		ImageIcon diceShow = new ImageIcon("../resource/image/dice.gif");
@@ -570,6 +570,7 @@ public class GameClient {
 		frame.getContentPane().add(TakePicture);
 		frame.getContentPane().add(Default);
 		frame.getContentPane().add(FindOpponent);
+		frame.getContentPane().add(diceGif);
 		frame.getContentPane().doLayout();
 		frame.getContentPane().update(frame.getContentPane().getGraphics());
 	}
