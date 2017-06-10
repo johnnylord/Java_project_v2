@@ -3,6 +3,7 @@
 	<property name="lib.dir" value="lib"/>
 	<property name="bin.dir" value="bin"/>
 	<property name="bak.dir" value="bak"/>
+	<property name="classes.dir" value="classes"/>
 	<property name="build.dir" value="build"/>
 	<property name="resource.dir" value="resource"/>
 	
@@ -26,11 +27,14 @@
 	
 	<target name="compile" depends="prepare">
 		<javac srcdir="${src.dir}" destdir="${bin.dir}" encoding="UTF-8">
-			<classpath refid="build.path"/> 
+			<classpath refid="build.path"/>
 		</javac>
 	</target>
 	
 	<target name="prepare-build">
+		<copy todir="${build.dir}/lib">
+			<fileset dir="${lib.dir}"/>
+		</copy>
 		<pathconvert property="mf.classpath" pathsep=" ">
 			<mapper>
 				<chainedmapper>
@@ -48,7 +52,6 @@
 				<attribute name="Main-Class" value="GameServer"/>
 				<attribute name="Class-Path" value="${mf.classpath}"/>
 			</manifest>
-			<path refid="build.path"/>
 		</jar>
 	</target>
 	
@@ -58,7 +61,6 @@
 				<attribute name="Main-Class" value="GameClient"/>
 				<attribute name="Class-Path" value="${mf.classpath}"/>
 			</manifest>
-			<path refid="build.path"/>
 		</jar>
 	</target>
 	
@@ -68,7 +70,6 @@
 				<attribute name="Main-Class" value="UnitTest"/>
 				<attribute name="Class-Path" value="${mf.classpath}"/>
 			</manifest>
-			<path refid="build.path"/>
 		</jar>
 	</target>
 </project>
