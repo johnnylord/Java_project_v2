@@ -168,10 +168,10 @@ public class GameClient {
 	//現在的階段 //變成由firstselect控制
 	public static final int atk_stage = 1;
 	public static final int def_stage = 2;
-	public static int phase_stage = (firstSelect)?atk_stage:def_stage;
+	public static int phase_stage;
 	
 	//右邊角色選單的條件判斷
-	public static int character_state_mode = 7;
+	public static int character_state_mode = 0;
 	public static boolean end_using_skill = true;
 	
 	//在選擇發動技能時所按下的角色(會不斷變更
@@ -182,10 +182,11 @@ public class GameClient {
 	//判斷按下的技能是哪個
 	public static int skill_select = 0;
 	
-	//判斷攻擊時是否有選好2個角色
+	//判斷攻擊時是否有選好2個角色(攻擊時)
 	public static int attack_judge = -1;
 	public static int attacker_judge = -1;
 	
+	//判斷是誰攻擊誰
 	public static int attacker_test = 1;
 	public static int attack_test = 0;
 	
@@ -751,10 +752,16 @@ public class GameClient {
 	public static void fourthScene(){
 		// refresh the frame
 		frame.getContentPane().removeAll();
-		frame.getContentPane().doLayout();
-		frame.getContentPane().update(frame.getContentPane().getGraphics());
+		//frame.getContentPane().doLayout();
+		//frame.getContentPane().update(frame.getContentPane().getGraphics());
+		
+		
+		phase_stage = (firstSelect)?atk_stage:def_stage;
+		System.out.println("Your phase is : " + phase_stage);
+		
 		windows_construct();
 		null_construct();
+		frame.getContentPane().update(frame.getContentPane().getGraphics());
 	}
 
 	//清空(完全不顯示
@@ -795,10 +802,9 @@ public class GameClient {
 		else{  //繼續顯示mode4
 			if(character_state_mode != 4)
 			{
-				//等收到封包才要進入
-				check_use_skill_construct();
+				check_use_skill_construct_V2();
 			}
-			else //
+			else 
 			{
 				character_windows_show_nothing();
 			}
@@ -913,7 +919,7 @@ public class GameClient {
 	}
 
 	//mode 選擇要否執行技能  //被敵方攻擊時
-	public static void check_use_skill_construct(/*GameData gameData*/){
+	public static void check_use_skill_construct(GameData gameData){
 		character_state_mode = 4;
 		//mode1
 		skill1.setVisible(false);  
@@ -937,13 +943,41 @@ public class GameClient {
 		
 		//要改寫
 		
-		/*  
+		  
 		attacker_test = gameData.get_attacker();
 		attack_test = gameData.get_attacked();
-		receive_attackpack_and_set_character_state(gamedata);
-		 */
+		//receive_attackpack_and_set_character_state(gamedata);
+		 
+		ImageIcon img = new ImageIcon("../resource/image/"+ character[picked[attacker_test]]+".png");
+		img.setImage(img.getImage().getScaledInstance(200,295,Image.SCALE_DEFAULT));
+		who_attack_skill_use.setIcon(img);
+
+		img = new ImageIcon("../resource/image/"+ character[picked[attack_test]]+".png");
+		img.setImage(img.getImage().getScaledInstance(200,295,Image.SCALE_DEFAULT));
+		attack_who_skill_use.setIcon(img);
+	}
+	public static void check_use_skill_construct_V2(){
+		character_state_mode = 4;
+		//mode1
+		skill1.setVisible(false);  
+		skill2.setVisible(false);
+		//mode2
+		select_char.setVisible(false);
+		//mode3
+		attack_select.setVisible(false);
+		//mode4
+		skill_use.setVisible(true);
+		//mode5
+		def_dise_choose.setVisible(false);
+		//mode6
+		attack_dise_choose.setVisible(false);
+		//mode7
+		thorw_dise.setVisible(false);
 		
-	
+		
+		end_using_skill = false;
+		null_construct();
+		 
 		ImageIcon img = new ImageIcon("../resource/image/"+ character[picked[attacker_test]]+".png");
 		img.setImage(img.getImage().getScaledInstance(200,295,Image.SCALE_DEFAULT));
 		who_attack_skill_use.setIcon(img);
@@ -1149,8 +1183,6 @@ public class GameClient {
 	
 	//遊戲介面construct
 	public static void windows_construct(){
-		//整個WINDOWS FORM
-		//windows_form_construct();
 		
 		//角色目前狀況
 		windows_character_button_construct();
@@ -1168,16 +1200,6 @@ public class GameClient {
 		windows_characterState_construct();		
 		
 	}	
-	//整個WINDOWS FORM
-	
-	/*public static void windows_form_construct(){
-		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1280, 960);
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-	}*/
 
 	//角色目前狀況
 	public static void characterButton_listener(){
@@ -1363,15 +1385,12 @@ public class GameClient {
 		
 		end.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//準備接受敵人攻擊
-				phase_stage = def_stage; 
 				returnToOriginalState();
-
+				phase_stage = def_stage; 
 				windows_stage_select();
-				//呼教敵方my_ready_turn();
-				wait_stage();
 				
-				//直到收到攻擊封包才能動作
+				EventClient.send("GameClient::my_ready_turn()",enemyEventClientKey);
+				wait_stage();
 			}
 		});
 		
@@ -1397,12 +1416,10 @@ public class GameClient {
 				
 		//button ready
 		ready.setBounds(50, 435, 100, 30);
-		ready.setEnabled((phase_stage ==1)?true:false);
 		frame.add(ready);
 		
 		//button attack	
 		attack.setBounds(234, 435, 100, 30);
-		attack.setEnabled((phase_stage ==1)?true:false);
 		frame.add(attack);
 		
 		
@@ -1955,13 +1972,13 @@ public class GameClient {
 							
 							if(attack_all)
 							{
-								EventClient.send("GameClient::check_use_skill_construct()",enemyEventClientKey);
+								EventClient.send("GameClient::check_use_skill_construct($)",packet,enemyEventClientKey);
 								/*呼叫敵方的防禦CONSTRUCT  check_use_skill_construct*/
 							}
 							else
 							{
 								/*呼叫敵方的防禦CONSTRUCT  check_use_skill_construct*/
-								EventClient.send("GameClient::check_use_skill_construct()",enemyEventClientKey);
+								EventClient.send("GameClient::check_use_skill_construct($)",packet,enemyEventClientKey);
 								returnToOriginalState();
 							}
 							null_construct();
