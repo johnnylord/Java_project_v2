@@ -7,7 +7,7 @@ public class Character_Data {
 	private int defence;
 	public int now_def;
 	public int hp;
-	//public int now_hp;
+	public int origin_hp;
 	
 	private int skill_num;
 	private String[] skill = new String[2];
@@ -38,6 +38,7 @@ public class Character_Data {
 		this.defence = defence;
 		this.now_def = defence;
 		this.hp = hp;
+		this.origin_hp = hp;
 		//this.now_hp = hp;
 		
 		this.skill_num = skill_num;
