@@ -993,7 +993,7 @@ public class GameClient {
 		thorw_dise.setVisible(false);
 		
 		//end_using_skill = false;
-		null_construct();
+		//null_construct();
 		 
 		ImageIcon img = new ImageIcon("../resource/image/"+ character[picked[attacker_test]]+".png");
 		img.setImage(img.getImage().getScaledInstance(200,295,Image.SCALE_DEFAULT));
