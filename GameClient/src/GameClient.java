@@ -20,7 +20,7 @@ import org.json.JSONObject;
 
 public class GameClient {
 
-	public static String SERVERIP = "127.0.0.1";
+	public static String SERVERIP = "192.168.43.244";
 	public static int PORT = 9487;
 	public static JFrame frame;
 	public static String gKey; // my GaneClient key
