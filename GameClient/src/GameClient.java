@@ -147,16 +147,49 @@ public class GameClient {
 																	 self_character_2,opponent_character_2,
 																	 self_character_3,opponent_character_3};	
 	//character_label_state
-	public static JLabel opponent_character_1_data = new JLabel("New label");
-	public static JLabel opponent_character_2_data = new JLabel("New label");
-	public static JLabel opponent_character_3_data = new JLabel("New label");
-	public static JLabel self_character_1_data = new JLabel("New label");
-	public static JLabel self_character_2_data = new JLabel("New label");
-	public static JLabel self_character_3_data = new JLabel("New label");
-	public static JLabel character_label_state[] = new JLabel[]{self_character_1_data , opponent_character_1_data ,
+	//public static JLabel opponent_character_1_data = new JLabel("New label");
+	public static JProgressBar opponent_character_1_data_HP = new JProgressBar();
+	public static JProgressBar opponent_character_1_data_atk = new JProgressBar();
+	public static JProgressBar opponent_character_1_data_def = new JProgressBar();
+	//public static JLabel opponent_character_2_data = new JLabel("New label");
+	public static JProgressBar opponent_character_2_data_HP = new JProgressBar();
+	public static JProgressBar opponent_character_2_data_atk = new JProgressBar();
+	public static JProgressBar opponent_character_2_data_def = new JProgressBar();
+
+	//public static JLabel opponent_character_3_data = new JLabel("New label");
+	public static JProgressBar opponent_character_3_data_HP = new JProgressBar();
+	public static JProgressBar opponent_character_3_data_atk = new JProgressBar();
+	public static JProgressBar opponent_character_3_data_def = new JProgressBar();
+	//public static JLabel self_character_1_data = new JLabel("New label");
+	public static JProgressBar self_character_1_data_HP = new JProgressBar();
+	public static JProgressBar self_character_1_data_atk = new JProgressBar();
+	public static JProgressBar self_character_1_data_def = new JProgressBar();
+	
+	//public static JLabel self_character_2_data = new JLabel("New label");
+	public static JProgressBar self_character_2_data_HP = new JProgressBar();
+	public static JProgressBar self_character_2_data_atk = new JProgressBar();
+	public static JProgressBar self_character_2_data_def = new JProgressBar();
+
+	//public static JLabel self_character_3_data = new JLabel("New label");
+	public static JProgressBar self_character_3_data_HP = new JProgressBar();
+	public static JProgressBar self_character_3_data_atk = new JProgressBar();
+	public static JProgressBar self_character_3_data_def = new JProgressBar();
+	/*public static JLabel character_label_state[] = new JLabel[]{self_character_1_data , opponent_character_1_data ,
 																 self_character_2_data , opponent_character_2_data , 
 																 self_character_3_data , opponent_character_3_data};
-	
+	*/
+	public static JProgressBar character_label_state_HP[] = new JProgressBar[]{self_character_1_data_HP , opponent_character_1_data_HP,
+	self_character_2_data_HP , opponent_character_2_data_HP , 
+	self_character_3_data_HP , opponent_character_3_data_HP };
+
+	public static JProgressBar character_label_state_atk[] = new JProgressBar[]{self_character_1_data_atk , opponent_character_1_data_atk,
+	self_character_2_data_atk , opponent_character_2_data_atk , 
+	self_character_3_data_atk , opponent_character_3_data_atk };
+
+	public static JProgressBar character_label_state_def[] = new JProgressBar[]{self_character_1_data_def , opponent_character_1_data_def,
+	self_character_2_data_def , opponent_character_2_data_def , 
+	self_character_3_data_def , opponent_character_3_data_def };
+
 	//左中選單
 	public static JLabel stage = new JLabel("New label");  
 	public static JButton ready = new JButton("Ready");
@@ -205,12 +238,12 @@ public class GameClient {
 	public static String get = null; 
 	public static JFrame chat = null; // chatRoom JFrame 
 	public static String[] filepath = {
-		"../resource/image/photo_cotaduck.jpg",
-		"../resource/image/photo_fbhead.jpeg",
-		"../resource/image/photo_littleboy.jpeg",
-		"../resource/image/photo_monkey.jpeg",
-		"../resource/image/photo_nothing.jpeg",
-		"../resource/image/photo_youareloser.jpeg"
+		"./resource/image/photo_cotaduck.jpg",
+		"./resource/image/photo_fbhead.jpeg",
+		"./resource/image/photo_littleboy.jpeg",
+		"./resource/image/photo_monkey.jpeg",
+		"./resource/image/photo_nothing.jpeg",
+		"./resource/image/photo_youareloser.jpeg"
 	};
 /*------------------------------------------------------------------------------------------------------------
 /
@@ -259,7 +292,7 @@ public class GameClient {
 
 		// the input Source: bgMusic
 		// Through the Dataline, let bgMusic data go into mixer and play.
-		File bgMusic = new File("../resource/music/bgmusic2.wav");
+		File bgMusic = new File("./resource/music/bgmusic2.wav");
 		AudioInputStream audioInput = AudioSystem.getAudioInputStream(bgMusic);
 		musicBeforeGame.open(audioInput);
 		musicBeforeGame.loop(Clip.LOOP_CONTINUOUSLY);
@@ -276,7 +309,7 @@ public class GameClient {
 
 		// Setting Backgroung image
 		JLabel contentPane = new JLabel();
-		contentPane.setIcon(new ImageIcon("../resource/image/homepage.jpg"));
+		contentPane.setIcon(new ImageIcon("./resource/image/homepage.jpg"));
 		frame.setContentPane(contentPane);
 
 		// Setting the size and location of the frame [ width: 1280px , height:960px ]
@@ -285,8 +318,10 @@ public class GameClient {
 		frame.getContentPane().setLayout(null);
 
 		// Label for gif
-		JLabel cardBoy = new JLabel((Icon) new ImageIcon ("../resource/image/use1.gif"));
-		cardBoy.setBounds(300,300,500,500);
+		ImageIcon atMainGifIcon = new ImageIcon("./resource/image/use1.gif");
+		atMainGifIcon.setImage(atMainGifIcon.getImage().getScaledInstance(700,440,Image.SCALE_DEFAULT));
+		JLabel cardBoy = new JLabel((Icon) atMainGifIcon);
+		cardBoy.setBounds(290,155,700,500);
 		frame.getContentPane().add(cardBoy);
 
 		// StartGame button
@@ -348,7 +383,7 @@ public class GameClient {
 		PlayerGender.setLocation(865,230); 
 		PlayerGender.setSize(365,80);
 
-		ImageIcon diceShow = new ImageIcon("../resource/image/dice.gif");
+		ImageIcon diceShow = new ImageIcon("./resource/image/dice.gif");
 		diceShow.setImage(diceShow.getImage().getScaledInstance(270,224,Image.SCALE_DEFAULT));
 		Icon diceIcon = diceShow;
 		JLabel diceGif = new JLabel(diceIcon);
@@ -515,7 +550,7 @@ public class GameClient {
 		});
 		
 		// Label for client to find opponent
-		Icon opponentIcon = new ImageIcon("../resource/image/findopponent_button.png");
+		Icon opponentIcon = new ImageIcon("./resource/image/findopponent_button.png");
 		JLabel FindOpponent = new JLabel(opponentIcon);	
 		FindOpponent.setLocation(878,691); 
 		FindOpponent.setSize(336,237);
@@ -662,7 +697,7 @@ public class GameClient {
 				}
 				
 				//change the picture
-				Icon img = new ImageIcon("../resource/image/" + character[index] + ".png");
+				Icon img = new ImageIcon("./resource/image/" + character[index] + ".png");
 				character_data_label.setIcon(img);
 				
 			}
@@ -670,7 +705,7 @@ public class GameClient {
 
 
 		// used to display the selected car
-		ImageIcon display = new ImageIcon("../resource/image/亞瑟王.png");
+		ImageIcon display = new ImageIcon("./resource/image/亞瑟王.png");
 		display.setImage(display.getImage().getScaledInstance(400,590,Image.SCALE_DEFAULT));
 		Icon img = display;
 		character_data_label.setIcon(img);
@@ -686,7 +721,7 @@ public class GameClient {
 				if(seleted[comboBox.getSelectedIndex()]==0)
 				{
 					//set the character image
-					ImageIcon img = new ImageIcon("../resource/image/" + character[comboBox.getSelectedIndex()] + ".png");
+					ImageIcon img = new ImageIcon("./resource/image/" + character[comboBox.getSelectedIndex()] + ".png");
 					img.setImage(img.getImage().getScaledInstance(200,295,Image.SCALE_DEFAULT));
 					
 					seleted[comboBox.getSelectedIndex()]=1;
@@ -746,7 +781,7 @@ public class GameClient {
 
 	// Used to select the Hero
 	public static void my_turn_to_select(Integer select_which_character,Integer index){
-		ImageIcon img = new ImageIcon("../resource/image/" + character[select_which_character] + ".png");
+		ImageIcon img = new ImageIcon("./resource/image/" + character[select_which_character] + ".png");
 		img.setImage(img.getImage().getScaledInstance(200,295,Image.SCALE_DEFAULT));
 		
 		seleted[select_which_character]=1;
@@ -769,7 +804,7 @@ public class GameClient {
 		int index = (int)(Math.random()*3+1);
 		//set new Gameing background
 		JLabel gameBg = new JLabel();
-		gameBg.setIcon(new ImageIcon("../resource/image/gamebg"+index+".jpg"));
+		gameBg.setIcon(new ImageIcon("./resource/image/gamebg"+index+".jpg"));
 		frame.setContentPane(gameBg);
 
 		// set new music for gameing
@@ -782,7 +817,7 @@ public class GameClient {
 		
 		// the input Source: bgMusic
 		// Through the Dataline, let bgMusic data go into mixer and play.
-		File gameMusic = new File("../resource/music/musicbg"+index+".wav");
+		File gameMusic = new File("./resource/music/musicbg"+index+".wav");
 		AudioInputStream audioInput = AudioSystem.getAudioInputStream(gameMusic);
 		musicForGame.open(audioInput);
 		musicForGame.loop(Clip.LOOP_CONTINUOUSLY);
@@ -995,11 +1030,11 @@ public class GameClient {
 		//receive_attackpack_and_set_character_state(gamedata);
 		 
 		 
-		ImageIcon img = new ImageIcon("../resource/image/"+ character[picked[attacker_test]]+".png");
+		ImageIcon img = new ImageIcon("./resource/image/"+ character[picked[attacker_test]]+".png");
 		img.setImage(img.getImage().getScaledInstance(200,295,Image.SCALE_DEFAULT));
 		who_attack_skill_use.setIcon(img);
 
-		img = new ImageIcon("../resource/image/"+ character[picked[attack_test]]+".png");
+		img = new ImageIcon("./resource/image/"+ character[picked[attack_test]]+".png");
 		img.setImage(img.getImage().getScaledInstance(200,295,Image.SCALE_DEFAULT));
 		attack_who_skill_use.setIcon(img);
 	}
@@ -1027,11 +1062,11 @@ public class GameClient {
 		//end_using_skill = false;
 		//null_construct();
 		 
-		ImageIcon img = new ImageIcon("../resource/image/"+ character[picked[attacker_test]]+".png");
+		ImageIcon img = new ImageIcon("./resource/image/"+ character[picked[attacker_test]]+".png");
 		img.setImage(img.getImage().getScaledInstance(200,295,Image.SCALE_DEFAULT));
 		who_attack_skill_use.setIcon(img);
 
-		img = new ImageIcon("../resource/image/"+ character[picked[attack_test]]+".png");
+		img = new ImageIcon("./resource/image/"+ character[picked[attack_test]]+".png");
 		img.setImage(img.getImage().getScaledInstance(200,295,Image.SCALE_DEFAULT));
 		attack_who_skill_use.setIcon(img);
 		frame.getContentPane().update(frame.getContentPane().getGraphics());
@@ -1104,7 +1139,7 @@ public class GameClient {
 	//選擇技能發動對項 對應到角色button //mode2時按下
 	//選擇技能發動對象
 	public static void skill_active_select(int card){
-		ImageIcon img = new ImageIcon("../resource/image/"+ character[picked[card]]+".png");
+		ImageIcon img = new ImageIcon("./resource/image/"+ character[picked[card]]+".png");
 		img.setImage(img.getImage().getScaledInstance(200,295,Image.SCALE_DEFAULT));
 		active_character.setIcon(img);
 		active_character.setText("USE CHARACTER");
@@ -1146,7 +1181,7 @@ public class GameClient {
 	public static void attack_select(int card){
 		if((card%2)==0){
 			attacker_judge = card;
-			ImageIcon img = new ImageIcon("../resource/image/"+character[picked[card]]+".png");
+			ImageIcon img = new ImageIcon("./resource/image/"+character[picked[card]]+".png");
 			img.setImage(img.getImage().getScaledInstance(200,295,Image.SCALE_DEFAULT));
 			who_attack.setIcon(img);
 			who_attack.setText("");
@@ -1154,7 +1189,7 @@ public class GameClient {
 		else
 		{
 			attack_judge = card;
-			ImageIcon img = new ImageIcon("../resource/image/"+character[picked[card]]+".png");
+			ImageIcon img = new ImageIcon("./resource/image/"+character[picked[card]]+".png");
 			img.setImage(img.getImage().getScaledInstance(200,295,Image.SCALE_DEFAULT));
 			attack_who.setIcon(img);
 			attack_who.setText("");
@@ -1195,7 +1230,7 @@ public class GameClient {
 					 (i==3)? "shield_2.png":
 					 (i==4)? "special.png":"spec_2.png";
 
-		ImageIcon img = new ImageIcon("../resource/image/"+jpg);
+		ImageIcon img = new ImageIcon("./resource/image/"+jpg);
 		img.setImage(img.getImage().getScaledInstance(120,120,Image.SCALE_DEFAULT));
 		
 		if(j==0) dise_0.setIcon(img);
@@ -1381,7 +1416,7 @@ public class GameClient {
 		//set icon
 		for(int i=0;i<6;i++)
 		{
-			ImageIcon img = new ImageIcon("../resource/image/"+character[picked[i]]+".png");
+			ImageIcon img = new ImageIcon("./resource/image/"+character[picked[i]]+".png");
 			img.setImage(img.getImage().getScaledInstance(200,295,Image.SCALE_DEFAULT));
 			character_button_select[i].setIcon(img);
 			character_button_select[i].setText("");
@@ -1389,44 +1424,248 @@ public class GameClient {
 	}
 
 	public static void windows_character_state_construct(){
-		opponent_character_1_data.setHorizontalAlignment(SwingConstants.CENTER);
+		
 		//text opp1
-		opponent_character_1_data.setBounds(50, 375, 200, 20);
-		frame.add(opponent_character_1_data);
-		opponent_character_2_data.setHorizontalAlignment(SwingConstants.CENTER);
+		//opponent_character_1_data.setHorizontalAlignment(SwingConstants.CENTER);
+		JLabel opponent_character_1_data_HP_text = new JLabel("HP:");
+		opponent_character_1_data_HP_text.setBounds(50,375-20,50,20);
+		opponent_character_1_data_HP_text.setHorizontalAlignment(SwingConstants.CENTER);
+		opponent_character_1_data_HP_text.setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 20));
+		opponent_character_1_data_HP.setOrientation(SwingConstants.HORIZONTAL);
+		opponent_character_1_data_HP.setBounds(100, 375-20, 150, 20);
+		opponent_character_1_data_HP.setMaximum(100);
+		opponent_character_1_data_HP.setForeground(Color.red);
+		opponent_character_1_data_HP.setStringPainted(true);
+		frame.add(opponent_character_1_data_HP);
+		frame.add(opponent_character_1_data_HP_text);
 		
+		JLabel opponent_character_1_data_atk_text = new JLabel("ATK:");
+		opponent_character_1_data_atk_text.setBounds(50,375,50,20);
+		opponent_character_1_data_atk_text.setHorizontalAlignment(SwingConstants.CENTER);
+		opponent_character_1_data_atk_text.setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 18));
+		opponent_character_1_data_atk.setOrientation(SwingConstants.HORIZONTAL);
+		opponent_character_1_data_atk.setBounds(100, 375, 150, 20);
+		opponent_character_1_data_atk.setMaximum(100);
+		opponent_character_1_data_atk.setForeground(Color.orange);
+		opponent_character_1_data_atk.setStringPainted(true);
+		frame.add(opponent_character_1_data_atk);
+		frame.add(opponent_character_1_data_atk_text);
+
+		JLabel opponent_character_1_data_def_text = new JLabel("DEF:");
+		opponent_character_1_data_def_text.setBounds(50,375+20,50,20);
+		opponent_character_1_data_def_text.setHorizontalAlignment(SwingConstants.CENTER);
+		opponent_character_1_data_def_text.setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 18));
+		opponent_character_1_data_def.setOrientation(SwingConstants.HORIZONTAL);
+		opponent_character_1_data_def.setBounds(100, 375+20, 150, 20);
+		opponent_character_1_data_def.setMaximum(100);
+		opponent_character_1_data_def.setForeground(Color.green);
+		opponent_character_1_data_def.setStringPainted(true);
+		frame.add(opponent_character_1_data_def);
+		frame.add(opponent_character_1_data_def_text);
+
 		//text opp2
-		opponent_character_2_data.setBounds(275, 375, 200, 20);
-		frame.add(opponent_character_2_data);
-		opponent_character_3_data.setHorizontalAlignment(SwingConstants.CENTER);
+		//opponent_character_3_data.setHorizontalAlignment(SwingConstants.CENTER);
+		JLabel opponent_character_2_data_HP_text = new JLabel("HP:");
+		opponent_character_2_data_HP_text.setBounds(275,375-20,50,20);
+		opponent_character_2_data_HP_text.setHorizontalAlignment(SwingConstants.CENTER);
+		opponent_character_2_data_HP_text.setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 20));
+		opponent_character_2_data_HP.setOrientation(SwingConstants.HORIZONTAL);
+		opponent_character_2_data_HP.setBounds(325, 375-20, 150, 20);
+		opponent_character_2_data_HP.setMaximum(100);
+		opponent_character_2_data_HP.setForeground(Color.red);
+		opponent_character_2_data_HP.setStringPainted(true);
+		frame.add(opponent_character_2_data_HP);
+		frame.add(opponent_character_2_data_HP_text);
 		
+		JLabel opponent_character_2_data_atk_text = new JLabel("ATK:");
+		opponent_character_2_data_atk_text.setBounds(275,375,50,20);
+		opponent_character_2_data_atk_text.setHorizontalAlignment(SwingConstants.CENTER);
+		opponent_character_2_data_atk_text.setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 18));
+		opponent_character_2_data_atk.setOrientation(SwingConstants.HORIZONTAL);
+		opponent_character_2_data_atk.setBounds(325, 375, 150, 20);
+		opponent_character_2_data_atk.setMaximum(100);
+		opponent_character_2_data_atk.setForeground(Color.orange);
+		opponent_character_2_data_atk.setStringPainted(true);
+		frame.add(opponent_character_2_data_atk);
+		frame.add(opponent_character_2_data_atk_text);
+
+		JLabel opponent_character_2_data_def_text = new JLabel("DEF:");
+		opponent_character_2_data_def_text.setBounds(275,375+20,50,20);
+		opponent_character_2_data_def_text.setHorizontalAlignment(SwingConstants.CENTER);
+		opponent_character_2_data_def_text.setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 18));
+		opponent_character_2_data_def.setOrientation(SwingConstants.HORIZONTAL);
+		opponent_character_2_data_def.setBounds(325, 375+20, 150, 20);
+		opponent_character_2_data_def.setMaximum(100);
+		opponent_character_2_data_def.setForeground(Color.green);
+		opponent_character_2_data_def.setStringPainted(true);
+		frame.add(opponent_character_2_data_def);
+		frame.add(opponent_character_2_data_def_text);
+
 		//text opp3
-		opponent_character_3_data.setBounds(500, 375, 200, 20);
-		frame.add(opponent_character_3_data);
-		self_character_1_data.setHorizontalAlignment(SwingConstants.CENTER);
+		//opponent_character_3_data.setHorizontalAlignment(SwingConstants.CENTER);
+		JLabel opponent_character_3_data_HP_text = new JLabel("HP:");
+		opponent_character_3_data_HP_text.setBounds(500,375-20,50,20);
+		opponent_character_3_data_HP_text.setHorizontalAlignment(SwingConstants.CENTER);
+		opponent_character_3_data_HP_text.setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 20));
+		opponent_character_3_data_HP.setOrientation(SwingConstants.HORIZONTAL);
+		opponent_character_3_data_HP.setBounds(550, 375-20, 150, 20);
+		opponent_character_3_data_HP.setMaximum(100);
+		opponent_character_3_data_HP.setForeground(Color.red);
+		opponent_character_3_data_HP.setStringPainted(true);
+		frame.add(opponent_character_3_data_HP);
+		frame.add(opponent_character_3_data_HP_text);
 		
+		JLabel opponent_character_3_data_atk_text = new JLabel("ATK:");
+		opponent_character_3_data_atk_text.setBounds(500,375,50,20);
+		opponent_character_3_data_atk_text.setHorizontalAlignment(SwingConstants.CENTER);
+		opponent_character_3_data_atk_text.setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 18));
+		opponent_character_3_data_atk.setOrientation(SwingConstants.HORIZONTAL);
+		opponent_character_3_data_atk.setBounds(550, 375, 150, 20);
+		opponent_character_3_data_atk.setMaximum(100);
+		opponent_character_3_data_atk.setForeground(Color.orange);
+		opponent_character_3_data_atk.setStringPainted(true);
+		frame.add(opponent_character_3_data_atk);
+		frame.add(opponent_character_3_data_atk_text);
+
+		JLabel opponent_character_3_data_def_text = new JLabel("DEF:");
+		opponent_character_3_data_def_text.setBounds(500,375+20,50,20);
+		opponent_character_3_data_def_text.setHorizontalAlignment(SwingConstants.CENTER);
+		opponent_character_3_data_def_text.setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 18));
+		opponent_character_3_data_def.setOrientation(SwingConstants.HORIZONTAL);
+		opponent_character_3_data_def.setBounds(550, 375+20, 150, 20);
+		opponent_character_3_data_def.setMaximum(100);
+		opponent_character_3_data_def.setForeground(Color.green);
+		opponent_character_3_data_def.setStringPainted(true);
+		frame.add(opponent_character_3_data_def);
+		frame.add(opponent_character_3_data_def_text);
 		
 		//text self1
-		self_character_1_data.setBounds(50, 507, 200, 20);
-		frame.add(self_character_1_data);
-		self_character_2_data.setHorizontalAlignment(SwingConstants.CENTER);
+		//self_character_1_data.setHorizontalAlignment(SwingConstants.CENTER);
+		JLabel self_character_1_data_HP_text = new JLabel("HP:");
+		self_character_1_data_HP_text.setBounds(50,508+335,50,20);
+		self_character_1_data_HP_text.setHorizontalAlignment(SwingConstants.CENTER);
+		self_character_1_data_HP_text.setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 20));
+		self_character_1_data_HP.setOrientation(SwingConstants.HORIZONTAL);
+		self_character_1_data_HP.setBounds(100, 508+335, 150, 20);
+		self_character_1_data_HP.setMaximum(100);
+		self_character_1_data_HP.setForeground(Color.red);
+		self_character_1_data_HP.setStringPainted(true);
+		frame.add(self_character_1_data_HP);
+		frame.add(self_character_1_data_HP_text);
+		
+		JLabel self_character_1_data_atk_text = new JLabel("ATK:");
+		self_character_1_data_atk_text.setBounds(50,508+355,50,20);
+		self_character_1_data_atk_text.setHorizontalAlignment(SwingConstants.CENTER);
+		self_character_1_data_atk_text.setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 18));
+		self_character_1_data_atk.setOrientation(SwingConstants.HORIZONTAL);
+		self_character_1_data_atk.setBounds(100, 508+355, 150, 20);
+		self_character_1_data_atk.setMaximum(100);
+		self_character_1_data_atk.setForeground(Color.orange);
+		self_character_1_data_atk.setStringPainted(true);
+		frame.add(self_character_1_data_atk);
+		frame.add(self_character_1_data_atk_text);
+		
+		JLabel self_character_1_data_def_text = new JLabel("DEF:");
+		self_character_1_data_def_text.setBounds(50,508+375,50,20);
+		self_character_1_data_def_text.setHorizontalAlignment(SwingConstants.CENTER);
+		self_character_1_data_def_text.setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 18));
+		self_character_1_data_def.setOrientation(SwingConstants.HORIZONTAL);
+		self_character_1_data_def.setBounds(100, 508+375, 150, 20);
+		self_character_1_data_def.setMaximum(100);
+		self_character_1_data_def.setForeground(Color.green);
+		self_character_1_data_def.setStringPainted(true);
+		frame.add(self_character_1_data_def);
+		frame.add(self_character_1_data_def_text);
+		
 		
 		//text self2
-		self_character_2_data.setBounds(275, 508, 200, 20);
-		frame.add(self_character_2_data);
-		self_character_3_data.setHorizontalAlignment(SwingConstants.CENTER);
+		//self_character_2_data.setHorizontalAlignment(SwingConstants.CENTER);
+		JLabel self_character_2_data_HP_text = new JLabel("HP:");
+		self_character_2_data_HP_text.setBounds(275,508+335,50,20);
+		self_character_2_data_HP_text.setHorizontalAlignment(SwingConstants.CENTER);
+		self_character_2_data_HP_text.setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 20));
+		self_character_2_data_HP.setOrientation(SwingConstants.HORIZONTAL);
+		self_character_2_data_HP.setBounds(325, 508+335, 150, 20);
+		self_character_2_data_HP.setMaximum(100);
+		self_character_2_data_HP.setForeground(Color.red);
+		self_character_2_data_HP.setStringPainted(true);
+		frame.add(self_character_2_data_HP);
+		frame.add(self_character_2_data_HP_text);
+
+		JLabel self_character_2_data_atk_text = new JLabel("ATK:");
+		self_character_2_data_atk_text.setBounds(275,508+355,50,20);
+		self_character_2_data_atk_text.setHorizontalAlignment(SwingConstants.CENTER);
+		self_character_2_data_atk_text.setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 18));
+		self_character_2_data_atk.setOrientation(SwingConstants.HORIZONTAL);
+		self_character_2_data_atk.setBounds(325, 508+355, 150, 20);
+		self_character_2_data_atk.setMaximum(100);
+		self_character_2_data_atk.setForeground(Color.orange);
+		self_character_2_data_atk.setStringPainted(true);
+		frame.add(self_character_2_data_atk);
+		frame.add(self_character_2_data_atk_text);
 		
+		JLabel self_character_2_data_def_text = new JLabel("DEF:");
+		self_character_2_data_def_text.setBounds(275,508+375,50,20);
+		self_character_2_data_def_text.setHorizontalAlignment(SwingConstants.CENTER);
+		self_character_2_data_def_text.setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 18));
+		self_character_2_data_def.setOrientation(SwingConstants.HORIZONTAL);
+		self_character_2_data_def.setBounds(325, 508+375, 150, 20);
+		self_character_2_data_def.setMaximum(100);
+		self_character_2_data_def.setForeground(Color.green);
+		self_character_2_data_def.setStringPainted(true);
+		frame.add(self_character_2_data_def);
+		frame.add(self_character_2_data_def_text);
+
 		//text self3
-		self_character_3_data.setBounds(500, 508, 200, 20);
-		frame.add(self_character_3_data);
+		//self_character_3_data.setHorizontalAlignment(SwingConstants.CENTER);
+		JLabel self_character_3_data_HP_text = new JLabel("HP:");
+		self_character_3_data_HP_text.setBounds(500,508+335,50,20);
+		self_character_3_data_HP_text.setHorizontalAlignment(SwingConstants.CENTER);
+		self_character_3_data_HP_text.setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 20));
+		self_character_3_data_HP.setOrientation(SwingConstants.HORIZONTAL);
+		self_character_3_data_HP.setBounds(550, 508+335, 150, 20);
+		self_character_3_data_HP.setMaximum(100);
+		self_character_3_data_HP.setForeground(Color.red);
+		self_character_3_data_HP.setStringPainted(true);
+		frame.add(self_character_3_data_HP);
+		frame.add(self_character_3_data_HP_text);
+
+		JLabel self_character_3_data_atk_text = new JLabel("ATK:");
+		self_character_3_data_atk_text.setBounds(500,508+355,50,20);
+		self_character_3_data_atk_text.setHorizontalAlignment(SwingConstants.CENTER);
+		self_character_3_data_atk_text.setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 18));
+		self_character_3_data_atk.setOrientation(SwingConstants.HORIZONTAL);
+		self_character_3_data_atk.setBounds(550, 508+355, 150, 20);
+		self_character_3_data_atk.setMaximum(100);
+		self_character_3_data_atk.setForeground(Color.orange);
+		self_character_3_data_atk.setStringPainted(true);
+		frame.add(self_character_3_data_atk);
+		frame.add(self_character_3_data_atk_text);
 		
+		JLabel self_character_3_data_def_text = new JLabel("DEF:");
+		self_character_3_data_def_text.setBounds(500,508+375,50,20);
+		self_character_3_data_def_text.setHorizontalAlignment(SwingConstants.CENTER);
+		self_character_3_data_def_text.setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 18));
+		self_character_3_data_def.setOrientation(SwingConstants.HORIZONTAL);
+		self_character_3_data_def.setBounds(550, 508+375, 150, 20);
+		self_character_3_data_def.setMaximum(100);
+		self_character_3_data_def.setForeground(Color.green);
+		self_character_3_data_def.setStringPainted(true);
+		frame.add(self_character_3_data_def);
+		frame.add(self_character_3_data_def_text);
 		//set initial state
 		for(int i=0;i<6;i++)
 		{
+			/*
 			String state = "Atk "+ character_data.character[picked[i]].get_attack() + 
 					 	   " / Def "+ character_data.character[picked[i]].get_defence() + 
 					 	   " / Hp " + character_data.character[picked[i]].get_hp(); 
 			character_label_state[i].setText(state);
+			*/
+			character_label_state_HP[i].setValue(character_data.character[picked[i]].get_hp());
+			character_label_state_atk[i].setValue(character_data.character[picked[i]].get_attack());
+			character_label_state_def[i].setValue(character_data.character[picked[i]].get_defence());
+
 		}
 	}
 	
@@ -1507,21 +1746,21 @@ public class GameClient {
 		atk_icon.setBounds(15, 25, 70, 70);
 		atk_icon.setBackground(Color.BLACK);
 		dice_state.add(atk_icon);
-		ImageIcon img1 = new ImageIcon("../resource/image/sword.png");
+		ImageIcon img1 = new ImageIcon("./resource/image/sword.png");
 		img1.setImage(img1.getImage().getScaledInstance(70,70,Image.SCALE_DEFAULT));
 		atk_icon.setIcon(img1);
 		
 		//icon def
 		def_icon.setBounds(190, 25, 70, 70);
 		dice_state.add(def_icon);
-		ImageIcon img2 = new ImageIcon("../resource/image/shield.png");
+		ImageIcon img2 = new ImageIcon("./resource/image/shield.png");
 		img2.setImage(img2.getImage().getScaledInstance(80,80,Image.SCALE_DEFAULT));
 		def_icon.setIcon(img2);
 		
 		//icon spec
 		spec_icon.setBounds(372, 25, 70, 70);
 		dice_state.add(spec_icon);
-		ImageIcon img3 = new ImageIcon("../resource/image/special.png");
+		ImageIcon img3 = new ImageIcon("./resource/image/special.png");
 		img3.setImage(img3.getImage().getScaledInstance(70,70,Image.SCALE_DEFAULT));
 		spec_icon.setIcon(img3);
 		
@@ -2177,7 +2416,7 @@ public class GameClient {
 		public static void can_attack_and_useSkill(){
 			if(attack_all)
 			{
-				System.out.println("attack_all_count" = attack_all_count);
+				System.out.println("attack_all_count" + attack_all_count);
 				
 				if(attack_all_count==0)
 				{
@@ -2272,11 +2511,17 @@ public class GameClient {
 		
 		public static void setNowState(){
 			for(int i=0;i<6;i++)
-			{		
+			{	
+				/*	
 				String state = "Atk "+ character_data.character[picked[i]].get_now_attack() + 
 					 	   " / Def "+ character_data.character[picked[i]].get_now_defence() + 
 					 	   " / Hp " + character_data.character[picked[i]].get_hp();
 				character_label_state[i].setText(state);
+				character_button_select[i].setEnabled(character_alive[i]);
+				*/
+				character_label_state_HP[i].setValue(character_data.character[picked[i]].get_hp());
+				character_label_state_atk[i].setValue(character_data.character[picked[i]].get_now_attack());
+				character_label_state_def[i].setValue(character_data.character[picked[i]].get_now_defence());
 				character_button_select[i].setEnabled(character_alive[i]);
 			}
 		}
@@ -2290,11 +2535,16 @@ public class GameClient {
 			for(int i=0;i<6;i++)
 			{
 				character_data.character[picked[i]].reset_now_attack();
-				character_data.character[picked[i]].reset_now_defence();				
+				character_data.character[picked[i]].reset_now_defence();
+				/*				
 				String state = "Atk "+ character_data.character[picked[i]].get_now_attack() + 
 					 	   " / Def "+ character_data.character[picked[i]].get_now_defence() + 
 					 	   " / Hp " + character_data.character[picked[i]].get_hp();
 				character_label_state[i].setText(state);
+				*/
+				character_label_state_HP[i].setValue(character_data.character[picked[i]].get_hp());
+				character_label_state_atk[i].setValue(character_data.character[picked[i]].get_now_attack());
+				character_label_state_def[i].setValue(character_data.character[picked[i]].get_now_defence());
 				character_button_select[i].setEnabled(character_alive[i]);
 			}
 		}

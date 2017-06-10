@@ -1,0 +1,72 @@
+<project name="CardGame" default="compile">
+	<property name="src.dir" value="src"/>
+	<property name="lib.dir" value="lib"/>
+	<property name="bin.dir" value="bin"/>
+	<property name="bak.dir" value="bak"/>
+	<property name="classes.dir" value="classes"/>
+	<property name="build.dir" value="build"/>
+	<property name="resource.dir" value="resource"/>
+	
+	<path id="build.path">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+	
+	<target name="prepare">
+		<mkdir dir="${bin.dir}"/>
+		<mkdir dir="${bak.dir}"/>
+		<copy todir="${bak.dir}">
+			<fileset dir="${bin.dir}"/>
+		</copy>
+		<mkdir dir="${build.dir}"/>
+	</target>
+	
+	<target name="compile" depends="prepare">
+		<javac srcdir="${src.dir}" destdir="${bin.dir}" encoding="UTF-8">
+			<classpath refid="build.path"/>
+		</javac>
+	</target>
+	
+	<target name="prepare-build">
+		<copy todir="${build.dir}/lib">
+			<fileset dir="${lib.dir}"/>
+		</copy>
+		<pathconvert property="mf.classpath" pathsep=" ">
+			<mapper>
+				<chainedmapper>
+					<flattenmapper />
+					<globmapper from="*" to="${lib.dir}/*"/>
+				</chainedmapper>
+			</mapper>
+			<path refid="build.path"/>
+		</pathconvert>
+	</target>
+	
+	<target name="server" depends="compile,prepare-build">
+		<jar destfile="${build.dir}/server.jar" basedir="${bin.dir}">
+			<manifest>
+				<attribute name="Main-Class" value="GameServer"/>
+				<attribute name="Class-Path" value="${mf.classpath}"/>
+			</manifest>
+		</jar>
+	</target>
+	
+	<target name="client" depends="compile,prepare-build">
+		<jar destfile="${build.dir}/client.jar" basedir="${bin.dir}">
+			<manifest>
+				<attribute name="Main-Class" value="GameClient"/>
+				<attribute name="Class-Path" value="${mf.classpath} ."/>
+			</manifest>
+		</jar>
+	</target>
+	
+	<target name="test" depends="compile,prepare-build">
+		<jar destfile="test.jar" basedir="${bin.dir}">
+			<manifest>
+				<attribute name="Main-Class" value="UnitTest"/>
+				<attribute name="Class-Path" value="${mf.classpath}"/>
+			</manifest>
+		</jar>
+	</target>
+</project>
