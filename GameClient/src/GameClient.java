@@ -375,9 +375,6 @@ public class GameClient {
 				PlayerGender_String = PlayerGender.getText();
 				String PlayerMotto_String = PlayerMotto.getText();
 				System.out.println("Clicked...");
-				PlayerID_String = PlayerID.getText();
-				PlayerGender_String = PlayerGender.getText();
-				String PlayerMotto_String = PlayerMotto.getText();
 				GameClient.scene2Reminder();
 			}
 			public void mouseEntered(MouseEvent e){
