@@ -179,7 +179,6 @@ public class GameClient {
 		PlayerID.setFont(new Font("Liberation Mono", Font.BOLD | Font.ITALIC, 24));
 		PlayerID.setLocation(865,50); // 50 + 760
 		PlayerID.setSize(365,80);
-		PlayerID_String = PlayerID.getText();
 		
 		// Text Field for client to enter "PlayGender" 
 		JTextField PlayerGender = new JTextField("Enter Player Gender here.", 30);
@@ -187,7 +186,6 @@ public class GameClient {
 		PlayerGender.setBackground(Color.PINK);
 		PlayerGender.setLocation(865,295); 
 		PlayerGender.setSize(365,80);
-		PlayerGender_String = PlayerGender.getText();
 		
 		// Text Field for client to enter "PlayerMotto" 
 		JTextField PlayerMotto = new JTextField("Enter Player Motto here.", 30);
@@ -195,7 +193,6 @@ public class GameClient {
 		PlayerMotto.setBackground(Color.PINK);
 		PlayerMotto.setLocation(865,540); 
 		PlayerMotto.setSize(365,80);
-		String PlayerMotto_String = PlayerMotto.getText();
 		
 		// Button for client to confirm photo
 		JButton ConfirmPicture = new JButton("Confirm");
@@ -374,6 +371,9 @@ public class GameClient {
 		FindOpponent.addMouseListener(new MouseListener(){
 			//popUp reminder
 			public void mouseClicked(MouseEvent e){
+				PlayerID_String = PlayerID.getText();
+				PlayerGender_String = PlayerGender.getText();
+				String PlayerMotto_String = PlayerMotto.getText();
 				System.out.println("Clicked...");
 				GameClient.scene2Reminder();
 			}
