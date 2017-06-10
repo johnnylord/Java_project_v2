@@ -80,7 +80,7 @@ public class GameClient {
 		public static JLabel spec_icon = new JLabel();
 		public static JLabel atk_num = new JLabel("2");
 		public static JLabel def_num = new JLabel("2");
-		public static JLabel spec_num = new JLabel("0");
+		public static JLabel spec_num = new JLabel("5");
 	
 		
 	//角色選單	
@@ -253,7 +253,6 @@ public class GameClient {
 		//get the Clip Dataline Connected to the mixer
 		DataLine.Info dataInfo = new DataLine.Info(Clip.class, null);
 		musicBeforeGame = (Clip) mixer.getLine(dataInfo);
-		//musicForGame = (Clip) mixer
 
 		// the input Source: bgMusic
 		// Through the Dataline, let bgMusic data go into mixer and play.
@@ -759,9 +758,30 @@ public class GameClient {
 	public static void fourthScene(){
 		// refresh the frame
 		frame.getContentPane().removeAll();
+		int index = (int)(Math.random()*3+1);
+		//set new Gameing background
 		JLabel gameBg = new JLabel();
-		gameBg.setIcon(new ImageIcon("../resource/image/gamebg"+(int)(Math.random()*3+1)+".jpg"));
+		gameBg.setIcon(new ImageIcon("../resource/image/gamebg"+index+".jpg"));
 		frame.setContentPane(gameBg);
+
+		// set new music for gameing
+		// and close the bgmusic
+		//	get the Clip Dataline Connected to the mixer
+		try{
+		musicBeforeGame.stop(); 
+		DataLine.Info dataInfo = new DataLine.Info(Clip.class, null);
+		musicForGame = (Clip) mixer.getLine(dataInfo);
+		
+		// the input Source: bgMusic
+		// Through the Dataline, let bgMusic data go into mixer and play.
+		File gameMusic = new File("../resource/music/musicbg"+index+".wav");
+		AudioInputStream audioInput = AudioSystem.getAudioInputStream(gameMusic);
+		musicForGame.open(audioInput);
+		musicForGame.loop(Clip.LOOP_CONTINUOUSLY);
+		}catch(Exception e){
+			System.out.println("Change music error!");
+		}
+
 		phase_stage = (firstSelect)?atk_stage:def_stage;
 		System.out.println("Your phase is : " + phase_stage);		
 		windows_construct();
@@ -1060,9 +1080,17 @@ public class GameClient {
 			character_data.character[picked[i]].set_now_attack(gamedata.get_character_state(i).get_now_attack());
 			character_data.character[picked[i]].set_now_defence(gamedata.get_character_state(i).get_now_defence());
 			character_data.character[picked[i]].set_hp(gamedata.get_character_state(i).get_hp());
-			character_alive[i] = gamedata.get_character_state(i).get_alive();		
+			character_alive[i] = gamedata.get_character_state(i).get_alive();	
+			
+			System.out.println(character_data.character[picked[i]].get_name());
+			System.out.println("ATK" +character_data.character[picked[i]].get_now_attack());
+			System.out.println("DEF" +character_data.character[picked[i]].get_now_defence());
+			System.out.println("HP" +character_data.character[picked[i]].get_hp());
 		}
+		update();
 		frame.getContentPane().update(frame.getContentPane().getGraphics());
+		
+		//can_attack_and_useSkill();
 	}
 	
 	//選擇技能發動對項 對應到角色button //mode2時按下
@@ -1902,11 +1930,11 @@ public class GameClient {
 							wait_stage();
 							
 							//呼叫對方的 可以再次攻擊 can_attack_and_useSkill()
-							//EventClient.send("GameClient::can_attack_and_useSkill()",enemyEventClientKey);
+							EventClient.send("GameClient::can_attack_and_useSkill()",enemyEventClientKey);
 							
 							
 							/*********************傳送封包告知對方所受傷害*/
-							GameData packet = new GameData(GameData.attack_pack);
+							GameData packet = new GameData(GameData.def);
 							for(int i=0;i<6;i++)
 							{
 								int index = reverse(i);	
