@@ -237,6 +237,8 @@ public class GameClient {
 	public static Boolean winner ;
 	
 	// Chat room 
+	//public static JTextField inputField = null;
+	//public static JButton enterButton = null;
 	public static JTextArea chatContentDisplay = null; // Text Show in this area
 	public static String get = null; 
 	public static JFrame chat = null; // chatRoom JFrame 
@@ -2741,6 +2743,14 @@ public class GameClient {
 				frame.getContentPane().removeAll();
 				frame.getContentPane().doLayout();
 				secondScene();
+
+				//to debug
+				/*for(ActionListener remove_enter_listener: enterButton.getActionListeners()){
+                    enterButton.removeActionListener(remove_enter_listener);                                                   
+                }
+                for(KeyListener remove_input_listener: inputField.getKeyListeners()){
+                    inputField.removeKeyListener(remove_input_listener);                                                   
+                }*/
 				chat.dispose();
 				frame.getContentPane().update(frame.getContentPane().getGraphics());	
 			}
@@ -2823,10 +2833,10 @@ public class GameClient {
 			
 	
 			// chat room title
-			JLabel chatRoom = new JLabel("Chat Content");
-			chatRoom.setFont(new Font("DejaVu Sans Light", Font.BOLD | Font.ITALIC, 20));
-			chatRoom.setBounds(113, -18, 175, 70);
-			chat.getContentPane().add(chatRoom);
+			JLabel chatRoo = new JLabel("Chat Content");
+			chatRoo.setFont(new Font("DejaVu Sans Light", Font.BOLD | Font.ITALIC, 20));
+			chatRoo.setBounds(113, -18, 175, 70);
+			chat.getContentPane().add(chatRoo);
 			
 			// text enter field
 			JTextField inputField = new JTextField();
