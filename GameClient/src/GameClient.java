@@ -245,6 +245,7 @@ public class GameClient {
 		//get the Clip Dataline Connected to the mixer
 		DataLine.Info dataInfo = new DataLine.Info(Clip.class, null);
 		musicBeforeGame = (Clip) mixer.getLine(dataInfo);
+		musicForGame = (Clip) mixer.
 
 		// the input Source: bgMusic
 		// Through the Dataline, let bgMusic data go into mixer and play.
