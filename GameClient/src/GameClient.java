@@ -318,9 +318,17 @@ public class GameClient {
 		contentPane.setIcon(diceBackground);
 		frame.setContentPane(contentPane);
 
+		// text field which can enter Server's IP
         JTextField targetIP = new JTextField("");
-        targetIP.setBounds(540,680,200,50);
+        targetIP.setBounds(537,680,206,40);
+		targetIP.setFont(new Font("Liberation Mono", Font.BOLD, 20));
         frame.getContentPane().add(targetIP);
+
+		JLabel remindIP = new JLabel("Server IP:");
+		remindIP.setBounds(407,680,140,40);
+		remindIP.setFont(new Font("Liberation Mono", Font.BOLD, 22));
+		remindIP.setForeground(Color.GREEN);
+		frame.getContentPane().add(remindIP);
 
 		// Setting the size and location of the frame [ width: 1280px , height:960px ]
 		frame.setBounds(960-640, 540-480, 1280, 960);
@@ -501,7 +509,7 @@ public class GameClient {
 				for(ActionListener remove_default_listener : Default.getActionListeners()) {
 					Default.removeActionListener(remove_default_listener);
 				}
-                for(ActionListener remove_confirm_listener : Default.getActionListeners()) {
+                for(ActionListener remove_confirm_listener : ConfirmPicture.getActionListeners()) {
                     ConfirmPicture.removeActionListener(remove_confirm_listener);
                 }
 
