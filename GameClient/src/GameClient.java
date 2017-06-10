@@ -2221,34 +2221,34 @@ public class GameClient {
 			
 			// local info
 			JLabel myPhoto = new JLabel(display);
-			myPhoto.setBounds(353, 301, 185, 186);
+			myPhoto.setBounds(355, 301, 185, 186);
 			chat.getContentPane().add(myPhoto);
 			
 			JLabel myGender = new JLabel(PlayerGender_String);
 			myGender.setFont(new Font("DejaVu Sans Condensed", Font.BOLD, 18));
-			myGender.setBounds(363, 463, 175, 70);
+			myGender.setBounds(355, 463, 175, 70);
 			chat.getContentPane().add(myGender);
 
 			JLabel playerID_Label = new JLabel("You: " + PlayerID_String);
-			playerID_Label.setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 18));
-			playerID_Label.setBounds(18, 500, 270, 37);
+			playerID_Label.setFont(new Font("DejaVu Sans", Font.BOLD, 18));
+			playerID_Label.setBounds(355, 500, 270, 37);
 			chat.getContentPane().add(playerID_Label);
 
 			// opponent info
 			opponentPhoto.setImage(opponentPhoto.getImage().getScaledInstance(185,186,Image.SCALE_DEFAULT));
 			Icon enemyIcon = opponentPhoto;
 			JLabel enemyPhoto = new JLabel(enemyIcon);
-			enemyPhoto.setBounds(353, 34, 185, 186);
+			enemyPhoto.setBounds(355, 34, 185, 186);
 			chat.getContentPane().add(enemyPhoto);
 			
 			JLabel enemyGender = new JLabel(opponentGender);
 			enemyGender.setFont(new Font("DejaVu Sans Condensed", Font.BOLD, 18));
-			enemyGender.setBounds(363, 199, 185, 77);
+			enemyGender.setBounds(355, 199, 185, 77);
 			chat.getContentPane().add(enemyGender);
 
 			JLabel opponentID_Label = new JLabel("Eneny: " + opponentID);
-			opponentID_Label.setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 18));
-			opponentID_Label.setBounds(18, 463, 270, 37);
+			opponentID_Label.setFont(new Font("DejaVu Sans", Font.BOLD, 18));
+			opponentID_Label.setBounds(355, 242, 270, 37);
 			chat.getContentPane().add(opponentID_Label);
 			
 	
@@ -2269,7 +2269,7 @@ public class GameClient {
 			chatContentDisplay = new JTextArea("",339,418);
 			chatContentDisplay.setFont(new Font("DejaVu Sans", Font.PLAIN, 16));
 			JScrollPane scrollablePane = new JScrollPane(chatContentDisplay);
-			scrollablePane.setBounds(12, 34, 339, 418);
+			scrollablePane.setBounds(12, 34, 329, 490);
 			chatContentDisplay.setEditable(false);
 			chatContentDisplay.setLineWrap(true);
 			chatContentDisplay.setRows(10); //
@@ -2277,10 +2277,10 @@ public class GameClient {
 			scrollablePane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 			chat.getContentPane().add(scrollablePane);
 			
-
+			// button which confirm to send msg 
 			JButton enterButton = new JButton("Enter");
 			enterButton.setFont(new Font("Dialog", Font.BOLD, 14));
-			enterButton.setBounds(353, 544, 124, 36);
+			enterButton.setBounds(340, 544, 124, 36);
 			chat.getContentPane().add(enterButton);
 			
 			enterButton.addActionListener(new ActionListener() {
@@ -2295,6 +2295,7 @@ public class GameClient {
 				}
 			});
 			
+			// KeyListener for 'Enter' key to send msg
 			inputField.addKeyListener(new KeyListener(){
 				public void keyPressed(KeyEvent event){
 					if(event.getKeyCode() == KeyEvent.VK_ENTER)
