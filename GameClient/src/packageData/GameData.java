@@ -23,6 +23,11 @@ public class GameData implements Serializable{
 		this.packet_type = packet_type;
 		this.attacker = attacker;
 		this.attacked = attacked;
+		for(int i=0;i<6;i++)
+		{
+			character[i] = new Character_state();
+		}
+		
 	}
 	
 	public GameData(int packet_type){	this.packet_type = packet_type;	}
