@@ -781,6 +781,7 @@ public class GameClient {
 		attack_dise_choose.setVisible(false);
 		//mode7
 		thorw_dise.setVisible(false);
+		frame.getContentPane().update(frame.getContentPane().getGraphics());
 	}
 
 	//清空(有條件判斷
@@ -808,6 +809,7 @@ public class GameClient {
 				character_windows_show_nothing();
 			}
 		}	
+		frame.getContentPane().update(frame.getContentPane().getGraphics());
 	}
 
 	//mode1 查看角色技能
@@ -825,6 +827,7 @@ public class GameClient {
 		attack_dise_choose.setVisible(false);
 		//mode7
 		thorw_dise.setVisible(false);
+		//frame.getContentPane().update(frame.getContentPane().getGraphics());
 		
 		//mode1
 		skill1.setVisible(true);  
@@ -863,7 +866,8 @@ public class GameClient {
 				 character_data.character[picked[window_character]].skill2_use_stage() == Character_Data.both))
 			{	active2.setEnabled(true);	}
 			else{	active2.setEnabled(false);	}
-		}		
+		}	
+		frame.getContentPane().update(frame.getContentPane().getGraphics());		
 	}
 
 	//mode2 選擇作用對象
@@ -888,6 +892,7 @@ public class GameClient {
 		attack_dise_choose.setVisible(false);
 		//mode7
 		thorw_dise.setVisible(false);
+		frame.getContentPane().update(frame.getContentPane().getGraphics());
 	}
 
 	//mode3 選擇攻擊對象
@@ -915,6 +920,7 @@ public class GameClient {
 		attack_dise_choose.setVisible(false);
 		//mode7
 		thorw_dise.setVisible(false);
+		frame.getContentPane().update(frame.getContentPane().getGraphics());
 	}
 
 	//mode 選擇要否執行技能  //被敵方攻擊時
@@ -948,7 +954,7 @@ public class GameClient {
 			System.out.println(character_data.character[picked[attack_test]].get_name() +"承受攻擊");
 		//***********************************************************
 		
-		
+		frame.getContentPane().update(frame.getContentPane().getGraphics());
 		//receive_attackpack_and_set_character_state(gamedata);
 		 
 		 /*
@@ -978,7 +984,6 @@ public class GameClient {
 		//mode7
 		thorw_dise.setVisible(false);
 		
-		
 		//end_using_skill = false;
 		null_construct();
 		 
@@ -989,6 +994,7 @@ public class GameClient {
 		img = new ImageIcon("../resource/image/"+ character[picked[attack_test]]+".png");
 		img.setImage(img.getImage().getScaledInstance(200,295,Image.SCALE_DEFAULT));
 		attack_who_skill_use.setIcon(img);
+		frame.getContentPane().update(frame.getContentPane().getGraphics());
 	}
 
 	//mode5 選擇防禦骰量
@@ -1009,6 +1015,7 @@ public class GameClient {
 		attack_dise_choose.setVisible(false);
 		//mode7
 		thorw_dise.setVisible(false);
+		frame.getContentPane().update(frame.getContentPane().getGraphics());
 	}
 	 //mode6 選擇攻擊骰量
 	public static void atk_Dise_enter_construct(){
@@ -1028,6 +1035,7 @@ public class GameClient {
 		attack_dise_choose.setVisible(true);
 		//mode7
 		thorw_dise.setVisible(false);
+		frame.getContentPane().update(frame.getContentPane().getGraphics());
 	}
 	
 	
@@ -1042,7 +1050,7 @@ public class GameClient {
 			character_data.character[picked[i]].set_hp(gamedata.get_character_state(i).get_hp());
 			character_alive[i] = gamedata.get_character_state(i).get_alive();		
 		}
-		update();
+		frame.getContentPane().update(frame.getContentPane().getGraphics());
 	}
 	
 	//選擇技能發動對項 對應到角色button //mode2時按下
@@ -1126,6 +1134,7 @@ public class GameClient {
 			attack.setEnabled(false);
 			end.setEnabled(false);	
 		}
+		frame.getContentPane().update(frame.getContentPane().getGraphics());
 	}
 	
 	
