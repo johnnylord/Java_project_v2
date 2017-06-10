@@ -22,7 +22,7 @@ import javax.swing.UIManager.LookAndFeelInfo;
 
 public class GameClient {
 
-	public static String SERVERIP = "172.20.10.10";
+	public static String SERVERIP = "172.20.10.2";
 	public static int PORT = 9487;
 	public static JFrame frame;
 	public static String gKey; // my GaneClient key
@@ -41,7 +41,7 @@ public class GameClient {
 	public static JLabel confirmedPhoto = null;
 	public static Icon confirmedIcon = null;
 	public static int photoIndex = 1, webcam_check = 0;
-	public static Webcam webcam = Webcam.getDefault();
+	public static Webcam webcam ;
 	public static WebcamPanel panel = null;
 	public static ImageIcon confirmedToSend = null;
 	// Data of opponent
@@ -372,6 +372,7 @@ public class GameClient {
 	 */
 	public static void secondScene() {
 
+		webcam = Webcam.getDefault();
 		// Text Field for client to enter "PlayerID" 
 		JTextField PlayerID = new JTextField("Enter Player ID here.", 30);
 		PlayerID.setBackground(Color.PINK);
@@ -1668,7 +1669,7 @@ public class GameClient {
 			character_label_state_HP[i].setValue(character_data.character[picked[i]].get_hp());
 			character_label_state_atk[i].setValue(character_data.character[picked[i]].get_attack());
 			character_label_state_def[i].setValue(character_data.character[picked[i]].get_defence());
-
+			frame.getContentPane().update(frame.getContentPane().getGraphics());
 		}
 	}
 	
@@ -2526,6 +2527,7 @@ public class GameClient {
 				character_label_state_atk[i].setValue(character_data.character[picked[i]].get_now_attack());
 				character_label_state_def[i].setValue(character_data.character[picked[i]].get_now_defence());
 				character_button_select[i].setEnabled(character_alive[i]);
+				frame.getContentPane().update(frame.getContentPane().getGraphics());
 			}
 		}
 		
@@ -2549,6 +2551,7 @@ public class GameClient {
 				character_label_state_atk[i].setValue(character_data.character[picked[i]].get_now_attack());
 				character_label_state_def[i].setValue(character_data.character[picked[i]].get_now_defence());
 				character_button_select[i].setEnabled(character_alive[i]);
+				frame.getContentPane().update(frame.getContentPane().getGraphics());
 			}
 		}
 		
