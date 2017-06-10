@@ -245,6 +245,7 @@ public class GameClient {
 		//get the Clip Dataline Connected to the mixer
 		DataLine.Info dataInfo = new DataLine.Info(Clip.class, null);
 		musicBeforeGame = (Clip) mixer.getLine(dataInfo);
+		//musicForGame = (Clip) mixer
 
 		// the input Source: bgMusic
 		// Through the Dataline, let bgMusic data go into mixer and play.
@@ -752,13 +753,11 @@ public class GameClient {
 	public static void fourthScene(){
 		// refresh the frame
 		frame.getContentPane().removeAll();
-		//frame.getContentPane().doLayout();
-		//frame.getContentPane().update(frame.getContentPane().getGraphics());
-		
-		
+		JLabel gameBg = new JLabel();
+		gameBg.setIcon(new ImageIcon("../resource/image/gamebg"+(int)(Math.random()*3+1)+".jpg"));
+		frame.setContentPane(gameBg);
 		phase_stage = (firstSelect)?atk_stage:def_stage;
-		System.out.println("Your phase is : " + phase_stage);
-		
+		System.out.println("Your phase is : " + phase_stage);		
 		windows_construct();
 		null_construct();
 		frame.getContentPane().update(frame.getContentPane().getGraphics());
@@ -922,7 +921,7 @@ public class GameClient {
 	public static void check_use_skill_construct(GameData gameData){
 		character_state_mode = 4;
 		//mode1
-		skill1.setVisible(false);  
+		/*skill1.setVisible(false);  
 		skill2.setVisible(false);
 		//mode2
 		select_char.setVisible(false);
@@ -935,26 +934,24 @@ public class GameClient {
 		//mode6
 		attack_dise_choose.setVisible(false);
 		//mode7
-		thorw_dise.setVisible(false);
+		thorw_dise.setVisible(false);*/
 		
-		
-		end_using_skill = false;
-		null_construct();
-		
-		//要改寫
-		
-		  
 		attacker_test = gameData.get_attacker();
 		attack_test = gameData.get_attacked();
+		
+		end_using_skill = false;
+		null_construct();	  
+		
 		//receive_attackpack_and_set_character_state(gamedata);
 		 
+		 /*
 		ImageIcon img = new ImageIcon("../resource/image/"+ character[picked[attacker_test]]+".png");
 		img.setImage(img.getImage().getScaledInstance(200,295,Image.SCALE_DEFAULT));
 		who_attack_skill_use.setIcon(img);
 
 		img = new ImageIcon("../resource/image/"+ character[picked[attack_test]]+".png");
 		img.setImage(img.getImage().getScaledInstance(200,295,Image.SCALE_DEFAULT));
-		attack_who_skill_use.setIcon(img);
+		attack_who_skill_use.setIcon(img);*/
 	}
 	public static void check_use_skill_construct_V2(){
 		character_state_mode = 4;
@@ -975,7 +972,7 @@ public class GameClient {
 		thorw_dise.setVisible(false);
 		
 		
-		end_using_skill = false;
+		//end_using_skill = false;
 		null_construct();
 		 
 		ImageIcon img = new ImageIcon("../resource/image/"+ character[picked[attacker_test]]+".png");
@@ -1951,7 +1948,7 @@ public class GameClient {
 							int atk = character_data.character[picked[attacker_judge]].get_now_attack()+use_dise*10;
 							character_data.character[picked[attacker_judge]].set_now_attack(atk);
 							System.out.println(character_data.character[picked[attacker_judge]].get_name() +"發動攻擊");
-							System.out.println("攻擊："+atk);
+							System.out.println("攻擊："+ character_data.character[picked[attacker_judge]].get_now_attack());
 							//***********************************************************
 							
 							
@@ -2177,11 +2174,12 @@ public class GameClient {
 			end.setEnabled(false);
 		}		
 
-		public static void recvMsg(String msg)
-		{
+		// Show the message in the text field of chat room
+		public static void recvMsg(String msg){
 			chatContentDisplay.append(opponentID + ":\n" + "    " + msg);
 		}
 
+		// Chat Room GUI initialize
 		public static void chatRoom(){
 			chat = new JFrame("ChatRoom");
 			chat.getContentPane().setBackground(Color.WHITE);
@@ -2297,6 +2295,7 @@ public class GameClient {
 			chat.setVisible(true);
 			chat.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		}
+		
 }
 
 
