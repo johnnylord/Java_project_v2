@@ -2017,23 +2017,14 @@ public class GameClient {
 							
 							/*此處呼叫func 直接改變數值 (GameData packet) receive_attackpack_and_set_character_state*/
 							/*********************傳送封包告知對方所受傷害*/
-							System.out.println("up");
 							GameData packet = new GameData(GameData.attack_pack,reverse(attacker_judge),reverse(attack_judge));
-							System.out.println("down");
-							System.out.println("attacke+++++++++++++++++ : " + reverse(attacker_judge));
-							System.out.println("attack++++++++++++++++++ : " + reverse(attack_judge));
 							for(int i=0;i<6;i++)
 							{
 								int index = reverse(i);	
-								System.out.println(index);
 								packet.character[index].set_now_attack(character_data.character[picked[i]].get_now_attack());
-								System.out.println("1 OK");
 								packet.character[index].set_now_defence(character_data.character[picked[i]].get_now_defence());
-								System.out.println("2 OK");
 								packet.character[index].set_hp(character_data.character[picked[i]].get_hp());
-								System.out.println("3 OK");
 								packet.character[index].set_alive(character_alive[i]);	
-								System.out.println("4 OK");
 							}
 							EventClient.send("GameClient::receive_attackpack_and_set_character_state($)",packet,enemyEventClientKey);
 							update();
@@ -2043,8 +2034,15 @@ public class GameClient {
 							
 							if(attack_all)
 							{
-								EventClient.send("GameClient::check_use_skill_construct($)",packet,enemyEventClientKey);
-								/*呼叫敵方的防禦CONSTRUCT  check_use_skill_construct*/
+								if(character_alive[3])
+								{	
+									packet.set_attack(1);
+									EventClient.send("GameClient::check_use_skill_construct($)",packet,enemyEventClientKey);
+									/*呼叫敵方的防禦CONSTRUCT  check_use_skill_construct*/
+								}
+								else{
+									can_attack_and_useSkill();
+								}
 							}
 							else
 							{
@@ -2126,34 +2124,47 @@ public class GameClient {
 		public static void can_attack_and_useSkill(){
 			if(attack_all)
 			{
+				System.out.println("attack_all_count" = attack_all_count);
+				
 				if(attack_all_count==0)
 				{
-					GameData packet = new GameData(GameData.defense_pack,reverse(attacker_judge),reverse(3));	
-					for(int i=0;i<6;i++) //已反轉 之後收到直接使用就好
+					if(character_alive[3])
 					{
-						int index = reverse(i);	
-						packet.character[index].set_now_attack(character_data.character[picked[i]].get_now_attack());
-						packet.character[index].set_now_defence(character_data.character[picked[i]].get_now_defence());
-						packet.character[index].set_hp(character_data.character[picked[i]].get_hp());
-						packet.character[index].set_alive(character_alive[i]);
+						GameData packet = new GameData(GameData.defense_pack,reverse(attacker_judge),reverse(3));	
+						for(int i=0;i<6;i++) //已反轉 之後收到直接使用就好
+						{
+							int index = reverse(i);	
+							packet.character[index].set_now_attack(character_data.character[picked[i]].get_now_attack());
+							packet.character[index].set_now_defence(character_data.character[picked[i]].get_now_defence());
+							packet.character[index].set_hp(character_data.character[picked[i]].get_hp());
+							packet.character[index].set_alive(character_alive[i]);
+						}
+						EventClient.send("GameClient::check_use_skill_construct($)",packet,enemyEventClientKey);
+						/*呼叫敵方的防禦CONSTRUCT  check_use_skill_construct*/
+						attack_all_count++;
 					}
-					EventClient.send("GameClient::check_use_skill_construct()",enemyEventClientKey);
-					/*呼叫敵方的防禦CONSTRUCT  check_use_skill_construct*/
+					else{
+						attack_all_count++;
+						can_attack_and_useSkill();
+					}
 				}
 				if(attack_all_count==1)
 				{
-					GameData packet = new GameData(GameData.defense_pack,reverse(attacker_judge),reverse(5));	
-					for(int i=0;i<6;i++) //已反轉 之後收到直接使用就好
+					if(character_alive[5])
 					{
-						int index = reverse(i);	
-						packet.character[index].set_now_attack(character_data.character[picked[i]].get_now_attack());
-						packet.character[index].set_now_defence(character_data.character[picked[i]].get_now_defence());
-						packet.character[index].set_hp(character_data.character[picked[i]].get_hp());
-						packet.character[index].set_alive(character_alive[i]);
+						
+						GameData packet = new GameData(GameData.defense_pack,reverse(attacker_judge),reverse(5));	
+						for(int i=0;i<6;i++) //已反轉 之後收到直接使用就好
+						{
+							int index = reverse(i);	
+							packet.character[index].set_now_attack(character_data.character[picked[i]].get_now_attack());
+							packet.character[index].set_now_defence(character_data.character[picked[i]].get_now_defence());
+							packet.character[index].set_hp(character_data.character[picked[i]].get_hp());
+							packet.character[index].set_alive(character_alive[i]);
+						}
+						/*呼叫敵方的防禦CONSTRUCT  check_use_skill_construct*/
+						EventClient.send("GameClient::check_use_skill_construct($)",packet,enemyEventClientKey);
 					}
-					/*呼叫敵方的防禦CONSTRUCT  check_use_skill_construct*/
-					EventClient.send("GameClient::check_use_skill_construct()",enemyEventClientKey);
-					
 					attack_all_count=0;
 					attack_all = false;
 					returnToOriginalState();
