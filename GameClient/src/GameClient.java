@@ -193,7 +193,7 @@ public class GameClient {
 		PlayerMotto.setBackground(Color.PINK);
 		PlayerMotto.setLocation(865,540); 
 		PlayerMotto.setSize(365,80);
-		
+
 		// Button for client to confirm photo
 		JButton ConfirmPicture = new JButton("Confirm");
 		ConfirmPicture.setBackground(Color.GREEN);
@@ -375,6 +375,9 @@ public class GameClient {
 				PlayerGender_String = PlayerGender.getText();
 				String PlayerMotto_String = PlayerMotto.getText();
 				System.out.println("Clicked...");
+				PlayerID_String = PlayerID.getText();
+				PlayerGender_String = PlayerGender.getText();
+				String PlayerMotto_String = PlayerMotto.getText();
 				GameClient.scene2Reminder();
 			}
 			public void mouseEntered(MouseEvent e){
@@ -576,9 +579,12 @@ public class GameClient {
 		opponentID = packageData.getUserData().playerID;
 		opponentGender = packageData.getUserData().playerGender;
 		opponentPhoto = packageData.getUserData().photo;
-		if(opponentID!=null && opponentGender!= null && opponentPhoto != null){
-			System.out.println("Return packege players info .............!!!!!!!!!!!1");
-		}
+
+		System.out.println("Opponent info:");
+		System.out.println(opponentID+":"+(opponentID!= null));
+		System.out.println(opponentGender+":" +(opponentGender != null));
+		System.out.println(opponentPhoto+":"+(opponentPhoto!=null));
+
 		//Change to third scene
 		GameClient.thirdScene();
 	}
