@@ -684,9 +684,9 @@ public class GameClient {
 		frame.getContentPane().doLayout();
 		frame.getContentPane().update(frame.getContentPane().getGraphics());
 		
+		picked = new int[6];
 		for(int i=0;i<6;i++)
 		{
-			picked[i] = new int[6];
 			select[i].setIcon(null);
 		}
 		for(int i=0;i<12;i++)
@@ -1716,7 +1716,7 @@ public class GameClient {
 				if(surrender==0) //contentPane.setVisible(false);//法二傳送至主機端(請她delete)
 				{
 					jump_result(false);
-					EventClient.send("GameClient::jump_result($)",false,enemyEventClientKey);
+					EventClient.send("GameClient::jump_result($)",true,enemyEventClientKey);
 				}
 			}
 		});
@@ -2196,7 +2196,7 @@ public class GameClient {
 							if(damage>0)
 							{
 								character_data.character[picked[attack_test]].set_hp(character_data.character[picked[attack_test]].get_hp() - damage);
-								if(character_data.character[picked[attack_test]].get_hp()<0)
+								if(character_data.character[picked[attack_test]].get_hp()<=0)
 								{
 									update();
 								}
@@ -2352,8 +2352,6 @@ public class GameClient {
 								displayFightMsg(msg);
 								EventClient.send("GameClient::displayFightMsg($)",msg,enemyEventClientKey);
 								//********************
-								
-								returnToOriginalState();
 							}
 							null_construct();
 							wait_stage();
@@ -2477,11 +2475,12 @@ public class GameClient {
 				}
 			}
 			else
-			{
+			{	
 				character_state_mode = 0;
 				ready.setEnabled(false);
 				attack.setEnabled(true);
 				end.setEnabled(true);
+				returnToOriginalState();
 			}		
 		}
 		
@@ -2574,7 +2573,7 @@ public class GameClient {
 			if(!character_alive[0] && !character_alive[2] && !character_alive[4]) //all character died
 			{
 				jump_result(false);
-				EventClient.send("GameClient::jump_result($)",false,enemyEventClientKey);
+				EventClient.send("GameClient::jump_result($)",true,enemyEventClientKey);
 			}
 		}
 		
