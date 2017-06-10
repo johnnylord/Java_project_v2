@@ -38,6 +38,11 @@ public class GameData implements Serializable{
 		}
 	}
 	
+	public void set_attack(int attacked)
+	{
+		this.attacked = attacked;
+	}
+	
 	public int get_packet_type(){	return this.packet_type;	}
 	public int get_attacker(){	return this.attacker;	}
 	public int get_attacked(){	return this.attacked;	}
