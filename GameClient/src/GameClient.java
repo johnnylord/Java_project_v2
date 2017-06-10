@@ -644,8 +644,8 @@ public class GameClient {
                 for(ActionListener remove_confirm_listener : ConfirmPicture.getActionListeners()) {
                     ConfirmPicture.removeActionListener(remove_confirm_listener);
                 }
-				for(ActionListener remove_find_listener: FindOpponent.getActionListeners()){
-					FindOpponent.removeActionListener(remove_find_listener);
+				for(MouseListener remove_find_listener: FindOpponent.getMouseListeners()){
+					FindOpponent.removeMouseListener(remove_find_listener);
 				}
 				
 				System.out.println("Clicked...");
