@@ -578,20 +578,12 @@ public class GameClient {
 		opponentPhoto = packageData.getUserData().photo;
 
 		System.out.println("Opponent info:");
-		System.out.println(opponentID != null);
-		System.out.println(opponentGender != null);
-		System.out.println(opponentPhoto != null);
+		System.out.println(opponentID+":"+(opponentID!= null));
+		System.out.println(opponentGender+":" +(opponentGender != null));
+		System.out.println(opponentPhoto+":"+(opponentPhoto!=null));
 
-		Icon tmpe = opponentPhoto;
-		JLabel tmplabel = new JLabel(tmpe);
-		tmplabel.setBounds(100,100,500,500);
-		frame.getContentPane().removeAll();
-		frame.getContentPane().doLayout();
-		frame.getContentPane().update(frame.getContentPane().getGraphics());
-		frame.add(tmplabel);
-		frame.getContentPane().update(frame.getContentPane().getGraphics());
 		//Change to third scene
-		//GameClient.thirdScene();
+		GameClient.thirdScene();
 	}
 	
 	public static void my_turn_to_select(Integer select_which_character,Integer index)
