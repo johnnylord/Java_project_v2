@@ -51,6 +51,7 @@ public class GameClient {
 
 	// Scene3Data
 	public static String[] character = {"亞瑟王","高文","莫德雷德","蘭斯洛特","加雷斯","貝迪維爾","崔斯坦","摩根勒菲","加拉哈德","珀西瓦","梅林","閨妮維雅"};
+	public static String[] character_english_name = {"Arthur","Gawain","Mordred","Lancelot","Gareth","Bedivere","Tristram","Morgana","Galahad","Percivale","Merlin","Guinevere"};
 	public static JLabel character_data_label = new JLabel("");
 	public static JComboBox comboBox = new JComboBox<String>(character);
 	public static JLabel label = new JLabel("");
@@ -744,9 +745,9 @@ public class GameClient {
 		frame.getContentPane().doLayout();
 		frame.getContentPane().update(frame.getContentPane().getGraphics());
 		
+		picked = new int[6];
 		for(int i=0;i<6;i++)
 		{
-			picked = new int[6];
 			select[i].setIcon(null);
 		}
 		for(int i=0;i<12;i++)
@@ -1776,7 +1777,7 @@ public class GameClient {
 				if(surrender==0) //contentPane.setVisible(false);//法二傳送至主機端(請她delete)
 				{
 					jump_result(false);
-					EventClient.send("GameClient::jump_result($)",false,enemyEventClientKey);
+					EventClient.send("GameClient::jump_result($)",true,enemyEventClientKey);
 				}
 			}
 		});
@@ -1990,8 +1991,7 @@ public class GameClient {
 							EventClient.send("GameClient::receive_attackpack_and_set_character_state($)",packet,enemyEventClientKey);
 							/************************************************************/	
 							//**********************************************
-							String msg = character_data.character[picked[window_skillUse_character]].get_name() 
-									+ "發動了" + character_data.character[picked[window_skillUse_character]].get_skill1();
+							String msg = character_english_name[picked[window_skillUse_character]]+ "use skill1";
 							displayFightMsg(msg);
 							EventClient.send("GameClient::displayFightMsg($)",msg,enemyEventClientKey);
 							//************************************
@@ -2074,8 +2074,7 @@ public class GameClient {
 							}
 							EventClient.send("GameClient::receive_attackpack_and_set_character_state($)",packet,enemyEventClientKey);
 							//**********************************************
-							String msg = character_data.character[picked[window_skillUse_character]].get_name() 
-									+ "發動了" + character_data.character[picked[window_skillUse_character]].get_skill2();
+							String msg = character_english_name[picked[window_skillUse_character]] + "use skill2";
 							displayFightMsg(msg);
 							EventClient.send("GameClient::displayFightMsg($)",msg,enemyEventClientKey);
 							//************************************
@@ -2256,19 +2255,19 @@ public class GameClient {
 							if(damage>0)
 							{
 								character_data.character[picked[attack_test]].set_hp(character_data.character[picked[attack_test]].get_hp() - damage);
-								if(character_data.character[picked[attack_test]].get_hp()<0)
+								if(character_data.character[picked[attack_test]].get_hp()<=0)
 								{
 									update();
 								}
 								//********************
-								String msg = character_data.character[picked[attack_test]] + "受到了 " + damage + " 傷害";
+								String msg = character_english_name[picked[attack_test]] + "take " + damage + " damage";
 								displayFightMsg(msg);
 								EventClient.send("GameClient::displayFightMsg($)",msg,enemyEventClientKey);
 								//********************
 							}
 							else{
 								//********************
-								String msg = character_data.character[picked[attack_test]] + "受到了 0 傷害";
+								String msg = character_data.character[picked[attack_test]] + "doesn't take any damage";
 								displayFightMsg(msg);
 								EventClient.send("GameClient::displayFightMsg($)",msg,enemyEventClientKey);
 								//********************
@@ -2390,8 +2389,7 @@ public class GameClient {
 									EventClient.send("GameClient::check_use_skill_construct($)",packet,enemyEventClientKey);
 									/*呼叫敵方的防禦CONSTRUCT  check_use_skill_construct*/
 									//********************
-									String msg = character_data.character[picked[attacker_judge]].get_name() +"發動攻擊，" 
-												+ "攻擊："+ character_data.character[picked[attacker_judge]].get_now_attack();
+									String msg = character_english_name[picked[attacker_judge]]+"Attack, Attack："+ character_data.character[picked[attacker_judge]].get_now_attack();
 									displayFightMsg(msg);
 									EventClient.send("GameClient::displayFightMsg($)",msg,enemyEventClientKey);
 									//********************
@@ -2406,14 +2404,11 @@ public class GameClient {
 								EventClient.send("GameClient::check_use_skill_construct($)",packet,enemyEventClientKey);
 								
 								//********************
-								String msg = character_data.character[picked[attacker_judge]].get_name() +"發動攻擊，"
-											+ "攻擊："+ character_data.character[picked[attacker_judge]].get_now_attack();
+								String msg = character_english_name[picked[attacker_judge]]+"Attack, Attack："+ character_data.character[picked[attacker_judge]].get_now_attack();
 											
 								displayFightMsg(msg);
 								EventClient.send("GameClient::displayFightMsg($)",msg,enemyEventClientKey);
 								//********************
-								
-								returnToOriginalState();
 							}
 							null_construct();
 							wait_stage();
@@ -2537,11 +2532,12 @@ public class GameClient {
 				}
 			}
 			else
-			{
+			{	
 				character_state_mode = 0;
 				ready.setEnabled(false);
 				attack.setEnabled(true);
 				end.setEnabled(true);
+				returnToOriginalState();
 			}		
 		}
 		
@@ -2636,7 +2632,7 @@ public class GameClient {
 			if(!character_alive[0] && !character_alive[2] && !character_alive[4]) //all character died
 			{
 				jump_result(false);
-				EventClient.send("GameClient::jump_result($)",false,enemyEventClientKey);
+				EventClient.send("GameClient::jump_result($)",true,enemyEventClientKey);
 			}
 		}
 		
