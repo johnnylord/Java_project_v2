@@ -17,6 +17,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.*;
+import javax.swing.UIManager.*;
+import javax.swing.UIManager.LookAndFeelInfo;
 
 public class GameClient {
 
@@ -217,6 +219,12 @@ public class GameClient {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+						if ("Nimbus".equals(info.getName())) {
+						    UIManager.setLookAndFeel(info.getClassName());
+						    break;
+						}
+					}
 					GameClient window = new GameClient();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
