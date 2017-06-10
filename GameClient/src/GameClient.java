@@ -282,8 +282,10 @@ public class GameClient {
 		frame.getContentPane().setLayout(null);
 
 		// Label for gif
-		JLabel cardBoy = new JLabel((Icon) new ImageIcon ("../resource/image/use1.gif"));
-		cardBoy.setBounds(300,300,500,500);
+		ImageIcon atMainGifIcon = new ImageIcon("../resource/image/use1.gif");
+		atMainGifIcon.setImage(atMainGifIcon.getImage().getScaledInstance(700,440,Image.SCALE_DEFAULT));
+		JLabel cardBoy = new JLabel((Icon) atMainGifIcon);
+		cardBoy.setBounds(290,155,700,500);
 		frame.getContentPane().add(cardBoy);
 
 		// StartGame button
@@ -2124,7 +2126,7 @@ public class GameClient {
 		public static void can_attack_and_useSkill(){
 			if(attack_all)
 			{
-				System.out.println("attack_all_count" = attack_all_count);
+				System.out.println("attack_all_count" + attack_all_count);
 				
 				if(attack_all_count==0)
 				{
