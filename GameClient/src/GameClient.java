@@ -685,6 +685,16 @@ public class GameClient {
 		frame.getContentPane().doLayout();
 		frame.getContentPane().update(frame.getContentPane().getGraphics());
 		
+		for(int i=0;i<6;i++)
+		{
+			picked[i] = new int[6];
+			select[i].setIcon(null);
+		}
+		for(int i=0;i<12;i++)
+		{
+			seleted[i] = 0;
+		}
+		
 		// add Combo box 
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"亞瑟王","高文","莫德雷德","蘭斯洛特","加雷斯","貝迪維爾","崔斯坦","摩根勒菲","加拉哈德","珀西瓦","梅林","閨妮維雅"}));
 		comboBox.setForeground(Color.BLACK);
@@ -2572,6 +2582,8 @@ public class GameClient {
 		}
 		
 		public static void jump_result(Boolean win){
+			
+			/*通知SERVER*/
 			
 			String msg = (win)? "你贏了!":"你輸了";
 			msg = msg+ "\n是否重完?";
