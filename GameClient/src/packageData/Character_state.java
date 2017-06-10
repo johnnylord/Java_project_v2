@@ -10,12 +10,9 @@ public class Character_state implements Serializable{
 	private int hp;
 	private boolean alive;
 	
-	public Character_state(int atk,int def,int hp ,boolean alive)
+	public Character_state()
 	{
-		this.now_atk = atk;
-		this.now_def = def;
-		this.hp = hp;
-		this.alive = alive;
+		;
 	}
 	
 	
