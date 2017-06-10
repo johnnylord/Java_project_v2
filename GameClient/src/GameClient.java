@@ -284,8 +284,11 @@ public class GameClient {
 			if(info[i].getName().contains("default"))
 				break;
 		}
-		mixer = AudioSystem.getMixer(info[i]);
-		
+		if(i >=info.length)
+			mixer = AudioSystem.getMixer(info[0]);
+		else
+			mixer = AudioSystem.getMixer(info[i]);
+
 		//get the Clip Dataline Connected to the mixer
 		DataLine.Info dataInfo = new DataLine.Info(Clip.class, null);
 		musicBeforeGame = (Clip) mixer.getLine(dataInfo);
