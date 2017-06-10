@@ -22,7 +22,7 @@ import javax.swing.UIManager.LookAndFeelInfo;
 
 public class GameClient {
 
-	public static String SERVERIP = "172.20.10.2";
+	public static String SERVERIP = null;
 	public static int PORT = 9487;
 	public static JFrame frame;
 	public static String gKey; // my GaneClient key
@@ -313,8 +313,14 @@ public class GameClient {
 
 		// Setting Backgroung image
 		JLabel contentPane = new JLabel();
-		contentPane.setIcon(new ImageIcon("./resource/image/homepage.jpg"));
+		ImageIcon diceBackground = new ImageIcon("./resource/image/dicebackground.jpg");
+		diceBackground.setImage(diceBackground.getImage().getScaledInstance(1280,960,Image.SCALE_DEFAULT));
+		contentPane.setIcon(diceBackground);
 		frame.setContentPane(contentPane);
+
+        JTextField targetIP = new JTextField("");
+        targetIP.setBounds(540,680,200,50);
+        frame.getContentPane().add(targetIP);
 
 		// Setting the size and location of the frame [ width: 1280px , height:960px ]
 		frame.setBounds(960-640, 540-480, 1280, 960);
@@ -333,6 +339,8 @@ public class GameClient {
 		JButton StartButton = new JButton("Start Game");
 		StartButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+					
+					SERVERIP = targetIP.getText();
 
 					// Connect to server and get the EventClient.thisKey
 					EventClient.initialize(SERVERIP);
@@ -375,24 +383,30 @@ public class GameClient {
 
 		webcam = Webcam.getDefault();
 		// Text Field for client to enter "PlayerID" 
-		JTextField PlayerID = new JTextField("Enter Player ID here.", 30);
-		PlayerID.setBackground(Color.PINK);
+		JTextField PlayerID = new JTextField("", 30);
+		PlayerID.setBackground(Color.GREEN);
 		PlayerID.setFont(new Font("Liberation Mono", Font.BOLD | Font.ITALIC, 24));
-		PlayerID.setLocation(865,50); // 50 + 760
-		PlayerID.setSize(365,80);
+		PlayerID.setLocation(865,150); // 50 + 760
+		PlayerID.setSize(349,48);
+
+		// Label for reminding client to enter ID
+		JLabel showRemindMsg_ID = new JLabel("Enter Player ID here:");
+		showRemindMsg_ID.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 28));
+		showRemindMsg_ID.setForeground(Color.WHITE);
+		showRemindMsg_ID.setBounds(835, 100, 450, 38);
 		
 		// Text Field for client to enter "PlayGender" 
-		JTextField PlayerGender = new JTextField("Enter Player Gender here.", 30);
+		JTextField PlayerGender = new JTextField("", 30);
 		PlayerGender.setFont(new Font("Liberation Mono", Font.BOLD | Font.ITALIC, 24));
-		PlayerGender.setBackground(Color.PINK);
-		PlayerGender.setLocation(865,230); 
-		PlayerGender.setSize(365,80);
+		PlayerGender.setBackground(Color.GREEN);
+		PlayerGender.setLocation(865,280); 
+		PlayerGender.setSize(349,48);
 
-		ImageIcon diceShow = new ImageIcon("./resource/image/dice.gif");
-		diceShow.setImage(diceShow.getImage().getScaledInstance(270,224,Image.SCALE_DEFAULT));
-		Icon diceIcon = diceShow;
-		JLabel diceGif = new JLabel(diceIcon);
-		diceGif.setBounds(919, 398, 270, 224);
+		// Label for reminding client to enter Gender
+		JLabel showRemindMsg_Gender = new JLabel("Enter Player's Gender here:");
+		showRemindMsg_Gender.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 28));
+		showRemindMsg_Gender.setForeground(Color.WHITE);
+		showRemindMsg_Gender.setBounds(835, 230, 450, 38);
 
 		// Button for client to confirm photo
 		JButton ConfirmPicture = new JButton("Confirm");
@@ -417,6 +431,44 @@ public class GameClient {
 		Default.setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 24));
 		Default.setLocation(580,850); 
 		Default.setSize(230,80);
+
+		// use Picture and Text to instruct client
+		JLabel noteRemindInfo = new JLabel("Find Opponent");
+		noteRemindInfo.setForeground(Color.GREEN);
+		noteRemindInfo.setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 24));
+		noteRemindInfo.setBounds(976, 600, 270, 55);
+		frame.getContentPane().add(noteRemindInfo);
+		
+		JLabel noteRemindPhoto = new JLabel("Choose Yout Photo");
+		noteRemindPhoto.setForeground(Color.GREEN);
+		noteRemindPhoto.setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 24));
+		noteRemindPhoto.setBounds(917, 492, 270, 55);
+		frame.getContentPane().add(noteRemindPhoto);
+		
+		JLabel noteRemindFind = new JLabel("Enter Yout Info");
+		noteRemindFind.setForeground(Color.GREEN);
+		noteRemindFind.setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 24));
+		noteRemindFind.setBounds(976, 368, 270, 55);
+		frame.getContentPane().add(noteRemindFind);
+		
+		
+		ImageIcon oneNumber = new ImageIcon("./resource/image/number1.png");
+		oneNumber.setImage(oneNumber.getImage().getScaledInstance(100,100,Image.SCALE_DEFAULT));
+		JLabel numberOne = new JLabel((Icon)oneNumber);
+		numberOne.setBounds(885, 310, 80, 140);
+		frame.getContentPane().add(numberOne);
+		
+		ImageIcon twoNumber = new ImageIcon("./resource/image/number2.png");
+		twoNumber.setImage(twoNumber.getImage().getScaledInstance(100,100,Image.SCALE_DEFAULT));
+		JLabel numberTwo = new JLabel((Icon)twoNumber);
+		numberTwo.setBounds(791, 477, 140, 80);
+		frame.getContentPane().add(numberTwo);
+		
+		ImageIcon threeNumber = new ImageIcon("./resource/image/number3.png");
+		threeNumber.setImage(threeNumber.getImage().getScaledInstance(100,100,Image.SCALE_DEFAULT));
+		JLabel numberThree = new JLabel((Icon)threeNumber);
+		numberThree.setBounds(894, 572, 80, 140);
+		frame.getContentPane().add(numberThree);
 		
 		// set default photo data
 		Icon[] defaultPhotoArray = new ImageIcon[6];
@@ -439,6 +491,8 @@ public class GameClient {
 				TakePicture.setForeground(Color.BLACK);
 				Default.setBackground(Color.RED);
 				Default.setForeground(Color.BLACK);
+                ConfirmPicture.setBackground(Color.RED);
+                ConfirmPicture.setForeground(Color.BLACK);
 				
 				// remove the other buttons' action listener
 				for(ActionListener remove_take_listener : TakePicture.getActionListeners()) {
@@ -447,6 +501,10 @@ public class GameClient {
 				for(ActionListener remove_default_listener : Default.getActionListeners()) {
 					Default.removeActionListener(remove_default_listener);
 				}
+                for(ActionListener remove_confirm_listener : Default.getActionListeners()) {
+                    ConfirmPicture.removeActionListener(remove_confirm_listener);
+                }
+
 				
 				// set and display choosed photo
 				if(webcam_check == 1){
@@ -617,7 +675,8 @@ public class GameClient {
 		frame.getContentPane().add(TakePicture);
 		frame.getContentPane().add(Default);
 		frame.getContentPane().add(FindOpponent);
-		frame.getContentPane().add(diceGif);
+		frame.getContentPane().add(showRemindMsg_ID);
+        frame.getContentPane().add(showRemindMsg_Gender);
 		frame.getContentPane().doLayout();
 		frame.getContentPane().update(frame.getContentPane().getGraphics());
 	}
