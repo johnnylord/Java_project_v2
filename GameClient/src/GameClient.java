@@ -1419,6 +1419,17 @@ public class GameClient {
 	//遊戲介面construct
 	public static void windows_construct(){
 		
+		for(int i=0;i<12;i++)
+		{
+			character_data.character[i].reset_hp();
+			character_data.character[i].reset_now_attack();
+			character_data.character[i].reset_now_defence();
+		}
+		for(int i=0;i<6;i++)
+		{
+			character_alive[i]=true;
+		}
+		
 		//角色目前狀況
 		windows_character_button_construct();
 		windows_character_state_construct();
@@ -2344,9 +2355,19 @@ public class GameClient {
 							}
 							
 							//BUG點
+							Boolean opp_attack_all;
+							EvevtClient.send(o->opp_attack_all(o), "GameClient::get_attack_all()", enemyEventClientKey);
+							
+							if(opp_attack_all)
+							{
+								null_construct();
+								wait_stage();
+							}
+							else{
 								returnToOriginalState();
 								null_construct();
 								wait_stage();
+							}
 
 							
 							//呼叫對方的 可以再次攻擊 can_attack_and_useSkill()
