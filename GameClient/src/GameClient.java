@@ -20,7 +20,7 @@ import java.util.*;
 
 public class GameClient {
 
-	public static String SERVERIP = "192.168.43.244";
+	public static String SERVERIP = "172.20.10.10";
 	public static int PORT = 9487;
 	public static JFrame frame;
 	public static String gKey; // my GaneClient key
@@ -70,11 +70,8 @@ public class GameClient {
 
 	// Scene4Data for GUI
 	public static JPanel contentPane;
-
 	public  static CreateCharacter character_data = new CreateCharacter();
-	
 	public static Random rand = new Random();
-	
 	public static JPanel dice_state = new JPanel();
 		public static JLabel atk_icon = new JLabel();
 		public static JLabel def_icon = new JLabel();
@@ -197,6 +194,19 @@ public class GameClient {
 	public static boolean attack_all = false;
 	public static int attack_all_count = 0;
 
+
+	// Chat room 
+	public static JTextArea chatContentDisplay = null; // Text Show in this area
+	public static String get = null; 
+	public static JFrame chat = null; // chatRoom JFrame 
+	public static String[] filepath = {
+		"../resource/image/photo_cotaduck.jpg",
+		"../resource/image/photo_fbhead.jpeg",
+		"../resource/image/photo_littleboy.jpeg",
+		"../resource/image/photo_monkey.jpeg",
+		"../resource/image/photo_nothing.jpeg",
+		"../resource/image/photo_youareloser.jpeg"
+	};
 /*------------------------------------------------------------------------------------------------------------
 /
 /	Main program
@@ -354,14 +364,6 @@ public class GameClient {
 		Default.setSize(230,80);
 		
 		// set default photo data
-		String[] filepath = {
-				"../resource/image/photo_cotaduck.jpg",
-				"../resource/image/photo_fbhead.jpeg",
-				"../resource/image/photo_littleboy.jpeg",
-				"../resource/image/photo_monkey.jpeg",
-				"../resource/image/photo_nothing.jpeg",
-				"../resource/image/photo_youareloser.jpeg"
-		};
 		Icon[] defaultPhotoArray = new ImageIcon[6];
 		for(int i=0; i<6; ++i)
 		{
@@ -723,6 +725,9 @@ public class GameClient {
 		frame.getContentPane().add(player2_character_2);
 		frame.getContentPane().add(player2_character_3);		
 		frame.getContentPane().update(frame.getContentPane().getGraphics());
+
+		// After match successed, build the chat room
+		GameClient.chatRoom();
 	}
 
 	// Used to select the Hero
@@ -804,6 +809,7 @@ public class GameClient {
 			}
 		}	
 	}
+
 	//mode1 查看角色技能
 	public static void skill_active_construct(int card){
 		character_state_mode = 1;
@@ -2159,6 +2165,127 @@ public class GameClient {
 			attack.setEnabled(false);	
 			end.setEnabled(false);
 		}		
+
+		public static void recvMsg(String msg)
+		{
+			chatContentDisplay.append(opponentID + ":\n" + "    " + msg);
+		}
+
+		public static void chatRoom(){
+			chat = new JFrame("ChatRoom");
+			chat.getContentPane().setBackground(Color.WHITE);
+			chat.setBounds(1356, 0, 550, 600);
+			chat.getContentPane().setLayout(null);
+
+			// local Photo
+			ImageIcon displayImage ;
+			if(webcam_check == 1)
+				displayImage = new ImageIcon("./takedPhoto.png");
+			else
+				displayImage = new ImageIcon(filepath[photoIndex-1]);
+			displayImage.setImage(displayImage.getImage().getScaledInstance(185,186,Image.SCALE_DEFAULT));
+			Icon display = displayImage;
+			
+			// local info
+			JLabel myPhoto = new JLabel(display);
+			myPhoto.setBounds(353, 301, 185, 186);
+			chat.getContentPane().add(myPhoto);
+			
+			JLabel myGender = new JLabel(PlayerGender_String);
+			myGender.setFont(new Font("DejaVu Sans Condensed", Font.BOLD, 18));
+			myGender.setBounds(363, 463, 175, 70);
+			chat.getContentPane().add(myGender);
+
+			JLabel playerID_Label = new JLabel("You: " + PlayerID_String);
+			playerID_Label.setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 18));
+			playerID_Label.setBounds(18, 500, 270, 37);
+			chat.getContentPane().add(playerID_Label);
+
+			// opponent info
+			opponentPhoto.setImage(opponentPhoto.getImage().getScaledInstance(185,186,Image.SCALE_DEFAULT));
+			Icon enemyIcon = opponentPhoto;
+			JLabel enemyPhoto = new JLabel(enemyIcon);
+			enemyPhoto.setBounds(353, 34, 185, 186);
+			chat.getContentPane().add(enemyPhoto);
+			
+			JLabel enemyGender = new JLabel(opponentGender);
+			enemyGender.setFont(new Font("DejaVu Sans Condensed", Font.BOLD, 18));
+			enemyGender.setBounds(363, 199, 185, 77);
+			chat.getContentPane().add(enemyGender);
+
+			JLabel opponentID_Label = new JLabel("Eneny: " + opponentID);
+			opponentID_Label.setFont(new Font("DejaVu Sans", Font.BOLD | Font.ITALIC, 18));
+			opponentID_Label.setBounds(18, 463, 270, 37);
+			chat.getContentPane().add(opponentID_Label);
+			
+	
+			// chat room title
+			JLabel chatRoom = new JLabel("Chat Content");
+			chatRoom.setFont(new Font("DejaVu Sans Light", Font.BOLD | Font.ITALIC, 20));
+			chatRoom.setBounds(113, -18, 175, 70);
+			chat.getContentPane().add(chatRoom);
+			
+			// text enter field
+			JTextField inputField = new JTextField();
+			inputField.setFont(new Font("DejaVu Sans Condensed", Font.PLAIN, 16));
+			inputField.setBounds(12, 543, 307, 37);
+			chat.getContentPane().add(inputField);
+			inputField.setColumns(30);
+			
+			// chat message display area
+			chatContentDisplay = new JTextArea("",339,418);
+			chatContentDisplay.setFont(new Font("DejaVu Sans", Font.PLAIN, 16));
+			JScrollPane scrollablePane = new JScrollPane(chatContentDisplay);
+			scrollablePane.setBounds(12, 34, 339, 418);
+			chatContentDisplay.setEditable(false);
+			chatContentDisplay.setLineWrap(true);
+			chatContentDisplay.setRows(10); //
+			scrollablePane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+			scrollablePane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+			chat.getContentPane().add(scrollablePane);
+			
+
+			JButton enterButton = new JButton("Enter");
+			enterButton.setFont(new Font("Dialog", Font.BOLD, 14));
+			enterButton.setBounds(353, 544, 124, 36);
+			chat.getContentPane().add(enterButton);
+			
+			enterButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if(!inputField.getText().equals(""))
+					{	
+						String text = inputField.getText() + "\n";
+						chatContentDisplay.append(PlayerID_String + ":\n" + "    " + text);
+						inputField.setText("");
+						EventClient.send("GameClient::recvMsg($)",text,enemyEventClientKey);
+					}
+				}
+			});
+			
+			inputField.addKeyListener(new KeyListener(){
+				public void keyPressed(KeyEvent event){
+					if(event.getKeyCode() == KeyEvent.VK_ENTER)
+					{
+						if(!inputField.getText().equals(""))
+						{	
+							String text = inputField.getText() + "\n";
+							chatContentDisplay.append(PlayerID_String + ":\n" + "    " + text);
+							inputField.setText("");
+							EventClient.send("GameClient::recvMsg($)",text,enemyEventClientKey);
+						}
+					}
+				}
+				public void keyTyped(KeyEvent event){
+					;
+				}
+				public void keyReleased(KeyEvent event){
+					;
+				}
+			});
+
+			chat.setVisible(true);
+			chat.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		}
 }
 
 
