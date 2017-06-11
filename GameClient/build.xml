@@ -20,6 +20,10 @@
 			<fileset dir="${bin.dir}"/>
 		</copy>
 		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${build.dir}/${resource.dir}"/>
+		<copy todir="${build.dir}/${resource.dir}">
+			<fileset dir="${resource.dir}"/>
+		</copy>
 	</target>
 	
 	<target name="compile" depends="prepare">
