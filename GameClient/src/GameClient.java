@@ -2876,7 +2876,7 @@ public class GameClient {
 			enemyGender.setBounds(355, 199, 185, 77);
 			chat.getContentPane().add(enemyGender);
 
-			JLabel opponentID_Label = new JLabel("Eneny: " + opponentID);
+			JLabel opponentID_Label = new JLabel("Enemy: " + opponentID);
 			opponentID_Label.setFont(new Font("DejaVu Sans", Font.BOLD, 18));
 			opponentID_Label.setBounds(355, 242, 270, 37);
 			chat.getContentPane().add(opponentID_Label);
