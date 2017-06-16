@@ -2290,7 +2290,9 @@ public class GameClient {
 						//如果全都是攻擊階段的技能
 						if(character_alive[i]&&
 						  (character_data.character[picked[i]].skill1_use_stage()==Character_Data.def||
-						   character_data.character[picked[i]].skill2_use_stage()==Character_Data.def))
+						   character_data.character[picked[i]].skill2_use_stage()==Character_Data.def)||
+						   (character_data.character[picked[i]].skill1_use_stage()==Character_Data.both||
+						   character_data.character[picked[i]].skill2_use_stage()==Character_Data.both))
 						{
 							null_construct();
 							break;
