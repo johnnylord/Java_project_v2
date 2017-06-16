@@ -994,6 +994,8 @@ public class GameClient {
 		windows_construct();
 		null_construct();
 		frame.getContentPane().update(frame.getContentPane().getGraphics());
+		String text = (firstSelect)? "Attack stage":"Defense stage";
+		JOptionPane.showMessageDialog(null, text);
 	}
 
 	//清空(完全不顯示
@@ -1881,8 +1883,8 @@ public class GameClient {
 				int surrender = JOptionPane.showConfirmDialog(null, "確定投降?","",JOptionPane.YES_NO_OPTION);
 				if(surrender==0) //contentPane.setVisible(false);//法二傳送至主機端(請她delete)
 				{
-					jump_result(false);
 					EventClient.send("GameClient::jump_result($)",true,enemyEventClientKey);
+					jump_result(false);			
 				}
 			}
 		});
@@ -2610,8 +2612,7 @@ public class GameClient {
 			thorw_dise.add(text_this_stage);
 		}
 
-		public static Boolean get_attack_all()
-		{
+		public static Boolean get_attack_all(){
 			return attack_all;
 		}
 		
@@ -2620,6 +2621,7 @@ public class GameClient {
 			phase_stage = atk_stage; 
 			windows_stage_select();
 			null_construct();
+			JOptionPane.showMessageDialog(null, "It's your turn~");
 		}
 		
 		public static void can_attack_and_useSkill(){
@@ -2681,6 +2683,7 @@ public class GameClient {
 				attack.setEnabled(true);
 				end.setEnabled(true);
 				returnToOriginalState();
+				JOptionPane.showMessageDialog(null, "You can attack");
 			}		
 		}
 		
