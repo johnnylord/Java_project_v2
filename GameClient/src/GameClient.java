@@ -923,6 +923,9 @@ public class GameClient {
 
 		// After match successed, build the chat room
 		GameClient.chatRoom();
+		
+		String text = (firstSelect)? "You choose first":"You choose last";
+		JOptionPane.showMessageDialog(null, text);
 	}
 
 	// Used to select the Hero
@@ -989,12 +992,12 @@ public class GameClient {
 			System.out.println("Change music error!");
 		}
 
-		phase_stage = (firstSelect)?atk_stage:def_stage;
+		phase_stage = (firstSelect)?def_stage:atk_stage;
 		System.out.println("Your phase is : " + phase_stage);		
 		windows_construct();
 		null_construct();
 		frame.getContentPane().update(frame.getContentPane().getGraphics());
-		String text = (firstSelect)? "Attack stage":"Defense stage";
+		String text = (firstSelect)? "Defense stage":"Attack stage";
 		JOptionPane.showMessageDialog(null, text);
 	}
 
@@ -2750,6 +2753,7 @@ public class GameClient {
 		public static void returnToOriginalState(){
 			for(int i=0;i<6;i++)
 			{
+				attack_all = false;
 				character_data.character[picked[i]].reset_now_attack();
 				character_data.character[picked[i]].reset_now_defence();
 				/*				
