@@ -10,9 +10,10 @@ Server端主要功能是維護Players的配對，並擔任中間者，傳遞Play
 Client端主要負責遊戲中的計算，例如畫面的更新，判斷遊戲進行的階段。  
   
 * 示意圖
-![Game structure](http://imgur.com/GSTbFjl)
+![Game structure](http://i.imgur.com/GSTbFjl.png)
   
-* A more detail about client side
+* A more detail about client side  
+![Imgur](http://i.imgur.com/yFmU7DT.png)  
 
 * * *
 # 如何玩這個遊戲？
