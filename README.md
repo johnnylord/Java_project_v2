@@ -21,7 +21,7 @@ Client端主要負責遊戲中的計算，例如畫面的更新，判斷遊戲�
 	+ Before you go to the next step,make sure you have
 	+ installed "java ant" in your computer.
 
-* Java ant install on Linux
+* Java ant install on Linux  
 	sudo apt-get update
 	sudo apt-get install ant  
 
