@@ -1,4 +1,15 @@
-# Java_project
-===
-# Run
-Go to /GameClient/src, and execute "make" and "make run" in terminal
+# 線上卡排遊戲
+* * * 
+# 遊戲發想動機
+結合現今卡排遊戲---爐石，和兒時卡通片遊戲王中的情節而想到的。  
+
+* * *
+# 遊戲架構
+* Server-Client
+> Server端主要功能是維護Players的配對，並擔任中間者，傳遞Players間的訊息封包。
+> Client端主要負責遊戲中的計算，例如畫面的更新，判斷遊戲進行的階段。  
+  
+* 示意圖
+* * *
+
+
