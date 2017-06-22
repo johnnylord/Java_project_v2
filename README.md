@@ -29,25 +29,24 @@ Client端主要負責遊戲中的計算，例如畫面的更新，判斷遊戲�
 * Server 需先執行（讓Client 端連上用的）  
 > Linux: "ifconfig" 查詢IP  
 > Windows: "ipconfig" 查詢IP  
-![server](http://imgur.com/7NjbDfn)  
+![server](http://i.imgur.com/7NjbDfn.png)  
 
-* Client 執行（遊戲主畫面)
-![main](http://imgur.com/K5B4k5K)
+* Client 執行（遊戲主畫面)  
+![main](http://i.imgur.com/K5B4k5K.png)
 
 * 玩家設定
 > 基本玩家設定  
 > 1. 玩家頭貼  
 > 2. 玩家ID  
 > 3. 玩家性別  
-![player-setting](http://imgur.com/8Leordt)
+![player-setting](http://i.imgur.com/8Leordt.png)
 
 * 卡排選擇
 > 選擇遊戲時，玩家擁有的三張角色卡牌  
-![Choose-card](http://imgur.com/c1tuBaa)  
+![Choose-card](http://i.imgur.com/c1tuBaa.png)  
 
 * 遊戲畫面
-![playing](http://imgur.com/G2oiqW0)
-
+![Imgur](http://i.imgur.com/G2oiqW0.png)
 * * *
 
 # 共同開發者
